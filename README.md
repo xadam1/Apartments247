@@ -9,11 +9,11 @@ Jména:
     Vojtěch Škaroupka (485232)
 
 
-### About
+### O Projektu
 Na webovém portálu si uživatel může založit a spravovat účet. Kromě nástrojů pro správu základních údajů jako jméno, heslo a profilový obrázek, editor nabízí i možnost vytvářet záznamy o vlastněných bytech a sdružovat je do logických celků. Cílem je poskytnout vlastníkovi bytů přehledný panel se zadanými údaji a grafy zobrazujícími vývoj změn v průběhu času.
 
 
-#### Users
+#### Uživatelé
     - Autentizace
         - login/logout
         - změna údajů (heslo, email)
