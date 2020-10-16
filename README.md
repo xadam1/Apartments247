@@ -28,7 +28,7 @@ Na webovém portálu si uživatel může založit a spravovat účet. Kromě ná
     - Vyhledávat námjce podle jména, č. bytu, rod. č., ...
 
 
-#### Byty
+#### Bytové jednotky
     - pojmenovat/změnit název bytu
     - barevně odlišené obsazené/volné byty
     - možnost nahrát/stáhnout fotky bytu
