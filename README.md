@@ -3,7 +3,7 @@
 
 ### Info
 Číslo skupiny: 8,
-Jména: 
+Jména (uča): 
     Jan Adam (485566),
     Tomáš Fojt (485072),
     Vojtěch Škaroupka (485232)
