@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using ApartmentsDAL.Extras;
 
 namespace ApartmentsDAL.Models
@@ -8,6 +9,7 @@ namespace ApartmentsDAL.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
         [MaxLength(128)]
         public string Name { get; set; }
 
@@ -16,6 +18,9 @@ namespace ApartmentsDAL.Models
         [MaxLength(1024)]
         public string Note { get; set; }
 
-        public Address Address { get; set; }
+        public int AddressId { get; set; }
+
+        [ForeignKey(nameof(AddressId))]
+        public virtual Address Address { get; set; }
     }
 }

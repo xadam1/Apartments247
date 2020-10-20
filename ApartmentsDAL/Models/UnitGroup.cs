@@ -12,8 +12,8 @@ namespace ApartmentsDAL.Models
         public int SpecificationId { get; set; }
 
         [ForeignKey(nameof(SpecificationId))]
-        public Specification Specification { get; set; }
+        public virtual Specification Specification { get; set; }
         
-        public ICollection<Unit> Units { get; set; }
+        public virtual ICollection<Unit> Units { get; set; }
     }
 }

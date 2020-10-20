@@ -15,11 +15,11 @@ namespace ApartmentsDAL.Models
         public int UnitTypeId { get; set; }
 
         [ForeignKey(nameof(UnitTypeId))]
-        public UnitType Type { get; set; }
+        public virtual UnitType Type { get; set; }
 
         public int SpecificationId { get; set; }
 
         [ForeignKey(nameof(SpecificationId))]
-        public Specification Specification { get; set; }
+        public virtual Specification Specification { get; set; }
     }
 }

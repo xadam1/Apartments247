@@ -3,9 +3,9 @@ using ApartmentsDAL.Models;
 
 namespace ApartmentsDAL
 {
-    class ApartmentsDbContext : DbContext
+    public class ApartmentsDbContext : DbContext
     {
-        private string ConnectionString = "(localdb)\\MSSQLLocalDB;IntegratedSecurity = True; MultipleActiveResultSets=True;Database=ApartmentsDB;Trusted_Connection=True;";
+        private string ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Integrated Security=True;MultipleActiveResultSets=True;Database=ApartmentsDB;Trusted_Connection=True;";
 
         public DbSet<User> Users { get; set; }
 
@@ -20,7 +20,6 @@ namespace ApartmentsDAL
         public DbSet<Equipment> Equipment { get; set; }
 
         public DbSet<EquipmentType> EquipmentTypes { get; set; }
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

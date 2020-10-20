@@ -12,8 +12,8 @@ namespace ApartmentsDAL.Models
         public int UnitId { get; set; }
 
         [ForeignKey(nameof(UnitId))]
-        public Unit Unit { get; set; }
+        public virtual Unit Unit { get; set; }
 
-        public ICollection<EquipmentType> AvailableEquipment{ get; set; }
+        public virtual ICollection<EquipmentType> AvailableEquipment { get; set; }
     }
 }

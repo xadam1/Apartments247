@@ -1,4 +1,6 @@
-﻿namespace ApartmentsDAL
+﻿using System;
+
+namespace ApartmentsDAL
 {
     public interface IRepository<TEntity> where TEntity : class, IEntity, new()
     {
