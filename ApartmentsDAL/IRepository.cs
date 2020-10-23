@@ -36,30 +36,72 @@ namespace ApartmentsDAL
 
         public IEnumerable<TEntity> GetAll()
             => Context.Set<TEntity>().ToList();
+
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+            => Context.Set<TEntity>().Where(predicate);
+
+        public void Add(TEntity entity)
+            => Context.Set<TEntity>().Add(entity);
+
+        public void AddRange(IEnumerable<TEntity> entities)
+            => Context.Set<TEntity>().AddRange(entities);
+
+        public void Remove(TEntity entity)
+            => Context.Set<TEntity>().Remove(entity);
+
+        public void RemoveRange(IEnumerable<TEntity> entities)
+            => Context.Set<TEntity>().RemoveRange(entities);
     }
 
 
-    public class UnitOfWork<DatabaseType>
+    public interface IUnitOfWork<TDatabase> : IDisposable where TDatabase : DbContext
     {
-        public DatabaseType Database { get; }
+        // Attributes
+        public IRepository<Address> AddressAtr { get; }
+        public IRepository<Equipment> EquipmentAtr { get; }
+        public IRepository<EquipmentType> EquipmentTypeAtr { get; }
+        public IRepository<Specification> SpecificationAtr { get; }
+        public IRepository<Unit> UnitAtr { get; }
+        public IRepository<UnitGroup> UnitGroupAtr { get; }
+        public IRepository<UnitType> UnitTypeAtr { get; }
+        public IRepository<User> UserAtr { get; }
+
+        // Methods
+        void Complete();
+    }
+
+    public class UnitOfWork<TDatabase> : IUnitOfWork<TDatabase> where TDatabase : DbContext
+    {
+        public TDatabase Database { get; }
 
         // Tables
-        public Repository<Address> Address { get; private set; } = new Repository<Address>(Database);
-        public Repository<Equipment> equipment { get; private set; } = new Repository<Equipment>(databaseP);
-        public Repository<EquipmentType> equipmentType { get; private set; } = new Repository<EquipmentType>(databaseP);
-        public Repository<Specification> specification { get; private set; } = new Repository<Specification>(databaseP);
-        public Repository<Unit> unit { get; private set; } = new Repository<Unit>(databaseP);
-        public Repository<UnitGroup> unitGroup { get; private set; } = new Repository<UnitGroup>(databaseP);
-        public Repository<UnitType> UnitType { get; private set; }
-        public Repository<User> UserAtr { get; private set; }
+        public IRepository<Address> AddressAtr { get; }
+        public IRepository<Equipment> EquipmentAtr { get; }
+        public IRepository<EquipmentType> EquipmentTypeAtr { get; }
+        public IRepository<Specification> SpecificationAtr { get; }
+        public IRepository<Unit> UnitAtr { get; }
+        public IRepository<UnitGroup> UnitGroupAtr { get; }
+        public IRepository<UnitType> UnitTypeAtr { get; }
+        public IRepository<User> UserAtr { get; }
+
+        public void Complete() => Database.SaveChanges();
 
         // Constructor
-        public UnitOfWork(DatabaseType databaseP)
+        public UnitOfWork(TDatabase databaseP)
         {
             Database = databaseP;
 
-            // Inicialization
-            UserAtr = new Repository<User>(databaseP);
+            // Initialization
+            AddressAtr = new Repository<Address>(Database);
+            EquipmentAtr = new Repository<Equipment>(Database);
+            EquipmentTypeAtr = new Repository<EquipmentType>(Database);
+            SpecificationAtr = new Repository<Specification>(Database);
+            UnitAtr = new Repository<Unit>(Database);
+            UnitGroupAtr = new Repository<UnitGroup>(Database);
+            UnitTypeAtr = new Repository<UnitType>(Database);
+            UserAtr = new Repository<User>(Database);
         }
+
+        public void Dispose() => Database.Dispose();
     }
 }
