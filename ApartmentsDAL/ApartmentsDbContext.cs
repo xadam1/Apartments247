@@ -10,8 +10,8 @@ namespace ApartmentsDAL
         public DbSet<User> Users { get; set; }
 
         public DbSet<Unit> Units { get; set; }
-
-        public DbSet<UnitGroup> UnitGroups { get; set; }
+        
+        public DbSet<UnitGroup> UnitGroups { get; set; } 
 
         public DbSet<UnitType> UnitTypes { get; set; }
 
@@ -26,12 +26,6 @@ namespace ApartmentsDAL
             optionsBuilder
                 .UseSqlServer(ConnectionString)
                 .UseLazyLoadingProxies();
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // TODO EDIT
-            base.OnModelCreating(modelBuilder);
         }
     }
 }
