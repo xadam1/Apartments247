@@ -10,7 +10,7 @@ Jména (uča):
 
 
 ### O Projektu
-Na webovém portálu si uživatel může založit a spravovat účet. Kromě nástrojů pro správu základních údajů jako jméno, heslo a profilový obrázek, editor nabízí i možnost vytvářet záznamy o vlastněných bytech a sdružovat je do logických celků. Cílem je poskytnout vlastníkovi bytů přehledný panel se zadanými údaji a grafy zobrazujícími vývoj změn v průběhu času.
+Na webovém portálu si uživatel může založit a spravovat účet. Kromě nástrojů pro správu základních údajů jako jméno, heslo a profilový obrázek, editor nabízí i možnost vytvářet záznamy o vlastněných bytech a sdružovat je do logických celků. Cílem je poskytnout vlastníkovi bytů přehledný panel se zadanými údaji a grafy zobrazujícími vývoj změn v průběhu času. Jelikož se údaje zobrazí jen po přihlášení, nemusí se uživatel bát na stránku vkládat nájemní smlouvy, data o tržbách a další soukromé informace.
 
 
 #### Uživatelé
