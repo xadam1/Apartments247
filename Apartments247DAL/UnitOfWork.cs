@@ -17,7 +17,8 @@ namespace ApartmentsDAL
         public IRepository<UnitType> UnitTypeAtr { get; }
         public IRepository<User> UserAtr { get; }
 
-        public void Complete() => Database.SaveChanges();
+        public void Complete() 
+            => Database.SaveChanges();
 
         // Constructor
         public UnitOfWork(TDatabase databaseP)
