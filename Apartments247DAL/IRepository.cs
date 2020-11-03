@@ -6,10 +6,12 @@ namespace DAL
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        TEntity Get(int id);
+        TEntity GetById(int id);
         IEnumerable<TEntity> GetAll();
 
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        TEntity FindFirst(Expression<Func<TEntity, bool>> predicate);
+
+        IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
