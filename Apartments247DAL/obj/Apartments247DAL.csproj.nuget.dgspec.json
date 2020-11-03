@@ -1,21 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Github\\Apartments247\\Apartments247DAL\\Apartments247DAL.csproj": {}
+    "D:\\Coding\\Csharp\\Apartments247\\Apartments247DAL\\Apartments247DAL.csproj": {}
   },
   "projects": {
-    "D:\\Github\\Apartments247\\Apartments247DAL\\Apartments247DAL.csproj": {
+    "D:\\Coding\\Csharp\\Apartments247\\Apartments247DAL\\Apartments247DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Github\\Apartments247\\Apartments247DAL\\Apartments247DAL.csproj",
+        "projectUniqueName": "D:\\Coding\\Csharp\\Apartments247\\Apartments247DAL\\Apartments247DAL.csproj",
         "projectName": "Apartments247DAL",
-        "projectPath": "D:\\Github\\Apartments247\\Apartments247DAL\\Apartments247DAL.csproj",
-        "packagesPath": "C:\\Users\\TOMAS\\.nuget\\packages\\",
-        "outputPath": "D:\\Github\\Apartments247\\Apartments247DAL\\obj\\",
+        "projectPath": "D:\\Coding\\Csharp\\Apartments247\\Apartments247DAL\\Apartments247DAL.csproj",
+        "packagesPath": "C:\\Users\\honza\\.nuget\\packages\\",
+        "outputPath": "D:\\Coding\\Csharp\\Apartments247\\Apartments247DAL\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\TOMAS\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\honza\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"

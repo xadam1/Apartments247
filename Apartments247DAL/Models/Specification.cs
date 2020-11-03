@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ApartmentsDAL.Extras;
+using DAL.Extras;
 
-namespace ApartmentsDAL.Models
+namespace DAL.Models
 {
     public class Specification
     {

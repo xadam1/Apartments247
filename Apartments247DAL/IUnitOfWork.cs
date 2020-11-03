@@ -1,8 +1,8 @@
 ﻿using System;
-using ApartmentsDAL.Models;
+using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ApartmentsDAL
+namespace DAL
 {
     public interface IUnitOfWork<TDatabase> : IDisposable where TDatabase : DbContext
     {

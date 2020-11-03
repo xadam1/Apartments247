@@ -1,4 +1,4 @@
-﻿namespace ApartmentsDAL.Extras
+﻿namespace DAL.Extras
 {
     public enum Color
     {

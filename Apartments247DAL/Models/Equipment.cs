@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ApartmentsDAL.Models
+namespace DAL.Models
 {
     public class Equipment
     {

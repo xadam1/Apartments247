@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
-namespace ApartmentsDAL
+namespace DAL
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

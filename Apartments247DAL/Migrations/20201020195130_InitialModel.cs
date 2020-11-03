@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ApartmentsDAL.Migrations
+namespace DAL.Migrations
 {
     public partial class InitialModel : Migration
     {

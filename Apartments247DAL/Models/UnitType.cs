@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ApartmentsDAL.Models
+namespace DAL.Models
 {
     public class UnitType
     {

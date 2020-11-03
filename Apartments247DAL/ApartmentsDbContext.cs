@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ApartmentsDAL.Models;
+﻿using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace ApartmentsDAL
+namespace DAL
 {
     public class ApartmentsDbContext : DbContext
     {
