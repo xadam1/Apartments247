@@ -15,33 +15,18 @@ namespace DAL
         {
             Context = context;
         }
+        
 
-
-        #region GetMethods
         public TEntity GetById(int id)
             => Context.Set<TEntity>().Find(id);
 
-        public IEnumerable<TEntity> GetAll()
-            => Context.Set<TEntity>().ToList();
-        #endregion
 
-
-        #region FindMethods
-        public TEntity FindFirst(Expression<Func<TEntity, bool>> predicate)
-            => Context.Set<TEntity>().Where(predicate).First();
-
-        public IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate)
-            => Context.Set<TEntity>().Where(predicate);
-        #endregion
-
-
-        #region AddMethods
         public void Add(TEntity entity)
             => Context.Set<TEntity>().Add(entity);
 
-        public void AddRange(IEnumerable<TEntity> entities)
-            => Context.Set<TEntity>().AddRange(entities);
-        #endregion
+
+        public TEntity Find(Expression<Func<TEntity, bool>> predicate)
+            => Context.Set<TEntity>().Where(predicate).First();
 
 
         public void Update(TEntity entity)
@@ -51,12 +36,7 @@ namespace DAL
         }
 
 
-        #region RemoveMethods
         public void Remove(TEntity entity)
             => Context.Set<TEntity>().Remove(entity);
-
-        public void RemoveRange(IEnumerable<TEntity> entities)
-            => Context.Set<TEntity>().RemoveRange(entities);
-        #endregion
     }
 }
