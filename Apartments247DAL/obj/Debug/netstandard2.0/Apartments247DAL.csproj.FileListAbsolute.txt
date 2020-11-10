@@ -1,9 +1,0 @@
-D:\Github\Apartments247\Apartments247DAL\bin\Debug\netstandard2.0\Apartments247DAL.deps.json
-D:\Github\Apartments247\Apartments247DAL\bin\Debug\netstandard2.0\Apartments247DAL.dll
-D:\Github\Apartments247\Apartments247DAL\obj\Debug\netstandard2.0\Apartments247DAL.csprojAssemblyReference.cache
-D:\Github\Apartments247\Apartments247DAL\obj\Debug\netstandard2.0\Apartments247DAL.AssemblyInfoInputs.cache
-D:\Github\Apartments247\Apartments247DAL\obj\Debug\netstandard2.0\Apartments247DAL.AssemblyInfo.cs
-D:\Github\Apartments247\Apartments247DAL\obj\Debug\netstandard2.0\Apartments247DAL.csproj.CoreCompileInputs.cache
-D:\Github\Apartments247\Apartments247DAL\bin\Debug\netstandard2.0\Apartments247DAL.pdb
-D:\Github\Apartments247\Apartments247DAL\obj\Debug\netstandard2.0\Apartments247DAL.dll
-D:\Github\Apartments247\Apartments247DAL\obj\Debug\netstandard2.0\Apartments247DAL.pdb
