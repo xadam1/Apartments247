@@ -1,7 +1,8 @@
-﻿using DAL.Models;
+﻿using DAL;
+using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL
+namespace Infrastructure
 {
     public class UnitOfWork<TDatabase> : IUnitOfWork<TDatabase> where TDatabase : DbContext
     {
