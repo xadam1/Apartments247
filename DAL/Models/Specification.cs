@@ -4,11 +4,8 @@ using DAL.Extras;
 
 namespace DAL.Models
 {
-    public class Specification
+    public class Specification : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(128)]
         public string Name { get; set; }

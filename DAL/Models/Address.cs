@@ -2,11 +2,8 @@
 
 namespace DAL.Models
 {
-    public class Address
+    public class Address : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         [MaxLength(64)]
         public string State { get; set; }
 

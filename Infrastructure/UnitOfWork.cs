@@ -1,42 +1,46 @@
 ﻿using DAL;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public class UnitOfWork<TDatabase> : IUnitOfWork<TDatabase> where TDatabase : DbContext
+    public class UnitOfWork : IUnitOfWork
     {
-        public TDatabase Database { get; }
-
+        private readonly ApartmentsDbContext _dbContext;
+        
         // Tables
-        public IRepository<Address> AddressAtr { get; }
-        public IRepository<Equipment> EquipmentAtr { get; }
-        public IRepository<EquipmentType> EquipmentTypeAtr { get; }
-        public IRepository<Specification> SpecificationAtr { get; }
-        public IRepository<Unit> UnitAtr { get; }
-        public IRepository<UnitGroup> UnitGroupAtr { get; }
-        public IRepository<UnitType> UnitTypeAtr { get; }
-        public IRepository<User> UserAtr { get; }
-
-        public void Complete() 
-            => Database.SaveChanges();
-
+        public IRepository<Address> Address { get; }
+        public IRepository<Equipment> Equipment { get; }
+        public IRepository<EquipmentType> EquipmentType { get; }
+        public IRepository<Specification> Specification { get; }
+        public IRepository<Unit> Unit { get; }
+        public IRepository<UnitGroup> UnitGroup { get; }
+        public IRepository<UnitType> UnitType { get; }
+        public IRepository<User> User { get; }
+        
         // Constructor
-        public UnitOfWork(TDatabase databaseP)
+        public UnitOfWork()
         {
-            Database = databaseP;
+            _dbContext = new ApartmentsDbContext();
 
             // Initialization
-            AddressAtr = new Repository<Address>(Database);
-            EquipmentAtr = new Repository<Equipment>(Database);
-            EquipmentTypeAtr = new Repository<EquipmentType>(Database);
-            SpecificationAtr = new Repository<Specification>(Database);
-            UnitAtr = new Repository<Unit>(Database);
-            UnitGroupAtr = new Repository<UnitGroup>(Database);
-            UnitTypeAtr = new Repository<UnitType>(Database);
-            UserAtr = new Repository<User>(Database);
+            Address = new Repository<Address>(_dbContext);
+            Equipment = new Repository<Equipment>(_dbContext);
+            EquipmentType = new Repository<EquipmentType>(_dbContext);
+            Specification = new Repository<Specification>(_dbContext);
+            Unit = new Repository<Unit>(_dbContext);
+            UnitGroup = new Repository<UnitGroup>(_dbContext);
+            UnitType = new Repository<UnitType>(_dbContext);
+            User = new Repository<User>(_dbContext);
         }
 
-        public void Dispose() => Database.Dispose();
+
+        public async Task CommitAsync() 
+            => await _dbContext.SaveChangesAsync();
+
+        
+        public void Dispose() 
+            => _dbContext.Dispose();
     }
 }

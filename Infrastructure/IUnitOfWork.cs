@@ -1,22 +1,26 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public interface IUnitOfWork<TDatabase> : IDisposable where TDatabase : DbContext
+    public interface IUnitOfWork : IDisposable
     {
         // Attributes
-        IRepository<Address> AddressAtr { get; }
-        IRepository<Equipment> EquipmentAtr { get; }
-        IRepository<EquipmentType> EquipmentTypeAtr { get; }
-        IRepository<Specification> SpecificationAtr { get; }
-        IRepository<Unit> UnitAtr { get; }
-        IRepository<UnitGroup> UnitGroupAtr { get; }
-        IRepository<UnitType> UnitTypeAtr { get; }
-        IRepository<User> UserAtr { get; }
+        IRepository<Address> Address { get; }
+        IRepository<Equipment> Equipment { get; }
+        IRepository<EquipmentType> EquipmentType { get; }
+        IRepository<Specification> Specification { get; }
+        IRepository<Unit> Unit { get; }
+        IRepository<UnitGroup> UnitGroup { get; }
+        IRepository<UnitType> UnitType { get; }
+        IRepository<User> User { get; }
 
         // Methods
-        void Complete();
+        Task CommitAsync();
+
+        // Queries
+
     }
 }

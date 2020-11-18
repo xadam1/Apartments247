@@ -4,11 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class Equipment
+    public class Equipment : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         public int UnitId { get; set; }
 
         [ForeignKey(nameof(UnitId))]

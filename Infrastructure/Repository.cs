@@ -1,40 +1,47 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using DAL;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> 
+        where TEntity : class
     {
-        protected readonly DbContext Context;
+        private readonly ApartmentsDbContext _context;
 
-        public Repository(DbContext context)
+        public Repository(ApartmentsDbContext context)
         {
-            Context = context;
+            _context = context;
         }
+
         
-
-        public TEntity GetById(int id)
-            => Context.Set<TEntity>().Find(id);
-
-
+        #region IRepository Methods
+        
         public void Add(TEntity entity)
-            => Context.Set<TEntity>().Add(entity);
+            => _context.Set<TEntity>().Add(entity);
+                
+        public async Task<TEntity> Get(int id) 
+            => await _context.Set<TEntity>().FindAsync(id);
 
+        public async Task<IEnumerable<TEntity>> GetAll()
+            => await _context.Set<TEntity>().ToListAsync();
 
-        public TEntity Find(Expression<Func<TEntity, bool>> predicate)
-            => Context.Set<TEntity>().Where(predicate).First();
-
-
-        public void Update(TEntity entity)
+        public void Update(TEntity updatedEntity)
         {
-            Context.Set<TEntity>().Attach(entity);
-            Context.Entry(entity).State = EntityState.Modified;
+            _context.Set<TEntity>().Attach(updatedEntity);
+            _context.Entry(updatedEntity).State = EntityState.Modified;
         }
 
+        public void Delete(TEntity entity)
+            => _context.Set<TEntity>().Remove(entity);
 
-        public void Remove(TEntity entity)
-            => Context.Set<TEntity>().Remove(entity);
+        #endregion
+        
+        public TEntity Find(Expression<Func<TEntity, bool>> predicate)
+            => _context.Set<TEntity>().Where(predicate).First();
     }
 }

@@ -2,11 +2,8 @@
 
 namespace DAL.Models
 {
-    public class User
+    public class User : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(64)]
         public string Username { get; set; }

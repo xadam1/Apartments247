@@ -3,11 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class Unit
+    public class Unit : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         public int MaxCapacity { get; set; }
 
         public int CurrentCapacity { get; set; }

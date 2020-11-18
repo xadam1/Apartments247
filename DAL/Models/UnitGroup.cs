@@ -4,11 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
-    public class UnitGroup
+    public class UnitGroup : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         public int SpecificationId { get; set; }
 
         [ForeignKey(nameof(SpecificationId))]
