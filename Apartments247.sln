@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{62A9EA0D-816F-46D9-B908-5C9B245DD87B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{22967A28-360F-41EF-8369-B133FA82D53C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentsConsoleApp", "ApartmentsConsoleApp\ApartmentsConsoleApp.csproj", "{E4DC066B-567B-4BE1-B002-F10A2D66040A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApartmentsConsoleApp", "ApartmentsConsoleApp\ApartmentsConsoleApp.csproj", "{E4DC066B-567B-4BE1-B002-F10A2D66040A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{4B143F30-5B6B-4BD0-B8DC-FED20D1BBDFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{4B143F30-5B6B-4BD0-B8DC-FED20D1BBDFD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{F551E4E5-DE72-4883-853F-829751D32BF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{62A9EA0D-816F-46D9-B908-5C9B245DD87B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62A9EA0D-816F-46D9-B908-5C9B245DD87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62A9EA0D-816F-46D9-B908-5C9B245DD87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62A9EA0D-816F-46D9-B908-5C9B245DD87B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{22967A28-360F-41EF-8369-B133FA82D53C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{22967A28-360F-41EF-8369-B133FA82D53C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22967A28-360F-41EF-8369-B133FA82D53C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{4B143F30-5B6B-4BD0-B8DC-FED20D1BBDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B143F30-5B6B-4BD0-B8DC-FED20D1BBDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B143F30-5B6B-4BD0-B8DC-FED20D1BBDFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F551E4E5-DE72-4883-853F-829751D32BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F551E4E5-DE72-4883-853F-829751D32BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F551E4E5-DE72-4883-853F-829751D32BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F551E4E5-DE72-4883-853F-829751D32BF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
