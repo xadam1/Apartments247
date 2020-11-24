@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.Data.SqlClient;
 
@@ -19,11 +18,13 @@ namespace DAL.Models
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
 
-        public UnitGroup(SqlDataReader reader) : this(reader.GetInt32(0)) { }
+        /*
+         public UnitGroup(SqlDataReader reader) : this(reader.GetInt32(0)) { }
 
         public UnitGroup(int id)
         {
             SpecificationId = id;
         }
+        */
     }
 }

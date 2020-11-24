@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Text;
-using DAL;
+﻿using DAL;
+using DAL.Models;
+using Infrastructure;
+
 
 namespace BLL
 {
     public class Engine
     {
-        
+        /*
         private Database database = new Database();
-        public (bool, DAL.Models.User) BLLGetUserByCredentials(string name, string password)
+        public User BLLGetUserByCredentials(string name, string password)
         {
-            return database.DALGetUserByCredentials(name, password);
+            return database.DalGetUserByCredentials(name, password);
         }
 
         public DAL.Models.User[] BLLGetAllUsers()
@@ -54,5 +53,6 @@ namespace BLL
         {
             database.DALChangeUnit(unit);
         }
+        */
     }
 }

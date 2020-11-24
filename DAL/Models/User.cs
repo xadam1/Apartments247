@@ -20,6 +20,7 @@ namespace DAL.Models
 
         public bool IsAdmin { get; set; }
 
+/*      TODO oddelat
         public User(int id, string username, string password, string email, bool isAdmin)
         {
             Id = id;
@@ -29,6 +30,15 @@ namespace DAL.Models
             IsAdmin = isAdmin;
         }
 
-        public User(SqlDataReader reader) : this(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4) != 0) { }
+        public User(SqlDataReader reader)
+            : this(
+                reader.GetInt32(0),
+            reader.GetString(1),
+            reader.GetString(2),
+            reader.GetString(3),
+            reader.GetInt32(4) != 0)
+        {
+        }
+*/
     }
 }

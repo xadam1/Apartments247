@@ -1,19 +1,21 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Configuration;
+using Castle.DynamicProxy.Generators.Emitters;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
-using System;
+using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class ApartmentsDbContext : DbContext
     {
-        // Rozbitá relativní reference na System.Configuration.dll byla nahrazena správným zahrnutím System.Configuration 4.7.0
-        private string CONNECTION_STRING = ConfigurationManager.ConnectionStrings[0].ConnectionString;
+        private readonly string _connectionString;
+
+
         public ApartmentsDbContext()
         {
-            throw new Exception();
-            //Database.SetInitializer
+            // "data source=(localdb)\MSSQLLocalDB; initial catalog=ApartmentsDB; integrated security=SSPI"
+            _connectionString =
+                @"data source=(localdb)\MSSQLLocalDB; initial catalog=ApartmentsDB; integrated security=SSPI";
         }
 
         public DbSet<User> Users { get; set; }
@@ -29,11 +31,11 @@ namespace DAL
         public DbSet<Equipment> Equipment { get; set; }
 
         public DbSet<EquipmentType> EquipmentTypes { get; set; }
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(CONNECTION_STRING);
-            //.UseLazyLoadingProxies();
+            optionsBuilder.UseSqlServer(_connectionString)
+            .UseLazyLoadingProxies();
         }
     }
 }

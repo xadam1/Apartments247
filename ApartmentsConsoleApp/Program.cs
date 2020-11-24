@@ -12,11 +12,20 @@ namespace ApartmentsConsoleApp
     {
         static void Main(string[] args)
         {
+            using (var apartmentsDbContext = new ApartmentsDbContext())
+            {
+               
+            }
+            /*
             // Launch app
-            new ConsoleApp();
+            //new ConsoleApp();
+            SqlConnection con = new SqlConnection(@"Data Source=cassiopeia.serveirc.com,49172;Initial Catalog=myDataBase;User ID=Apartments247;Password=IFofon5FFE;");
+            con.Open();
+            Console.WriteLine(con.State);
+            */
         }
     }
-
+    /*
     public class ConsoleApp
     {
         private Engine engine = new Engine();
@@ -24,6 +33,7 @@ namespace ApartmentsConsoleApp
         private DAL.Models.User user = null;
         DAL.Models.UnitGroup unitGroup = null;
         private DAL.Models.Unit unit = null;
+
         public ConsoleApp()
         {
             // Viz logický DFA
@@ -80,7 +90,7 @@ namespace ApartmentsConsoleApp
                 Console.Write("email: ");
                 email = Console.ReadLine();
             }
-            if (! engine.BLLCreateAccount(name, password, email))
+            if (!engine.BLLCreateAccount(name, password, email))
             {
                 Console.WriteLine("Account already exists");
             }
@@ -101,7 +111,8 @@ namespace ApartmentsConsoleApp
             if (result)
             {
                 PromptDefaultScreen();
-            } else
+            }
+            else
             {
                 Console.WriteLine("Account doesnt exist");
             }
@@ -122,10 +133,10 @@ namespace ApartmentsConsoleApp
         {
             unitGroup = engine.BLLGetGroupByID(groupId);
 
-            Console.WriteLine($"name: {unitGroup.Name}");
-            Console.WriteLine($"color: {unitGroup.Color}");
-            Console.WriteLine($"note: {unitGroup.Note}");
-            Console.WriteLine($"address: {unitGroup.Address}");
+            Console.WriteLine($"name: {unitGroup.Specification.Name}");
+            Console.WriteLine($"color: {unitGroup.Specification.Color}");
+            Console.WriteLine($"note: {unitGroup.Specification.Note}");
+            Console.WriteLine($"address: {unitGroup.Specification.Address}");
 
             Prompt(new (string, Action)[] { ("Change Group Details", () => PromptChangeGroupDetails()) }, "Group Details");
         }
@@ -140,29 +151,30 @@ namespace ApartmentsConsoleApp
             if ((mode & T.Binary("1000")) != 0)
             {
                 Console.Write("name: ");
-                unitGroup.Name = Console.ReadLine();
+                unitGroup.Specification.Name = Console.ReadLine();
             }
             if ((mode & T.Binary("0100")) != 0)
             {
                 int color = 0;
                 Console.Write("color: ");
-                if (! int.TryParse(Console.ReadLine(), out color))
+                if (!int.TryParse(Console.ReadLine(), out color))
                 {
                     Console.WriteLine("You have to insert number");
-                } else
+                }
+                else
                 {
-                    unitGroup.Color = color;
+                    unitGroup.Specification.Color = color;
                 }
             }
             if ((mode & T.Binary("0010")) != 0)
             {
                 Console.Write("note: ");
-                unitGroup.Note = Console.ReadLine();
+                unitGroup.Specification.Note = Console.ReadLine();
             }
             if ((mode & T.Binary("0001")) != 0)
             {
                 Console.Write("address: ");
-                unitGroup.Address = Console.ReadLine();
+                unitGroup.Specification.Address = Console.ReadLine();
             }
 
             engine.BLLChangeGroup(unitGroup);
@@ -176,7 +188,7 @@ namespace ApartmentsConsoleApp
 
         private void PromptUnit(int unit)
         {
-            Prompt(new (string, Action)[] { ("Show Unit Details", () => PromptShowUnitDetails(unit))}, "Unit Management");
+            Prompt(new (string, Action)[] { ("Show Unit Details", () => PromptShowUnitDetails(unit)) }, "Unit Management");
         }
 
         public void PromptShowUnitDetails(int unitId)
@@ -210,7 +222,8 @@ namespace ApartmentsConsoleApp
                 if (int.TryParse(Console.ReadLine(), out capacity))
                 {
                     unit.CurrentCapacity = capacity;
-                } else
+                }
+                else
                 {
                     Console.WriteLine("Capacity must be number");
                 }
@@ -279,4 +292,5 @@ namespace ApartmentsConsoleApp
             engine.BLLChangeUser(user);
         }
     }
+    */
 }

@@ -24,6 +24,7 @@ namespace DAL.Models
 
         public string ContractLink { get; set; }
 
+        /*
         public Unit(SqlDataReader reader) : this(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3)) { }
         public Unit(int id, int currentCapacity, int maxCapacity, int type)
         {
@@ -32,5 +33,6 @@ namespace DAL.Models
             MaxCapacity = maxCapacity;
             UnitTypeId = type;
         }
+        */
     }
 }
