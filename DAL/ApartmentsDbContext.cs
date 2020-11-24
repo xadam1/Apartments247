@@ -1,16 +1,12 @@
-﻿using System.Configuration;
-using Castle.DynamicProxy.Generators.Emitters;
-using DAL.Models;
+﻿using DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class ApartmentsDbContext : DbContext
     {
         private readonly string _connectionString;
-
-
+        
         public ApartmentsDbContext()
         {
             // "data source=(localdb)\MSSQLLocalDB; initial catalog=ApartmentsDB; integrated security=SSPI"

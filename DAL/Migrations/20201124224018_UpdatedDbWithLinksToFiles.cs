@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class InitialModel : Migration
+    public partial class UpdatedDbWithLinksToFiles : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,13 +11,13 @@ namespace DAL.Migrations
                 name: "Address",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    State = table.Column<string>(maxLength: 64, nullable: true),
-                    City = table.Column<string>(maxLength: 64, nullable: true),
-                    Street = table.Column<string>(maxLength: 64, nullable: false),
-                    Number = table.Column<string>(maxLength: 64, nullable: false),
-                    Zip = table.Column<string>(maxLength: 64, nullable: true)
+                    State = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    City = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Zip = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,9 +28,9 @@ namespace DAL.Migrations
                 name: "UnitTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(maxLength: 64, nullable: true)
+                    Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,12 +41,12 @@ namespace DAL.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(maxLength: 64, nullable: false),
-                    Email = table.Column<string>(maxLength: 128, nullable: false),
-                    Password = table.Column<string>(maxLength: 256, nullable: false),
-                    IsAdmin = table.Column<bool>(nullable: false)
+                    Username = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,12 +57,12 @@ namespace DAL.Migrations
                 name: "Specifications",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
-                    Color = table.Column<int>(nullable: false),
-                    Note = table.Column<string>(maxLength: 1024, nullable: true),
-                    AddressId = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Color = table.Column<int>(type: "int", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
+                    AddressId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,9 +79,10 @@ namespace DAL.Migrations
                 name: "UnitGroups",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SpecificationId = table.Column<int>(nullable: false)
+                    SpecificationId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,19 +93,26 @@ namespace DAL.Migrations
                         principalTable: "Specifications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UnitGroups_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Units",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MaxCapacity = table.Column<int>(nullable: false),
-                    CurrentCapacity = table.Column<int>(nullable: false),
-                    UnitTypeId = table.Column<int>(nullable: false),
-                    SpecificationId = table.Column<int>(nullable: false),
-                    UnitGroupId = table.Column<int>(nullable: true)
+                    CurrentCapacity = table.Column<int>(type: "int", nullable: false),
+                    MaxCapacity = table.Column<int>(type: "int", nullable: false),
+                    UnitTypeId = table.Column<int>(type: "int", nullable: false),
+                    SpecificationId = table.Column<int>(type: "int", nullable: false),
+                    ContractLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitGroupId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -132,9 +141,9 @@ namespace DAL.Migrations
                 name: "Equipment",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UnitId = table.Column<int>(nullable: false)
+                    UnitId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -148,13 +157,36 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Photo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateTimeUploaded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UnitId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Photo_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EquipmentTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(maxLength: 64, nullable: true),
-                    EquipmentId = table.Column<int>(nullable: true)
+                    Type = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    EquipmentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -178,6 +210,11 @@ namespace DAL.Migrations
                 column: "EquipmentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Photo_UnitId",
+                table: "Photo",
+                column: "UnitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Specifications_AddressId",
                 table: "Specifications",
                 column: "AddressId");
@@ -186,6 +223,11 @@ namespace DAL.Migrations
                 name: "IX_UnitGroups_SpecificationId",
                 table: "UnitGroups",
                 column: "SpecificationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UnitGroups_UserId",
+                table: "UnitGroups",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Units_SpecificationId",
@@ -209,7 +251,7 @@ namespace DAL.Migrations
                 name: "EquipmentTypes");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Photo");
 
             migrationBuilder.DropTable(
                 name: "Equipment");
@@ -225,6 +267,9 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Specifications");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Address");

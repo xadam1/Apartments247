@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace ApartmentsConsoleApp
+namespace FrontendConsole
 {
-    static class T
+    static class Utils
     {
         public static (int i, T val)[] Enumerate<T>(System.Collections.Generic.IEnumerable<T> array)
         {
@@ -22,7 +20,7 @@ namespace ApartmentsConsoleApp
         {
             int result = 0;
             int bit = 1;
-            for (int i = s.Length - 1; i >= 0 ; i--)
+            for (int i = s.Length - 1; i >= 0; i--)
             {
                 if (s[i] == '1')
                 {
@@ -33,7 +31,7 @@ namespace ApartmentsConsoleApp
             return result;
         }
 
-        public static string FOD(string first, string second)
+        public static string FirstOrDefault(string first, string second)
         {
             return first.Length != 0 ? first : second;
         }
