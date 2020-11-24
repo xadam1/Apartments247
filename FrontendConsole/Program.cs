@@ -1,22 +1,12 @@
-﻿using DAL;
-
+﻿using System.Linq;
 namespace FrontendConsole
 {
     class Program
     {
         static void Main(string[] args)
         {
-            using (var apartmentsDbContext = new ApartmentsDbContext())
-            {
-
-            }
-            /*
-            // Launch app
-            //new ConsoleApp();
-            SqlConnection con = new SqlConnection(@"Data Source=cassiopeia.serveirc.com,49172;Initial Catalog=myDataBase;User ID=Apartments247;Password=IFofon5FFE;");
-            con.Open();
-            Console.WriteLine(con.State);
-            */
+            var engine = new BLL.Engine();
+            engine.Test();
         }
     }
 }

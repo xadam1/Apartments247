@@ -24,7 +24,7 @@ namespace Infrastructure
         public void Add(TEntity entity)
             => _context.Set<TEntity>().Add(entity);
                 
-        public async Task<TEntity> Get(int id) 
+        public async Task<TEntity> GetById(int id) 
             => await _context.Set<TEntity>().FindAsync(id);
 
         public async Task<IEnumerable<TEntity>> GetAll()

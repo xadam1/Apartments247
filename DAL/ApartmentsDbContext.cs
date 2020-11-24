@@ -1,17 +1,22 @@
-﻿using DAL.Models;
+﻿using System.Collections.Generic;
+using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
     public class ApartmentsDbContext : DbContext
     {
+        private readonly Dictionary<string, string> _connections = new Dictionary<string, string>()
+        {
+            {"localDb", @"data source=(localdb)\MSSQLLocalDB; initial catalog=ApartmentsDB; integrated security=SSPI"},
+            {"sharedServer", @"Data Source=cassiopeia.serveirc.com\SQLEXPRESS,1433; Initial Catalog = ApartmentsDB; Integrated Security = FALSE; User ID = Apartments247; password=Janči-je-naprostý-Somár"}
+        };
+
         private readonly string _connectionString;
-        
+
         public ApartmentsDbContext()
         {
-            // "data source=(localdb)\MSSQLLocalDB; initial catalog=ApartmentsDB; integrated security=SSPI"
-            _connectionString =
-                @"data source=(localdb)\MSSQLLocalDB; initial catalog=ApartmentsDB; integrated security=SSPI";
+            _connectionString = _connections["sharedServer"];
         }
 
         public DbSet<User> Users { get; set; }

@@ -1,4 +1,7 @@
-﻿using DAL;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using DAL;
 using DAL.Models;
 using Infrastructure;
 
@@ -7,11 +10,22 @@ namespace BLL
 {
     public class Engine
     {
-        /*
-        private Database database = new Database();
-        public User BLLGetUserByCredentials(string name, string password)
+        public void Test()
         {
-            return database.DalGetUserByCredentials(name, password);
+            using (var dbContext = new ApartmentsDbContext())
+            {
+                var tomci = dbContext.Users.FirstOrDefault(x=>x.Username=="Hotentot");
+                Console.WriteLine($"name: {tomci?.Username}\npass: {tomci?.Password}");
+            }
+
+            Console.ReadKey();
+        }
+
+        /*
+        //private Database database = new Database();
+        public async Task<User> BLLGetUserByCredentials(string name, string password)
+        {
+            
         }
 
         public DAL.Models.User[] BLLGetAllUsers()

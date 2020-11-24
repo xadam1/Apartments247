@@ -8,7 +8,7 @@ namespace Infrastructure
     {
         void Add(TEntity entity);
 
-        Task<TEntity> Get(int id);
+        Task<TEntity> GetById(int id);
 
         void Update(TEntity updatedEntity);
 
