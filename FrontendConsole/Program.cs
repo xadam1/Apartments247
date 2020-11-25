@@ -22,8 +22,13 @@ namespace FrontendConsole
 
         public ConsoleApp()
         {
+            // To speedup login
+            new DAL.ApartmentsDbContext();
+
             // Viz logický DFA
-            PromptStart();
+            //PromptStart();
+
+            PromptDefaultScreen(14);
         }
 
         private void Prompt((string name, Action act)[] options, string info)
@@ -113,72 +118,80 @@ namespace FrontendConsole
         
         private void PromptDefaultScreen(int userID)
         {
-            Prompt(new (string, Action)[] { ("List my flats", unimpl /*PromptGroups*/), ("Create new flat", unimpl), ("Search", unimpl), ("Show User Details", () => PromptShowUserDetails(userID)) }, "Your Account");
+            Prompt(new (string, Action)[] { ("List my flats", () => PromptGroups(userID)), ("Create new flat", unimpl), ("Search", unimpl), ("Show User Details", () => PromptShowUserDetails(userID)) }, "Your Account");
         }
-        /*
-        private void PromptGroups()
+        
+        private void PromptGroups(int userID)
         {
-            string[] groups = engine.BLLListGroups(user);
-            Prompt(T.Concat(T.Enumerate(groups).Select<(int i, string val), (string, Action)>(group => (group.val, () => PromptUnits(group.i))), new (string, Action)[] { }), "Your Groups");
+            (int id, string name)[] groupNames = engine.BLLListGroups(userID);
+            Prompt(Utils.Concat(Utils.Enumerate(groupNames).Select<(int i, (int id, string val) cont), (string, Action)>(group => (group.cont.val, () => PromptUnits(group.cont.id))), new (string, Action)[] { ("CreateGroup", unimpl) }), "Your Groups");
         }
-
-        private void PromptShowGroupDetails(int groupId)
+        
+        private void PromptShowGroupDetails(int groupID)
         {
-            unitGroup = engine.BLLGetGroupByID(groupId);
+            Specification spec = engine.BLLGetSPecificationByGroupID(groupID);
 
-            Console.WriteLine($"name: {unitGroup.Specification.Name}");
-            Console.WriteLine($"color: {unitGroup.Specification.Color}");
-            Console.WriteLine($"note: {unitGroup.Specification.Note}");
-            Console.WriteLine($"address: {unitGroup.Specification.Address}");
+            Console.WriteLine($"name: {spec.Name}");
+            Console.WriteLine($"color: {spec.Color}");
+            Console.WriteLine($"note: {spec.Note}");
+            PrintAddress(spec.Address);
 
-            Prompt(new (string, Action)[] { ("Change Group Details", () => PromptChangeGroupDetails()) }, "Group Details");
-        }
-
-        private void PromptChangeGroupDetails()
-        {
-            Prompt(new (string, Action)[] { ("Name", () => PromptSetGroupDetails(T.Binary("1000"))), ("Color", () => PromptSetGroupDetails(T.Binary("0100"))), ("Note", () => PromptSetGroupDetails(T.Binary("0010"))), ("Address", () => PromptSetGroupDetails(T.Binary("0001"))), ("All", () => PromptSetGroupDetails(T.Binary("1111"))) }, "Change Group Details");
+            Prompt(new (string, Action)[] { ("Change Group Details", () => PromptChangeGroupDetails(groupID)) }, "Group Details");
         }
 
-        private void PromptSetGroupDetails(int mode)
+        private void PrintAddress(Address address)
         {
-            if ((mode & T.Binary("1000")) != 0)
+            Console.WriteLine($"state: {address.State}");
+            Console.WriteLine($"city: {address.City}");
+            Console.WriteLine($"street: {address.Street}");
+            Console.WriteLine($"number: {address.Number}");
+            Console.WriteLine($"zip: {address.Zip}");
+        }
+        
+        private void PromptChangeGroupDetails(int groupID)
+        {
+            int addressID = engine.BLLGetAddressIDByGroupID(groupID);
+            Prompt(new (string, Action)[] { ("Name", () => PromptSetGroupDetails(groupID, Utils.Binary("1000"))), ("Color", () => PromptSetGroupDetails(groupID, Utils.Binary("0100"))), ("Note", () => PromptSetGroupDetails(groupID, Utils.Binary("0010"))), ("Address", () => PromptChangeAddress(addressID)), ("All", () => PromptSetGroupDetails(groupID, Utils.Binary("1111"))) }, "Change Group Details");
+        }
+        
+        private void PromptSetGroupDetails(int groupID, int mode)
+        {
+            Specification spec = engine.BLLGetSPecificationByGroupID(groupID);
+
+            if ((mode & Utils.Binary("1000")) != 0)
             {
                 Console.Write("name: ");
-                unitGroup.Specification.Name = Console.ReadLine();
+                spec.Name = Console.ReadLine();
             }
-            if ((mode & T.Binary("0100")) != 0)
+            if ((mode & Utils.Binary("0100")) != 0)
             {
-                int color = 0;
-                Console.Write("color: ");
-                if (!int.TryParse(Console.ReadLine(), out color))
-                {
-                    Console.WriteLine("You have to insert number");
-                }
-                else
-                {
-                    unitGroup.Specification.Color = color;
-                }
+                // TODO Color
             }
-            if ((mode & T.Binary("0010")) != 0)
+            if ((mode & Utils.Binary("0010")) != 0)
             {
                 Console.Write("note: ");
-                unitGroup.Specification.Note = Console.ReadLine();
-            }
-            if ((mode & T.Binary("0001")) != 0)
-            {
-                Console.Write("address: ");
-                unitGroup.Specification.Address = Console.ReadLine();
+                spec.Note = Console.ReadLine();
             }
 
-            engine.BLLChangeGroup(unitGroup);
+            engine.BLLChangeSpecification(spec);
         }
 
-        private void PromptUnits(int group)
+        private void PromptChangeAddress(int addressID)
         {
-            string[] units = null; // TODO
-            Prompt(T.Concat(T.Enumerate(units).Select<(int i, string val), (string, Action)>(unit => (unit.val, () => PromptUnits(unit.i))), new (string, Action)[] { ("Show Group Details", () => PromptShowGroupDetails(group)), ("Create Unit", unimpl) }), "Your Units");
+            // TODO
         }
 
+        private void PromptSetAddress(int addressID)
+        {
+            // TODO
+        }
+        
+        private void PromptUnits(int groupID)
+        {
+            (int, string)[] unitNames = engine.BLLListUnitsFromGroup(groupID);
+            Prompt(Utils.Concat(Utils.Enumerate(unitNames).Select<(int i, (int id, string val) cont), (string, Action)>(unit => (unit.cont.val, () => PromptUnits(unit.cont.id))), new (string, Action)[] { ("Show Group Details", () => PromptShowGroupDetails(groupID)), ("Create Unit", unimpl) }), "Your Units");
+        }
+        /*
         private void PromptUnit(int unit)
         {
             Prompt(new (string, Action)[] { ("Show Unit Details", () => PromptShowUnitDetails(unit)) }, "Unit Management");

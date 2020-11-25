@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Queries;
 
 namespace Infrastructure
 {

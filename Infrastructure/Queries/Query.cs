@@ -6,7 +6,7 @@ using DAL;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure
+namespace Infrastructure.Queries
 {
     public class Query<TEntity> where TEntity : BaseEntity
     {
@@ -18,10 +18,7 @@ namespace Infrastructure
             _query = dbContext.Set<TEntity>();
         }
 
-        /*public Query(IQueryable<TEntity> query)
-        {
-            _query = query;
-        }*/
+        public Query() { }
 
         public async Task<IEnumerable<TEntity>> ExecuteAsync()
             => await _query?.ToListAsync() ?? new List<TEntity>();

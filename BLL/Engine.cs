@@ -4,23 +4,13 @@ using System.Threading.Tasks;
 using DAL;
 using DAL.Models;
 using Infrastructure;
+using Infrastructure.Queries;
 
 
 namespace BLL
 {
     public class Engine
     {
-        public void Test()
-        {
-            using (var dbContext = new ApartmentsDbContext())
-            {
-                var tomci = dbContext.Users.FirstOrDefault(x=>x.Username=="Hotentot");
-                Console.WriteLine($"name: {tomci?.Username}\npass: {tomci?.Password}");
-            }
-
-            Console.ReadKey();
-        }
-
         public bool BLLCreateAccount(string name, string password, string email)
         {
             if (!new UserQuery(new ApartmentsDbContext()).UserWithNameExists(name))
@@ -44,27 +34,33 @@ namespace BLL
             return new Repository<User>(new ApartmentsDbContext()).GetById(userID).Result;
         }
 
+        public Specification BLLGetSPecificationByGroupID(int groupID)
+        {
+            int specID = new Repository<UnitGroup>(new ApartmentsDbContext()).GetById(groupID).Result.SpecificationId;
+            return new Repository<Specification>(new ApartmentsDbContext()).GetById(specID).Result;
+        }
+
         public void BLLChangeUser(User user)
         {
             new Repository<User>(new ApartmentsDbContext()).Update(user);
         }
 
+        public void BLLChangeSpecification(Specification spec)
+        {
+            new Repository<Specification>(new ApartmentsDbContext()).Update(spec);
+        }
+
+        public (int, string)[] BLLListGroups(int userID)
+        {
+            return new UnitGroupQuery(new ApartmentsDbContext()).FilterGroupsByUserID(userID).MapGroupsToIDsNames();
+        }
+
+        public (int, string)[] BLLListUnitsFromGroup(int groupID)
+        {
+            return new UnitQuery(new ApartmentsDbContext()).FilterUnitsByGroupID(groupID).MapUnitsToIDsNames();
+        }
+
         /*
-
-        public DAL.Models.User[] BLLGetAllUsers()
-        {
-            return database.DALGetAllUsers();
-        }
-
-        public string[] BLLListGroups(DAL.Models.User user)
-        {
-            return database.DALListGroups(user);
-        }
-
-        public DAL.Models.UnitGroup BLLGetGroupByID(int group)
-        {
-            return database.DALGetGroupByID(group);
-        }
 
         public void BLLChangeGroup(DAL.Models.UnitGroup unitGroup)
         {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System;
 
-namespace Infrastructure
+namespace Infrastructure.Queries
 {
     // Default view of user's unit groups
     public class UnitGroupsWithUsersWithSpecificationsQuery : Query<UnitGroup>
