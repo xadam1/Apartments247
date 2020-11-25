@@ -8,39 +8,52 @@ namespace Infrastructure
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApartmentsDbContext _dbContext;
-        
+
         // Tables
-        public IRepository<Address> Address { get; }
-        public IRepository<Equipment> Equipment { get; }
-        public IRepository<EquipmentType> EquipmentType { get; }
-        public IRepository<Specification> Specification { get; }
-        public IRepository<Unit> Unit { get; }
-        public IRepository<UnitGroup> UnitGroup { get; }
-        public IRepository<UnitType> UnitType { get; }
-        public IRepository<User> User { get; }
-        
+        public IRepository<Address> AddressRepository { get; }
+        public IRepository<Equipment> EquipmentRepository { get; }
+        public IRepository<EquipmentType> EquipmentTypeRepository { get; }
+        public IRepository<Specification> SpecificationRepository { get; }
+        public IRepository<Unit> UnitRepository { get; }
+        public IRepository<UnitGroup> UnitGroupRepository { get; }
+        public IRepository<UnitType> UnitTypeRepository { get; }
+        public IRepository<User> UserRepository { get; }
+
+        // Queries
+        public UnitGroupsWithUsersWithSpecificationsQuery UnitGroupsWithUsersWithSpecificationsQuery { get; }
+        public UnitGroupsWithUsersQuery UnitGroupsWithUsersQuery { get; }
+        public UserQuery UserQuery { get; }
+
+
         // Constructor
         public UnitOfWork()
         {
             _dbContext = new ApartmentsDbContext();
 
             // Initialization
-            Address = new Repository<Address>(_dbContext);
-            Equipment = new Repository<Equipment>(_dbContext);
-            EquipmentType = new Repository<EquipmentType>(_dbContext);
-            Specification = new Repository<Specification>(_dbContext);
-            Unit = new Repository<Unit>(_dbContext);
-            UnitGroup = new Repository<UnitGroup>(_dbContext);
-            UnitType = new Repository<UnitType>(_dbContext);
-            User = new Repository<User>(_dbContext);
+            AddressRepository = new Repository<Address>(_dbContext);
+            EquipmentRepository = new Repository<Equipment>(_dbContext);
+            EquipmentTypeRepository = new Repository<EquipmentType>(_dbContext);
+            SpecificationRepository = new Repository<Specification>(_dbContext);
+            UnitRepository = new Repository<Unit>(_dbContext);
+            UnitGroupRepository = new Repository<UnitGroup>(_dbContext);
+            UnitTypeRepository = new Repository<UnitType>(_dbContext);
+            UserRepository = new Repository<User>(_dbContext);
+
+            UnitGroupsWithUsersWithSpecificationsQuery = new UnitGroupsWithUsersWithSpecificationsQuery(_dbContext);
+            UnitGroupsWithUsersQuery = new UnitGroupsWithUsersQuery(_dbContext);
+            UserQuery = new UserQuery(_dbContext);
         }
 
 
-        public async Task CommitAsync() 
-            => await _dbContext.SaveChangesAsync();
+        public async Task CommitAsync()
+        {
+            await _dbContext.SaveChangesAsync();
+        }
 
-        
-        public void Dispose() 
-            => _dbContext.Dispose();
+        public void Dispose()
+        {
+            _dbContext.Dispose();
+        }
     }
 }

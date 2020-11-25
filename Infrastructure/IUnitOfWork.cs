@@ -8,19 +8,19 @@ namespace Infrastructure
     public interface IUnitOfWork : IDisposable
     {
         // Attributes
-        IRepository<Address> Address { get; }
-        IRepository<Equipment> Equipment { get; }
-        IRepository<EquipmentType> EquipmentType { get; }
-        IRepository<Specification> Specification { get; }
-        IRepository<Unit> Unit { get; }
-        IRepository<UnitGroup> UnitGroup { get; }
-        IRepository<UnitType> UnitType { get; }
-        IRepository<User> User { get; }
+        IRepository<Address> AddressRepository { get; }
+        IRepository<Equipment> EquipmentRepository { get; }
+        IRepository<EquipmentType> EquipmentTypeRepository { get; }
+        IRepository<Specification> SpecificationRepository { get; }
+        IRepository<Unit> UnitRepository { get; }
+        IRepository<UnitGroup> UnitGroupRepository { get; }
+        IRepository<UnitType> UnitTypeRepository { get; }
+        IRepository<User> UserRepository { get; }
 
         // Methods
         Task CommitAsync();
 
         // Queries
-
+        UnitGroupsWithUsersWithSpecificationsQuery UnitGroupsWithUsersWithSpecificationsQuery { get; }
     }
 }
