@@ -21,26 +21,39 @@ namespace BLL
             Console.ReadKey();
         }
 
-        /*
-        //private Database database = new Database();
-        public async Task<User> BLLGetUserByCredentials(string name, string password)
+        public bool BLLCreateAccount(string name, string password, string email)
         {
-            
+            if (!new UserQuery(new ApartmentsDbContext()).UserWithNameExists(name))
+            {
+                new Repository<User>(new ApartmentsDbContext())
+                    .Add(new User() { Username = name, Password = password, Email = email, IsAdmin = false });
+                return true;
+            }
+            return false;
         }
+
+
+        public (bool, int) BLLGetUserIDByCredentials(string name, string password)
+        {
+            User user = new UserQuery(new ApartmentsDbContext()).GetUserByCredentials(name, password).GetFirst();
+            return (user != null, user != null ? user.Id : 0);
+        }
+
+        public User GetUserByID(int userID)
+        {
+            return new Repository<User>(new ApartmentsDbContext()).GetById(userID).Result;
+        }
+
+        public void BLLChangeUser(User user)
+        {
+            new Repository<User>(new ApartmentsDbContext()).Update(user);
+        }
+
+        /*
 
         public DAL.Models.User[] BLLGetAllUsers()
         {
             return database.DALGetAllUsers();
-        }
-
-        public bool BLLCreateAccount(string name, string password, string email)
-        {
-            return database.DALCreateAccount(name, password, email);
-        }
-
-        public void BLLChangeUser(DAL.Models.User user)
-        {
-            database.DALChangeUser(user);
         }
 
         public string[] BLLListGroups(DAL.Models.User user)
