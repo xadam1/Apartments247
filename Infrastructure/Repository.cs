@@ -24,6 +24,7 @@ namespace Infrastructure
         public void Add(TEntity entity)
         {  
             _context.Set<TEntity>().Add(entity);
+            _context.SaveChanges();
         }
                 
         public async Task<TEntity> GetById(int id) 
@@ -36,6 +37,7 @@ namespace Infrastructure
         {
             _context.Set<TEntity>().Attach(updatedEntity);
             _context.Entry(updatedEntity).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public void Delete(TEntity entity)

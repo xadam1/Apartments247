@@ -5,9 +5,8 @@ namespace DAL.Models
 {
     public class Unit : BaseEntity
     {
-        public int UnitGroupId { get; set; }
-        public int CurrentCapacity { get; set; }
-        public int MaxCapacity { get; set; }
+        public int? CurrentCapacity { get; set; }
+        public int? MaxCapacity { get; set; }
 
         public int UnitTypeId { get; set; }
 
@@ -21,6 +20,10 @@ namespace DAL.Models
 
         public virtual ICollection<Photo> Photos { get; set; }
 
-        public string ContractLink { get; set; }
+        public string? ContractLink { get; set; }
+        public int UnitGroupId { get; set; }
+
+        [ForeignKey(nameof(UnitGroupId))]
+        public virtual UnitGroup UnitGroup { get; set; }
     }
 }

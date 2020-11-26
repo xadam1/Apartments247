@@ -10,10 +10,10 @@ namespace DAL.Models
         [MaxLength(128)]
         public string Name { get; set; }
 
-        public Color Color { get; set; }
+        public Color? Color { get; set; }
 
         [MaxLength(1024)]
-        public string Note { get; set; }
+        public string? Note { get; set; }
 
         public int AddressId { get; set; }
 

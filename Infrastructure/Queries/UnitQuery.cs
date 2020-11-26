@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using DAL.Models;
 using DAL;
+using Microsoft.Data.SqlClient;
 
 namespace Infrastructure.Queries
 {

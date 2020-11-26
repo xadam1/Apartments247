@@ -2,10 +2,18 @@
 {
     public enum Color
     {
+        Best,
         Black,
         Blue,
         Red,
         Green,
-        Orange
+        Orange,
+        Yellow,
+        Brown,
+        Purple,
+        Violet,
+        Salmon,
+        Pink,
+        Khaki
     }
 }

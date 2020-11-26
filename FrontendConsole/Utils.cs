@@ -33,7 +33,7 @@ namespace FrontendConsole
 
         public static string FirstOrDefault(string first, string second)
         {
-            return first.Length != 0 ? first : second;
+            return (first?.Length != 0) ? first : second;
         }
 
         public static T[] Concat<T>(System.Collections.Generic.IEnumerable<T> a, System.Collections.Generic.IEnumerable<T> b)

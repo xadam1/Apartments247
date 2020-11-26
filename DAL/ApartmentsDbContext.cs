@@ -12,7 +12,7 @@ namespace DAL
             { "sharedServer", @"Data Source=cassiopeia.serveirc.com\SQLEXPRESS,1433; Initial Catalog = ApartmentsDB; Integrated Security = FALSE; User ID = Apartments247; password=Janči-je-naprostý-Somár" }
         };
 
-        private readonly string _connectionString;
+        public readonly string _connectionString;
 
         public ApartmentsDbContext()
         {

@@ -2,12 +2,13 @@
 using System;
 using BLL;
 using DAL.Models;
+using DAL.Extras;
 
 namespace FrontendConsole
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             // Spuštění aplikace
             new ConsoleApp();
@@ -17,18 +18,13 @@ namespace FrontendConsole
     public class ConsoleApp
     {
 
-        private Engine engine = new Engine();
-        private Action unimpl = () => Console.WriteLine("Unimplemented");
+        private readonly Engine engine = new Engine();
+        private readonly Action unimpl = () => Console.WriteLine("Unimplemented");
 
         public ConsoleApp()
         {
-            // To speedup login
-            new DAL.ApartmentsDbContext();
-
             // Viz logický DFA
-            //PromptStart();
-
-            PromptDefaultScreen(14);
+            PromptStart();
         }
 
         private void Prompt((string name, Action act)[] options, string info)
@@ -78,7 +74,7 @@ namespace FrontendConsole
         
         private void PromptCreateAccount(bool advanced)
         {
-            (string name, string password, string email) = ("", "", "");
+            (string name, string password, string email) = (null, null, null);
 
             Console.WriteLine("Insert Details");
             Console.Write("name: ");
@@ -118,29 +114,39 @@ namespace FrontendConsole
         
         private void PromptDefaultScreen(int userID)
         {
-            Prompt(new (string, Action)[] { ("List my flats", () => PromptGroups(userID)), ("Create new flat", unimpl), ("Search", unimpl), ("Show User Details", () => PromptShowUserDetails(userID)) }, "Your Account");
+            Prompt(new (string, Action)[] { ("List my groups", () => PromptGroups(userID)), ("Search", unimpl), ("Show User Details", () => PromptShowUserDetails(userID)) }, "Your Account");
         }
         
         private void PromptGroups(int userID)
         {
             (int id, string name)[] groupNames = engine.BLLListGroups(userID);
-            Prompt(Utils.Concat(Utils.Enumerate(groupNames).Select<(int i, (int id, string val) cont), (string, Action)>(group => (group.cont.val, () => PromptUnits(group.cont.id))), new (string, Action)[] { ("CreateGroup", unimpl) }), "Your Groups");
+            Prompt(Utils.Concat(Utils.Enumerate(groupNames).Select<(int i, (int id, string val) cont), (string, Action)>(group => (group.cont.val, () => PromptUnits(group.cont.id))), new (string, Action)[] { ("CreateGroup", () => PromptCreateGroup(userID)) }), "Your Groups");
         }
         
         private void PromptShowGroupDetails(int groupID)
         {
-            Specification spec = engine.BLLGetSPecificationByGroupID(groupID);
+            void WriteDetails(int groupID)
+            {
+                Specification spec = engine.BLLGetGroupByID(groupID).Specification;
 
-            Console.WriteLine($"name: {spec.Name}");
-            Console.WriteLine($"color: {spec.Color}");
-            Console.WriteLine($"note: {spec.Note}");
-            PrintAddress(spec.Address);
+                Console.WriteLine($"name: {spec.Name}");
+                Console.WriteLine($"color: {spec.Color}");
+                Console.WriteLine($"note: {spec.Note}");
+                Console.WriteLine(ShortAddress(spec.Address));
+            }
 
-            Prompt(new (string, Action)[] { ("Change Group Details", () => PromptChangeGroupDetails(groupID)) }, "Group Details");
+            Prompt(new (string, Action)[] { ("Change Group Details", () => PromptChangeGroupDetails(groupID)) }, () => WriteDetails(groupID));
         }
 
-        private void PrintAddress(Address address)
+        private string ShortAddress(Address address)
         {
+            return $"address: {address.Street} {address.Number}, {Utils.FirstOrDefault(address.City, "*city not filled*")}";
+        }
+
+        private void PrintAddress(int addressID)
+        {
+            Address address = engine.BLLGetAddressByID(addressID);
+
             Console.WriteLine($"state: {address.State}");
             Console.WriteLine($"city: {address.City}");
             Console.WriteLine($"street: {address.Street}");
@@ -156,7 +162,7 @@ namespace FrontendConsole
         
         private void PromptSetGroupDetails(int groupID, int mode)
         {
-            Specification spec = engine.BLLGetSPecificationByGroupID(groupID);
+            Specification spec = engine.BLLGetGroupByID(groupID).Specification;
 
             if ((mode & Utils.Binary("1000")) != 0)
             {
@@ -165,7 +171,11 @@ namespace FrontendConsole
             }
             if ((mode & Utils.Binary("0100")) != 0)
             {
-                // TODO Color
+                (bool result, Color color) = ReadColor("color: ");
+                if (result)
+                {
+                    spec.Color = color;
+                }
             }
             if ((mode & Utils.Binary("0010")) != 0)
             {
@@ -178,112 +188,299 @@ namespace FrontendConsole
 
         private void PromptChangeAddress(int addressID)
         {
-            // TODO
+            Prompt(new (string, Action)[] { ("State", () => PromptSetAddress(addressID, Utils.Binary("10000"))), ("City", () => PromptSetAddress(addressID, Utils.Binary("01000"))), ("Street", () => PromptSetAddress(addressID, Utils.Binary("00100"))), ("Number", () => PromptSetAddress(addressID, Utils.Binary("00010"))), ("Zip", () => PromptSetAddress(addressID, Utils.Binary("00001"))), ("All", () => PromptSetAddress(addressID, Utils.Binary("11111"))) }, () => PrintAddress(addressID));
         }
 
-        private void PromptSetAddress(int addressID)
+        private void PromptSetAddress(int addressID, int mode)
         {
-            // TODO
+            Address address = engine.BLLGetAddressByID(addressID);
+
+            if ((mode & Utils.Binary("10000")) != 0)
+            {
+                Console.Write("State: ");
+                address.State = Console.ReadLine();
+            }
+            if ((mode & Utils.Binary("01000")) != 0)
+            {
+                Console.Write("City: ");
+                address.City = Console.ReadLine();
+            }
+            if ((mode & Utils.Binary("00100")) != 0)
+            {
+                Console.Write("Street: ");
+                address.Street = Console.ReadLine();
+            }
+            if ((mode & Utils.Binary("00010")) != 0)
+            {
+                Console.Write("Number: ");
+                address.Number = Console.ReadLine();
+            }
+            if ((mode & Utils.Binary("00001")) != 0)
+            {
+                Console.Write("Zip: ");
+                address.Zip = Console.ReadLine();
+            }
+
+            engine.BLLChangeAddress(address);
+        }
+
+        private void PromptCreateGroup(int userID)
+        {
+            Prompt(new (string, Action)[] { ("Fast", () => PromptNewGroup(userID, false)), ("Advanced", () => PromptNewGroup(userID, true)) }, "Fast or advanced?");
+        }
+
+        private void PromptNewGroup(int userID, bool advanced)
+        {
+            (string name, Color color, string note) = ("", 0, "");
+            (string state, string city, string street, string number, string zip) = ("", "", "", "", "");
+
+            Console.Write("name: ");
+            name = Console.ReadLine();
+
+            if (advanced)
+            {
+                (bool result, Color colorInput) = ReadColor("color: ");
+                if (result)
+                {
+                    color = colorInput;
+                }
+            }
+            if (advanced)
+            {
+                Console.Write("note: ");
+                note = Console.ReadLine();
+            }
+            if (advanced)
+            {
+                Console.Write("state: ");
+                state = Console.ReadLine();
+            }
+            if (advanced)
+            {
+                Console.Write("city: ");
+                city = Console.ReadLine();
+            }
+            Console.Write("street: ");
+            street = Console.ReadLine();
+
+            Console.Write("number: ");
+            number = Console.ReadLine();
+            if (advanced)
+            {
+                Console.Write("zip: ");
+                zip = Console.ReadLine();
+            }
+
+            engine.BLLCreateGroup(name, color, note, userID, state, city, street, number, zip);
         }
         
         private void PromptUnits(int groupID)
         {
             (int, string)[] unitNames = engine.BLLListUnitsFromGroup(groupID);
-            Prompt(Utils.Concat(Utils.Enumerate(unitNames).Select<(int i, (int id, string val) cont), (string, Action)>(unit => (unit.cont.val, () => PromptUnits(unit.cont.id))), new (string, Action)[] { ("Show Group Details", () => PromptShowGroupDetails(groupID)), ("Create Unit", unimpl) }), "Your Units");
+            Prompt(Utils.Concat(Utils.Enumerate(unitNames).Select<(int i, (int id, string val) cont), (string, Action)>(unit => (unit.cont.val, () => PromptUnit(unit.cont.id))), new (string, Action)[] { ("Show Group Details", () => PromptShowGroupDetails(groupID)), ("Create Unit", () => PromptCreateUnit(groupID)) }), "Your Units");
         }
-        /*
-        private void PromptUnit(int unit)
+        
+        private void PromptUnit(int unitID)
         {
-            Prompt(new (string, Action)[] { ("Show Unit Details", () => PromptShowUnitDetails(unit)) }, "Unit Management");
+            Prompt(new (string, Action)[] { ("Show Unit Details", () => PromptShowUnitDetails(unitID)) }, "Unit Management");
+        }
+        
+        private void PromptShowUnitDetails(int unitId)
+        {
+            void WriteDetails(int unitID)
+            {
+                Unit unit = engine.BLLGetUnitByID(unitId);
+
+                Console.WriteLine($"name: {unit.Specification.Name}");
+                Console.WriteLine($"color: {unit.Specification.Color}");
+                Console.WriteLine($"note: {unit.Specification.Note}");
+                Console.WriteLine(ShortAddress(unit.Specification.Address));
+                Console.WriteLine($"current capacity: {unit.CurrentCapacity}");
+                Console.WriteLine($"max capacity: {unit.MaxCapacity}");
+                Console.WriteLine($"type: {unit.Type.Type}");
+            }
+
+            Prompt(new (string, Action)[] { ("Change Unit Details", () => PromptChangeUnitDetails(unitId)) }, () => WriteDetails(unitId));
+        }
+        
+        private void PromptChangeUnitDetails(int unitID)
+        {
+            int addressID = engine.BLLGetAddressIDByUnitID(unitID);
+            Prompt(new (string, Action)[] { ("Name", () => PromptSetUnitDetails(unitID, Utils.Binary("100000"))), ("Color", () => PromptSetUnitDetails(unitID, Utils.Binary("010000"))), ("Note", () => PromptSetUnitDetails(unitID, Utils.Binary("001000"))), ("Address", () => PromptChangeAddress(addressID)), ("Current Capacity", () => PromptSetUnitDetails(unitID, Utils.Binary("000100"))), ("Max Capacity", () => PromptSetUnitDetails(unitID, Utils.Binary("000010"))), ("Type", () => PromptSetUnitDetails(unitID, Utils.Binary("000001"))), ("All", () => PromptSetUnitDetails(unitID, Utils.Binary("111111"))) }, "Change Unit Details");
         }
 
-        public void PromptShowUnitDetails(int unitId)
+
+        private (bool, Color) ReadColor(string prompt)
         {
-            unit = engine.BLLGetUnitByID(unitId);
-
-            Console.WriteLine($"name: {unit.Name}");
-            Console.WriteLine($"current capacity: {unit.CurrentCapacity}");
-            Console.WriteLine($"max capacity: {unit.MaxCapacity}");
-            Console.WriteLine($"type: {unit.UnitTypeId}");
-
-            Prompt(new (string, Action)[] { ("Change Unit Details", unimpl), (("Delete Unit", PromptChangeUnitDetails)) }, "Unit Details");
+            Console.Write(prompt);
+            if (Enum.TryParse(Console.ReadLine(), out Color color))
+            {
+                return (true, color);
+            } else
+            {
+                Console.WriteLine("You have to submit valid color");
+                return (false, 0);
+            }
+        }
+        private (bool, int) ReadNumber(string prompt)
+        {
+            Console.Write(prompt);
+            if (int.TryParse(Console.ReadLine(), out int capacity))
+            {
+                return (true, capacity);
+            }
+            else
+            {
+                Console.WriteLine("You have to insert number");
+                return (false, -1);
+            }
         }
 
-        public void PromptChangeUnitDetails()
+        private int ReadNumberOrDefault(int def=-1)
         {
-            Prompt(new (string, Action)[] { ("Name", () => PromptSetUnitDetails(T.Binary("1000"))), ("Current Capacity", () => PromptSetUnitDetails(T.Binary("0100"))), ("Max Capacity", () => PromptSetUnitDetails(T.Binary("0010"))), ("Type", () => PromptSetUnitDetails(T.Binary("0001"))), ("All", () => PromptSetUnitDetails(T.Binary("1111"))) }, "Change Unit Details");
+            int.TryParse(Console.ReadLine(), out def);
+            return def;
         }
-
-        public void PromptSetUnitDetails(int mode)
+        private void PromptSetUnitDetails(int unitID, int mode)
         {
-            int capacity = 0;
-            if ((mode & T.Binary("1000")) != 0)
+            Unit unit = engine.BLLGetUnitByID(unitID);
+            Specification spec = unit.Specification;
+
+            if ((mode & Utils.Binary("100000")) != 0)
             {
                 Console.Write("name: ");
-                unit.Name = Console.ReadLine();
+                spec.Name = Console.ReadLine();
             }
-            if ((mode & T.Binary("0100")) != 0)
+            if ((mode & Utils.Binary("010000")) != 0)
             {
-                Console.Write("current capacity: ");
-                if (int.TryParse(Console.ReadLine(), out capacity))
+                (bool result, Color color) = ReadColor("color: ");
+                if (result)
+                {
+                    spec.Color = color;
+                }
+            }
+            if ((mode & Utils.Binary("001000")) != 0)
+            {
+                Console.Write("note: ");
+                spec.Note = Console.ReadLine();
+            }
+            if ((mode & Utils.Binary("000100")) != 0)
+            {
+                (bool result, int capacity) = ReadNumber("current capacity: ");
+                if (result)
                 {
                     unit.CurrentCapacity = capacity;
                 }
-                else
-                {
-                    Console.WriteLine("Capacity must be number");
-                }
             }
-            if ((mode & T.Binary("0010")) != 0)
+            if ((mode & Utils.Binary("000010")) != 0)
             {
-                Console.Write("max capacity: ");
-                if (int.TryParse(Console.ReadLine(), out capacity))
+                (bool result, int capacity) = ReadNumber("max capacity: ");
+                if (result)
                 {
                     unit.MaxCapacity = capacity;
                 }
-                else
-                {
-                    Console.WriteLine("Capacity must be number");
-                }
             }
-            if ((mode & T.Binary("0001")) != 0)
+            if ((mode & Utils.Binary("000001")) != 0)
             {
-                Console.Write("type: ");
-                if (int.TryParse(Console.ReadLine(), out capacity))
+                (bool result, UnitType type) = ReadUnitType();
+                if (result)
                 {
-                    unit.UnitTypeId = capacity;
-                }
-                else
-                {
-                    Console.WriteLine("Type must be number");
+                    unit.UnitTypeId = type.Id;
+                    unit.Type = type;
                 }
             }
 
             engine.BLLChangeUnit(unit);
+            engine.BLLChangeSpecification(spec);
         }
-        */
+
+        private (bool, UnitType) ReadUnitType()
+        {
+            Console.Write("type: ");
+            string typeName = Console.ReadLine();
+            (bool exists, UnitType type) = engine.BLLGetTypeByName(typeName);
+            if (exists)
+            {
+                return (exists, type);
+            }
+            else
+            {
+                Console.WriteLine("Submitted type doesnt exist");
+                return (false, null);
+            }
+        }
+
+        private void PromptCreateUnit(int groupID)
+        {
+            Prompt(new (string, Action)[] { ("Fast", () => PromptNewUnit(groupID, false)), ("Advanced", () => PromptNewUnit(groupID, true)) }, "Fast or Advanced?");
+        }
+
+        private void PromptNewUnit(int groupID, bool advanced)
+        {
+            (int curCapacity, int maxCapacity, string name, Color color, string note, int typeID) = (0, 0, "", 0, "", 0);
+
+            Console.Write("name: ");
+            name = Console.ReadLine();
+
+            if (advanced)
+            {
+                Console.Write("current capacity: ");
+                curCapacity = ReadNumberOrDefault();
+            }
+
+            if (advanced)
+            {
+                Console.Write("max capacity: ");
+                maxCapacity = ReadNumberOrDefault();
+            }
+
+            if (advanced)
+            {
+                (bool result1, Color colorRead) = ReadColor("color: ");
+                if (result1)
+                {
+                    color = colorRead;
+                }
+            }
+            if (advanced)
+            {
+                Console.Write("note: ");
+                note = Console.ReadLine();
+            }
+
+            (bool result2, UnitType type) = ReadUnitType();
+            if (result2)
+            {
+                typeID = type.Id;
+            }
+
+            engine.BLLCreateUnit(curCapacity, maxCapacity, name, color, note, typeID, groupID);
+        }
+
         private void PromptShowUserDetails(int userID)
         {
-            void WriteDetails(User user)
+            void WriteDetails(int userID)
             {
+                User user = engine.GetUserByID(userID);
+
                 Console.WriteLine($"name: {user.Username}");
                 Console.WriteLine($"password: {user.Password}");
                 Console.WriteLine($"email: {(user.Email.Length != 0 ? user.Email : "*not filled*")}");
                 Console.WriteLine($"admin: {(user.IsAdmin ? "Yes" : "No")}");
             }
 
+            Prompt(new (string, Action)[] { ("Change User Details", () => PromptChangeUserDetails(userID)) }, () => WriteDetails(userID));
+        }
+        
+        private void PromptChangeUserDetails(int userID)
+        {
+            Prompt(new (string, Action)[] { ("Name", () => PromptSetUserDetails(userID, Utils.Binary("100"))), ("Password", () => PromptSetUserDetails(userID, Utils.Binary("010"))), ("Email", () => PromptSetUserDetails(userID, Utils.Binary("001"))), ("All", () => PromptSetUserDetails(userID, Utils.Binary("111"))) }, "Details Change");
+        }
+        
+        private void PromptSetUserDetails(int userID, int mode)
+        {
             User user = engine.GetUserByID(userID);
 
-            Prompt(new (string, Action)[] { ("Change User Details", () => PromptChangeUserDetails(user)) }, () => WriteDetails(user));
-        }
-        
-        private void PromptChangeUserDetails(User user)
-        {
-            Prompt(new (string, Action)[] { ("Name", () => PromptSetUserDetails(user, Utils.Binary("100"))), ("Password", () => PromptSetUserDetails(user, Utils.Binary("010"))), ("Email", () => PromptSetUserDetails(user, Utils.Binary("001"))), ("All", () => PromptSetUserDetails(user, Utils.Binary("111"))) }, "Details Change");
-        }
-        
-        private void PromptSetUserDetails(User user, int mode)
-        {
             if ((mode & Utils.Binary("100")) != 0)
             {
                 Console.Write("New Userame: ");
