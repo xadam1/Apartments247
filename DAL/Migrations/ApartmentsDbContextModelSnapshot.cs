@@ -133,7 +133,7 @@ namespace DAL.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Color")
+                    b.Property<int?>("Color")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -162,16 +162,16 @@ namespace DAL.Migrations
                     b.Property<string>("ContractLink")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CurrentCapacity")
+                    b.Property<int?>("CurrentCapacity")
                         .HasColumnType("int");
 
-                    b.Property<int>("MaxCapacity")
+                    b.Property<int?>("MaxCapacity")
                         .HasColumnType("int");
 
                     b.Property<int>("SpecificationId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UnitGroupId")
+                    b.Property<int>("UnitGroupId")
                         .HasColumnType("int");
 
                     b.Property<int>("UnitTypeId")
@@ -300,9 +300,11 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.UnitGroup", null)
+                    b.HasOne("DAL.Models.UnitGroup", "UnitGroup")
                         .WithMany("Units")
-                        .HasForeignKey("UnitGroupId");
+                        .HasForeignKey("UnitGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DAL.Models.UnitType", "Type")
                         .WithMany()
@@ -313,6 +315,8 @@ namespace DAL.Migrations
                     b.Navigation("Specification");
 
                     b.Navigation("Type");
+
+                    b.Navigation("UnitGroup");
                 });
 
             modelBuilder.Entity("DAL.Models.UnitGroup", b =>

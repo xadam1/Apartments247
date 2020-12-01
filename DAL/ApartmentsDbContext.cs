@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using DAL.Extras;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +14,11 @@ namespace DAL
             { "sharedServer", @"Data Source=cassiopeia.serveirc.com\SQLEXPRESS,1433; Initial Catalog = ApartmentsDB; Integrated Security = FALSE; User ID = Apartments247; password=Janči-je-naprostý-Somár" }
         };
 
-        public readonly string _connectionString;
+        private readonly string _connectionString;
 
         public ApartmentsDbContext()
         {
-            _connectionString = _connections["sharedServer"];
+            _connectionString = _connections["localDb"];
         }
 
         public DbSet<User> Users { get; set; }
@@ -31,12 +33,56 @@ namespace DAL
 
         public DbSet<Equipment> Equipment { get; set; }
 
-        public DbSet<EquipmentType> EquipmentTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString)
             .UseLazyLoadingProxies();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Specification
+            modelBuilder.Entity<Specification>()
+                .HasOne(specification => specification.Address)
+                .WithOne()
+                .HasForeignKey<Specification>(specification => specification.AddressId);
+
+
+            // Unit
+            modelBuilder.Entity<Unit>()
+                .HasOne(unit => unit.UnitType)
+                .WithMany(unitType => unitType.Units)
+                .HasForeignKey(unit => unit.UnitTypeId);
+
+            modelBuilder.Entity<Unit>()
+                .HasMany(unit => unit.AvailableEquipment)
+                .WithMany(equipment => equipment.Units)
+                .UsingEntity(j => j.ToTable("UnitEquipment"));
+
+
+            // UnitGroup
+            modelBuilder.Entity<UnitGroup>()
+                .HasOne(unitGroup => unitGroup.User)
+                .WithMany(user => user.UnitGroups)
+                .HasForeignKey(unitGroup => unitGroup.UserId);
+
+            modelBuilder.Entity<UnitGroup>()
+                .HasOne(unitGroup => unitGroup.Specification)
+                .WithOne()
+                .HasForeignKey<UnitGroup>(unitGroup => unitGroup.SpecificationId);
+
+            modelBuilder.Entity<UnitGroup>()
+                .HasMany(unitGroup => unitGroup.Units)
+                .WithMany(unitGroup => unitGroup.UnitGroups);
+
+
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+            modelBuilder.Seed();
         }
     }
 }

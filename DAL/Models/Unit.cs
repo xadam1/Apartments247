@@ -11,7 +11,7 @@ namespace DAL.Models
         public int UnitTypeId { get; set; }
 
         [ForeignKey(nameof(UnitTypeId))]
-        public virtual UnitType Type { get; set; }
+        public virtual UnitType UnitType { get; set; }
 
         public int SpecificationId { get; set; }
 
@@ -20,10 +20,11 @@ namespace DAL.Models
 
         public virtual ICollection<Photo> Photos { get; set; }
 
-        public string? ContractLink { get; set; }
-        public int UnitGroupId { get; set; }
+        public virtual ICollection<Equipment> AvailableEquipment { get; set; }
 
-        [ForeignKey(nameof(UnitGroupId))]
-        public virtual UnitGroup UnitGroup { get; set; }
+        public virtual ICollection<UnitGroup> UnitGroups { get; set; }
+
+#nullable enable
+        public string? ContractLink { get; set; }
     }
 }

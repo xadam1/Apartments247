@@ -18,7 +18,8 @@ namespace Infrastructure.Queries
 
         public UnitQuery FilterUnitsByGroupID(int groupID)
         {
-            return new UnitQuery(_query.Where(unit => unit.UnitGroupId == groupID));
+            _query = _query.Where(unit => unit.UnitGroupId == groupID);
+            return this;
         }
 
         public (int, string)[] MapUnitsToIDsNames()

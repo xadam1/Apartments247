@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models
 {
     public class Equipment : BaseEntity
     {
-        public int UnitId { get; set; }
+        public virtual ICollection<Unit> Units { get; set; }
 
-        [ForeignKey(nameof(UnitId))]
-        public virtual Unit Unit { get; set; }
-
-        public virtual ICollection<EquipmentType> AvailableEquipment { get; set; }
+        [MaxLength(64)]
+        public string Type { get; set; }
     }
 }

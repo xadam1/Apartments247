@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using DAL;
+﻿using DAL;
 using DAL.Models;
 using Infrastructure;
 using Infrastructure.Queries;

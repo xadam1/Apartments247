@@ -11,9 +11,10 @@ namespace DAL.Models
         [MaxLength(512)]
         public string Path { get; set; }
 
-        [MaxLength(256)]
-        public string Description { get; set; }
-
         public DateTime DateTimeUploaded { get; set; }
+
+#nullable enable
+        [MaxLength(256)]
+        public string? Description { get; set; }
     }
 }

@@ -18,7 +18,8 @@ namespace Infrastructure.Queries
         public UnitTypeQuery(ApartmentsDbContext context) : base(context) { }
         public UnitTypeQuery FilterByName(string name)
         {
-            return new UnitTypeQuery(_query.Where(type => type.Type == name));
+            _query = _query.Where(type => type.Type == name);
+            return this;
         }
     }
 }

@@ -15,17 +15,20 @@ namespace Infrastructure.Queries
 
         public UserQuery GetUserByName(string name)
         {
-            return new UserQuery(_query.Where(user => user.Username == name));
+            _query = _query.Where(user => user.Username == name);
+            return this;
         }
 
         public UserQuery GetUserByPassword(string password)
         {
-            return new UserQuery(_query.Where(user => user.Password == password));
+            _query = _query.Where(user => user.Password == password);
+            return this;
         }
 
         public UserQuery GetUserByCredentials(string name, string password)
         {
-            return GetUserByName(name).GetUserByPassword(password);
+            GetUserByName(name).GetUserByPassword(password);
+            return this;
         }
 
         public bool UserWithNameExists(string name)

@@ -18,13 +18,13 @@ namespace Infrastructure.Queries
 
         public UnitGroupQuery FilterGroupsByUserID(int userID)
         {
-            return new UnitGroupQuery(_query.Where(group => group.UserId == userID));
+            _query = _query.Where(group => group.UserId == userID);
+            return this;
         }
 
         public (int, string)[] MapGroupsToIDsNames()
         {
-            var x = _query.ToArray().Select(group => (group.Id, group.Specification.Name)).ToArray();
-            return x;
+            return _query.ToArray().Select(group => (group.Id, group.Specification.Name)).ToArray();
         }
     }
 }
