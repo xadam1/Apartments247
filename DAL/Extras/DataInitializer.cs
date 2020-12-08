@@ -238,7 +238,7 @@ namespace DAL.Extras
                     Id = 7,
                     Name = "Tomčiho chata",
                     Color = Color.Orange,
-                    Note = "Tady Vojta zbou",
+                    Note = "Tady bylo vyhuleno mnoho trávy",
                     AddressId = 7
                 },
                 new Specification()
