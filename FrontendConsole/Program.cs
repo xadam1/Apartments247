@@ -16,7 +16,7 @@ namespace FrontendConsole
     }
 
     public class ConsoleApp
-    {
+    {/*
 
         private readonly Engine engine = new Engine();
         private readonly Action unimpl = () => Console.WriteLine("Unimplemented");
@@ -498,7 +498,7 @@ namespace FrontendConsole
             }
 
             engine.BLLChangeUser(user);
-        }
+        }*/
     }
 }
 

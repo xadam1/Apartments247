@@ -7,6 +7,6 @@ namespace BLL.DTOs
     {
         public Unit Unit { get; set; }
 
-        public ICollection<EquipmentType> AvailableEquipment { get; set; }
+        // public ICollection<EquipmentType> AvailableEquipment { get; set; }
     }
 }

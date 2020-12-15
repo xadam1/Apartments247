@@ -9,7 +9,7 @@ namespace BLL
 {
     public class Engine
     {
-        public (bool, int) BLLGetUserIDByCredentials(string name, string password)
+        /*public (bool, int) BLLGetUserIDByCredentials(string name, string password)
         {
             User user = new UserQuery(new ApartmentsDbContext()).GetUserByCredentials(name, password).GetFirst();
             return (user != null, user != null ? user.Id : 0);
@@ -136,6 +136,6 @@ namespace BLL
         {
             new Repository<User>(new ApartmentsDbContext()).Update(user);
         }
-        #endregion
+        #endregion*/
     }
 }

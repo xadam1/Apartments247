@@ -13,7 +13,6 @@ namespace Infrastructure
         // Tables
         public IRepository<Address> AddressRepository { get; }
         public IRepository<Equipment> EquipmentRepository { get; }
-        public IRepository<EquipmentType> EquipmentTypeRepository { get; }
         public IRepository<Specification> SpecificationRepository { get; }
         public IRepository<Unit> UnitRepository { get; }
         public IRepository<UnitGroup> UnitGroupRepository { get; }
@@ -34,7 +33,6 @@ namespace Infrastructure
             // Initialization
             AddressRepository = new Repository<Address>(_dbContext);
             EquipmentRepository = new Repository<Equipment>(_dbContext);
-            EquipmentTypeRepository = new Repository<EquipmentType>(_dbContext);
             SpecificationRepository = new Repository<Specification>(_dbContext);
             UnitRepository = new Repository<Unit>(_dbContext);
             UnitGroupRepository = new Repository<UnitGroup>(_dbContext);

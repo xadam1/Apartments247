@@ -11,7 +11,6 @@ namespace Infrastructure
         // Attributes
         IRepository<Address> AddressRepository { get; }
         IRepository<Equipment> EquipmentRepository { get; }
-        IRepository<EquipmentType> EquipmentTypeRepository { get; }
         IRepository<Specification> SpecificationRepository { get; }
         IRepository<Unit> UnitRepository { get; }
         IRepository<UnitGroup> UnitGroupRepository { get; }
