@@ -2,7 +2,6 @@
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System;
 
 namespace Infrastructure.Queries
 {
@@ -23,14 +22,9 @@ namespace Infrastructure.Queries
 
         public UnitGroupsWithUsersWithSpecificationsQuery OrderByUnitGroupsName(bool isAscending = true)
         {
-            if (isAscending)
-            {
-                _query = _query.OrderBy(unitGroup => unitGroup.Specification.Name);
-            }
-            else
-            {
-                _query = _query.OrderByDescending(unitGroup => unitGroup.Specification.Name);
-            }
+            _query = isAscending ?
+                _query.OrderBy(unitGroup => unitGroup.Specification.Name)
+                : _query.OrderByDescending(unitGroup => unitGroup.Specification.Name);
             return this;
         }
     }

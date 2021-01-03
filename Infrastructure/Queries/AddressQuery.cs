@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+﻿using DAL;
+using DAL.Models;
 
 namespace Infrastructure.Queries
 {
-    public class AddressQuery
+    public class AddressQuery : Query<Address>
     {
-        // Useless shit...
+        public AddressQuery(ApartmentsDbContext dbContext) : base(dbContext)
+        {
+        }
     }
 }

@@ -12,9 +12,10 @@ namespace Infrastructure.Queries
             _query = _query.Include(unitGroup => unitGroup.User);
         }
 
-        public void FilterByUserId(int userId)
+        public UnitGroupsWithUsersQuery FilterByUserId(int userId)
         {
             _query = _query.Where(unitGroup => unitGroup.UserId == userId);
+            return this;
         }
     }
 }

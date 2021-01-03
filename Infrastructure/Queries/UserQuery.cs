@@ -8,9 +8,9 @@ namespace Infrastructure.Queries
     {
         public UserQuery(ApartmentsDbContext dbContext) : base(dbContext) { }
 
-        public UserQuery(IQueryable<User> query)
+        public UserQuery GetAllUsers()
         {
-            _query = query;
+            return this;
         }
 
         public UserQuery GetUserByName(string name)
