@@ -82,7 +82,8 @@ namespace DAL
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
-            modelBuilder.Seed();
+            //TODO Vojta
+            //modelBuilder.Seed();
         }
     }
 }
