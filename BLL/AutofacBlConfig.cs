@@ -14,16 +14,12 @@ namespace BLL
             builder.RegisterModule(new AutofacInfrastructureConfig());
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == "Bussiness.QueryObjects")
-                .InstancePerDependency();
-
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == "Bussiness.Services")
+                .Where(t => t.Namespace == "BLL.Services")
                 .As(t => t.GetInterfaces().FirstOrDefault(i => i.Name == "I" + t.Name))
                 .InstancePerDependency();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == "Bussiness.Facades")
+                .Where(t => t.Namespace == "BLL.Facades")
                 .As(t => t.GetInterfaces().FirstOrDefault(i => i.Name == "I" + t.Name))
                 .InstancePerDependency();
 
@@ -39,17 +35,12 @@ namespace BLL
             builder.RegisterModule(new AutofacInfrastructureConfig());
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == "Bussiness.QueryObjects")
-                .AsSelf()
-                .InstancePerDependency();
-
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == "Bussiness.Services")
+                .Where(t => t.Namespace == "BLL.Services")
                 .As(t => t.GetInterfaces().FirstOrDefault(i => i.Name == "I" + t.Name))
                 .InstancePerDependency();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == "Bussiness.Facades")
+                .Where(t => t.Namespace == "BLL.Facades")
                 .As(t => t.GetInterfaces().FirstOrDefault(i => i.Name == "I" + t.Name))
                 .InstancePerDependency();
 
