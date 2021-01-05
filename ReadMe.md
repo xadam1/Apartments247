@@ -31,11 +31,8 @@ Na webovém portálu si uživatel může založit a spravovat účet. Kromě ná
         - počet volných/obsazených bytů
     - Vyhledávat námjce podle jména, č. bytu, rod. č., ...
     - Administrátorské funkce
-        - dávat běžným uživatelům měkké a tvrdé bany
-        - mazat uživatelský obsah, který nesplňuje zásady používání webu
         - vytvářet nové kategorie bytových a nebytových jednotek
         - přidávat vlastnosti, které lze o jednotkách ukládat
-        - udělovat výjimky z limitů na maximální objem uložených dat
         - procházet přehledy bytů
 
 
