@@ -9,12 +9,12 @@ namespace DAL.Models
 
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
-        
+
         public int SpecificationId { get; set; }
-        
+
         [ForeignKey(nameof(SpecificationId))]
         public virtual Specification Specification { get; set; }
-        
+
         public virtual ICollection<Unit> Units { get; set; }
     }
 }

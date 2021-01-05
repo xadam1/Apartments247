@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using DAL.Models;
-using DAL.Extras;
+﻿using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Extras
 {
@@ -9,7 +8,6 @@ namespace DAL.Extras
         public static void Seed(this ModelBuilder builder)
         {
             #region Address            
-            // Address
             builder.Entity<Address>().HasData
             (
                 new Address()
@@ -70,7 +68,6 @@ namespace DAL.Extras
             #endregion
 
             #region Equipment
-            // Equipment
             builder.Entity<Equipment>().HasData
             (
                 new Equipment()
@@ -125,9 +122,8 @@ namespace DAL.Extras
                 }
             );
             #endregion
-            
+
             #region Photo
-            // Photo
             builder.Entity<Photo>().HasData
             (
                 new Photo()
@@ -182,7 +178,6 @@ namespace DAL.Extras
             #endregion
 
             #region Specification
-            // Specification
             builder.Entity<Specification>().HasData
             (
                 new Specification()
@@ -293,7 +288,6 @@ namespace DAL.Extras
             #endregion
 
             #region UnitGroups
-            // UnitGroups
             builder.Entity<UnitGroup>().HasData
             (
                 // Tomčiho majetek
@@ -513,7 +507,7 @@ namespace DAL.Extras
                 }
             );
             #endregion
-            
+
             // Unit With Equipment
             //builder.Entity<Unit>()
             //    .HasData();
