@@ -1,4 +1,4 @@
-﻿namespace BLL
+﻿namespace BLL.DTOs
 {
     public class UserShowDTO
     {
