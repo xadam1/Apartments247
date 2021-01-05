@@ -1,0 +1,20 @@
+﻿@model MVC.Models.ListGroupsModel
+
+@{
+    var groups = Model.Groups;
+}
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Color</th>
+        <th>Note</th>
+    </tr>
+    @foreach (var group in groups)
+    {
+        <tr>
+            <td>@group.Specification.Name</td>
+            <td>@group.Specification.Color</td>
+            <td>@group.Specification.Note</td>
+        </tr>
+    }
+ </table>

@@ -11,7 +11,7 @@ namespace BLL
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterModule(new AutofacInfrastructureConfig());
+            //builder.RegisterModule(new AutofacInfrastructureConfig());
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(t => t.Namespace == "BLL.Services")
@@ -32,7 +32,7 @@ namespace BLL
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterModule(new AutofacInfrastructureConfig());
+            //builder.RegisterModule(new AutofacInfrastructureConfig());
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(t => t.Namespace == "BLL.Services")

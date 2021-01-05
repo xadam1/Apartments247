@@ -31,10 +31,11 @@ namespace BLL.Services
 
         public async Task<UserShowDTO> GetUserAccordingToEmailAsync(string email)
         {
-            var query = _unitOfWork.UserQuery.GetUserByEmail(email);
+            /*var query = _unitOfWork.UserQuery.GetUserByEmail(email);
             var result = await query.ExecuteAsync();
             var user = result.First();
-            return _mapper.Map<UserShowDTO>(user);
+            return _mapper.Map<UserShowDTO>(user);*/
+            return null;
         }
 
         public async Task<UserShowDTO> AuthorizeUserAsync(UserLoginDTO login)

@@ -17,7 +17,7 @@ namespace DAL
 
         public ApartmentsDbContext()
         {
-            _connectionString = _connections["localDb"];
+            _connectionString = _connections["sharedServer"];
         }
 
         public DbSet<User> Users { get; set; }
