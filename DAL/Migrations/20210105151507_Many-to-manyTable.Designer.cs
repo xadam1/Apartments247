@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApartmentsDbContext))]
-    partial class ApartmentsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210105151507_Many-to-manyTable")]
+    partial class ManytomanyTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,17 +152,12 @@ namespace DAL.Migrations
                     b.Property<int>("SpecificationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UnitGroupId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UnitTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SpecificationId");
-
-                    b.HasIndex("UnitGroupId");
 
                     b.HasIndex("UnitTypeId");
 
@@ -204,6 +201,21 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UnitTypes");
+                });
+
+            modelBuilder.Entity("DAL.Models.UnitUnitGroup", b =>
+                {
+                    b.Property<int>("UnitId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitGroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UnitId", "UnitGroupId");
+
+                    b.HasIndex("UnitGroupId");
+
+                    b.ToTable("UnitUnitGroup");
                 });
 
             modelBuilder.Entity("DAL.Models.User", b =>
@@ -278,12 +290,6 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.UnitGroup", "UnitGroup")
-                        .WithMany("Units")
-                        .HasForeignKey("UnitGroupId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("DAL.Models.UnitType", "UnitType")
                         .WithMany("Units")
                         .HasForeignKey("UnitTypeId")
@@ -291,8 +297,6 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Specification");
-
-                    b.Navigation("UnitGroup");
 
                     b.Navigation("UnitType");
                 });
@@ -316,6 +320,25 @@ namespace DAL.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DAL.Models.UnitUnitGroup", b =>
+                {
+                    b.HasOne("DAL.Models.UnitGroup", "UnitGroup")
+                        .WithMany("UnitUnitGroups")
+                        .HasForeignKey("UnitGroupId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.Unit", "Unit")
+                        .WithMany("UnitUnitGroups")
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Unit");
+
+                    b.Navigation("UnitGroup");
+                });
+
             modelBuilder.Entity("EquipmentUnit", b =>
                 {
                     b.HasOne("DAL.Models.Equipment", null)
@@ -334,11 +357,13 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Models.Unit", b =>
                 {
                     b.Navigation("Photos");
+
+                    b.Navigation("UnitUnitGroups");
                 });
 
             modelBuilder.Entity("DAL.Models.UnitGroup", b =>
                 {
-                    b.Navigation("Units");
+                    b.Navigation("UnitUnitGroups");
                 });
 
             modelBuilder.Entity("DAL.Models.UnitType", b =>

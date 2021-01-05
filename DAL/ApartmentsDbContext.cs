@@ -33,7 +33,6 @@ namespace DAL
 
         public DbSet<Equipment> Equipment { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString)
@@ -56,6 +55,11 @@ namespace DAL
                 .HasForeignKey(unit => unit.UnitTypeId);
 
             modelBuilder.Entity<Unit>()
+                .HasOne(unit => unit.UnitGroup)
+                .WithMany(unitGroup => unitGroup.Units)
+                .HasForeignKey(unit => unit.UnitGroupId);
+
+            modelBuilder.Entity<Unit>()
                 .HasMany(unit => unit.AvailableEquipment)
                 .WithMany(equipment => equipment.Units)
                 .UsingEntity(j => j.ToTable("UnitEquipment"));
@@ -72,9 +76,9 @@ namespace DAL
                 .WithOne()
                 .HasForeignKey<UnitGroup>(unitGroup => unitGroup.SpecificationId);
 
-            modelBuilder.Entity<UnitGroup>()
+            /*modelBuilder.Entity<UnitGroup>()
                 .HasMany(unitGroup => unitGroup.Units)
-                .WithMany(unitGroup => unitGroup.UnitGroups);
+                .WithMany(unitGroup => unitGroup.UnitGroups);*/
 
 
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

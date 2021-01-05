@@ -22,7 +22,10 @@ namespace DAL.Models
 
         public virtual ICollection<Equipment> AvailableEquipment { get; set; }
 
-        public virtual ICollection<UnitGroup> UnitGroups { get; set; }
+        public int UnitGroupId { get; set; }
+
+        [ForeignKey(nameof(UnitGroupId))]
+        public virtual UnitGroup UnitGroup { get; set; }
 
 #nullable enable
         public string? ContractLink { get; set; }
