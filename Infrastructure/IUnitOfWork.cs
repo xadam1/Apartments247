@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using DAL.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using DAL.Models;
 using Infrastructure.Queries;
+using System;
+using System.Threading.Tasks;
 
 namespace Infrastructure
 {
