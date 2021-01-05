@@ -5,8 +5,6 @@ namespace DAL.Models
 {
     public class User : BaseEntity
     {
-        public virtual ICollection<UnitGroup> UnitGroups { get; set; }
-
         [Required]
         [EmailAddress]
         [MaxLength(128)]
@@ -21,5 +19,7 @@ namespace DAL.Models
         public string Password { get; set; }
 
         public bool IsAdmin { get; set; }
+
+        public virtual ICollection<UnitGroup> UnitGroups { get; set; }
     }
 }

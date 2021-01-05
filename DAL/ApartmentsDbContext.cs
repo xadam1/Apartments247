@@ -1,5 +1,4 @@
-﻿using DAL.Extras;
-using DAL.Models;
+﻿using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,15 +53,17 @@ namespace DAL
                 .WithMany(unitType => unitType.Units)
                 .HasForeignKey(unit => unit.UnitTypeId);
 
-            modelBuilder.Entity<Unit>()
-                .HasOne(unit => unit.UnitGroup)
-                .WithMany(unitGroup => unitGroup.Units)
-                .HasForeignKey(unit => unit.UnitGroupId);
+
 
             modelBuilder.Entity<Unit>()
                 .HasMany(unit => unit.AvailableEquipment)
                 .WithMany(equipment => equipment.Units)
                 .UsingEntity(j => j.ToTable("UnitEquipment"));
+
+            modelBuilder.Entity<Unit>()
+                .HasMany(unit => unit.Photos)
+                .WithOne()
+                .HasForeignKey(photo => photo.UnitId);
 
 
             // UnitGroup
@@ -76,15 +77,17 @@ namespace DAL
                 .WithOne()
                 .HasForeignKey<UnitGroup>(unitGroup => unitGroup.SpecificationId);
 
-            /*modelBuilder.Entity<UnitGroup>()
-                .HasMany(unitGroup => unitGroup.Units)
-                .WithMany(unitGroup => unitGroup.UnitGroups);*/
-
 
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+
+            modelBuilder.Entity<Unit>()
+                .HasOne(u => u.UnitGroup)
+                .WithMany(ug => ug.Units)
+                .HasForeignKey(u => u.UnitGroupId);
 
             //TODO Vojta
             //modelBuilder.Seed();

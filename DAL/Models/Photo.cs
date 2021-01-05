@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -12,6 +13,12 @@ namespace DAL.Models
         public string Path { get; set; }
 
         public DateTime DateTimeUploaded { get; set; }
+
+
+        public int UnitId { get; set; }
+        [ForeignKey(nameof(UnitId))]
+        public virtual Unit Unit { get; set; }
+
 
 #nullable enable
         [MaxLength(256)]

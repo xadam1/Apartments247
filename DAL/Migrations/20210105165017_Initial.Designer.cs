@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApartmentsDbContext))]
-    [Migration("20201124224427_AddedLimitsToPhotos")]
-    partial class AddedLimitsToPhotos
+    [Migration("20210105165017_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,35 +62,13 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("UnitId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("Equipment");
-                });
-
-            modelBuilder.Entity("DAL.Models.EquipmentType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int?>("EquipmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Type")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EquipmentId");
-
-                    b.ToTable("EquipmentTypes");
+                    b.ToTable("Equipment");
                 });
 
             modelBuilder.Entity("DAL.Models.Photo", b =>
@@ -115,12 +93,20 @@ namespace DAL.Migrations
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
-                    b.Property<int?>("UnitId")
+                    b.Property<int>("UnitId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UnitId1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitId2")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UnitId");
+
+                    b.HasIndex("UnitId1");
 
                     b.ToTable("Photo");
                 });
@@ -135,7 +121,7 @@ namespace DAL.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Color")
+                    b.Property<int?>("Color")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -149,7 +135,8 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("AddressId")
+                        .IsUnique();
 
                     b.ToTable("Specifications");
                 });
@@ -164,16 +151,16 @@ namespace DAL.Migrations
                     b.Property<string>("ContractLink")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CurrentCapacity")
+                    b.Property<int?>("CurrentCapacity")
                         .HasColumnType("int");
 
-                    b.Property<int>("MaxCapacity")
+                    b.Property<int?>("MaxCapacity")
                         .HasColumnType("int");
 
                     b.Property<int>("SpecificationId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UnitGroupId")
+                    b.Property<int>("UnitGroupId")
                         .HasColumnType("int");
 
                     b.Property<int>("UnitTypeId")
@@ -205,7 +192,8 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SpecificationId");
+                    b.HasIndex("SpecificationId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -258,37 +246,43 @@ namespace DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DAL.Models.Equipment", b =>
+            modelBuilder.Entity("EquipmentUnit", b =>
                 {
-                    b.HasOne("DAL.Models.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("AvailableEquipmentId")
+                        .HasColumnType("int");
 
-                    b.Navigation("Unit");
-                });
+                    b.Property<int>("UnitsId")
+                        .HasColumnType("int");
 
-            modelBuilder.Entity("DAL.Models.EquipmentType", b =>
-                {
-                    b.HasOne("DAL.Models.Equipment", null)
-                        .WithMany("AvailableEquipment")
-                        .HasForeignKey("EquipmentId");
+                    b.HasKey("AvailableEquipmentId", "UnitsId");
+
+                    b.HasIndex("UnitsId");
+
+                    b.ToTable("UnitEquipment");
                 });
 
             modelBuilder.Entity("DAL.Models.Photo", b =>
                 {
                     b.HasOne("DAL.Models.Unit", null)
                         .WithMany("Photos")
-                        .HasForeignKey("UnitId");
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId1")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("DAL.Models.Specification", b =>
                 {
                     b.HasOne("DAL.Models.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne()
+                        .HasForeignKey("DAL.Models.Specification", "AddressId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Address");
@@ -299,36 +293,40 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Models.Specification", "Specification")
                         .WithMany()
                         .HasForeignKey("SpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.UnitGroup", null)
+                    b.HasOne("DAL.Models.UnitGroup", "UnitGroup")
                         .WithMany("Units")
-                        .HasForeignKey("UnitGroupId");
+                        .HasForeignKey("UnitGroupId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasOne("DAL.Models.UnitType", "Type")
-                        .WithMany()
+                    b.HasOne("DAL.Models.UnitType", "UnitType")
+                        .WithMany("Units")
                         .HasForeignKey("UnitTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Specification");
 
-                    b.Navigation("Type");
+                    b.Navigation("UnitGroup");
+
+                    b.Navigation("UnitType");
                 });
 
             modelBuilder.Entity("DAL.Models.UnitGroup", b =>
                 {
                     b.HasOne("DAL.Models.Specification", "Specification")
-                        .WithMany()
-                        .HasForeignKey("SpecificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne()
+                        .HasForeignKey("DAL.Models.UnitGroup", "SpecificationId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DAL.Models.User", "User")
-                        .WithMany()
+                        .WithMany("UnitGroups")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Specification");
@@ -336,9 +334,19 @@ namespace DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DAL.Models.Equipment", b =>
+            modelBuilder.Entity("EquipmentUnit", b =>
                 {
-                    b.Navigation("AvailableEquipment");
+                    b.HasOne("DAL.Models.Equipment", null)
+                        .WithMany()
+                        .HasForeignKey("AvailableEquipmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.Unit", null)
+                        .WithMany()
+                        .HasForeignKey("UnitsId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL.Models.Unit", b =>
@@ -349,6 +357,16 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Models.UnitGroup", b =>
                 {
                     b.Navigation("Units");
+                });
+
+            modelBuilder.Entity("DAL.Models.UnitType", b =>
+                {
+                    b.Navigation("Units");
+                });
+
+            modelBuilder.Entity("DAL.Models.User", b =>
+                {
+                    b.Navigation("UnitGroups");
                 });
 #pragma warning restore 612, 618
         }

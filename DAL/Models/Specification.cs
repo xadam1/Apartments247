@@ -12,10 +12,11 @@ namespace DAL.Models
 
         public Color? Color { get; set; }
 
-        public int AddressId { get; set; }
 
+        public int AddressId { get; set; }
         [ForeignKey(nameof(AddressId))]
         public virtual Address Address { get; set; }
+
 
 #nullable enable
         [MaxLength(1024)]

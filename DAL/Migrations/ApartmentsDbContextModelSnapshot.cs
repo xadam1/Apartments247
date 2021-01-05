@@ -91,12 +91,20 @@ namespace DAL.Migrations
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
 
-                    b.Property<int?>("UnitId")
+                    b.Property<int>("UnitId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UnitId1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitId2")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UnitId");
+
+                    b.HasIndex("UnitId1");
 
                     b.ToTable("Photo");
                 });
@@ -256,7 +264,15 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Models.Unit", null)
                         .WithMany("Photos")
                         .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId1")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("DAL.Models.Specification", b =>
