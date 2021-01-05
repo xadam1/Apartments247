@@ -18,7 +18,6 @@ namespace Infrastructure
             _context = context;
         }
 
-
         #region IRepository Methods
 
         public void Add(TEntity entity)

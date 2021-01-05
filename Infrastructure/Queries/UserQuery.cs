@@ -25,6 +25,12 @@ namespace Infrastructure.Queries
             return this;
         }
 
+        public UserQuery GetUserByEmail(string email)
+        {
+            _query = _query.Where(user => user.Email == email);
+            return this;
+        }
+
         public UserQuery GetUserByCredentials(string name, string password)
         {
             GetUserByName(name).GetUserByPassword(password);

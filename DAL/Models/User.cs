@@ -15,12 +15,11 @@ namespace DAL.Models
         [MaxLength(256)]
         public string Password { get; set; }
 
-        public bool IsAdmin { get; set; }
-
-#nullable enable
         [Required]
         [EmailAddress]
         [MaxLength(128)]
-        public string? Email { get; set; }
+        public string Email { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }
