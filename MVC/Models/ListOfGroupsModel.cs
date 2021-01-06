@@ -6,7 +6,7 @@ using DAL.Models;
 
 namespace MVC.Models
 {
-    public class ListGroupsModel
+    public class ListOfGroupsModel
     {
         public UnitGroup[] Groups { get; set; }
     }

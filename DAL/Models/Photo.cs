@@ -14,9 +14,7 @@ namespace DAL.Models
 
         public DateTime DateTimeUploaded { get; set; }
 
-
         public int UnitId { get; set; }
-        [ForeignKey(nameof(UnitId))]
         public virtual Unit Unit { get; set; }
 
 

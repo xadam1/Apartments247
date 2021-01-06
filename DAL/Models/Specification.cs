@@ -10,11 +10,11 @@ namespace DAL.Models
         [MaxLength(128)]
         public string Name { get; set; }
 
-        public Color? Color { get; set; }
+        public int ColorId { get; set; }
+        public virtual Color Color { get; set; }
 
 
         public int AddressId { get; set; }
-        [ForeignKey(nameof(AddressId))]
         public virtual Address Address { get; set; }
 
 

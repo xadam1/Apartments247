@@ -10,15 +10,12 @@ namespace DAL.Models
 
         // FK
         public int SpecificationId { get; set; }
-        [ForeignKey(nameof(SpecificationId))]
         public virtual Specification Specification { get; set; }
 
         public int UnitTypeId { get; set; }
-        [ForeignKey(nameof(UnitTypeId))]
         public virtual UnitType UnitType { get; set; }
 
         public int UnitGroupId { get; set; }
-        [ForeignKey(nameof(UnitGroupId))]
         public virtual UnitGroup UnitGroup { get; set; }
 
         // Collections

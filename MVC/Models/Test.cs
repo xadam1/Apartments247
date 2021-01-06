@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DAL.Models;
 
 namespace MVC.Models
 {
-    public class ListUnitsModel
+    public class Test
     {
-        public Unit[] Units { get; set; }
+        public int Number { get; set; }
+        public string Word { get; set; }
     }
 }

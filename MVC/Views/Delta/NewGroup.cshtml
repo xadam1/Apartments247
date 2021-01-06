@@ -1,0 +1,31 @@
+﻿@model MVC.Models.NewGroupModel
+
+@{
+    ViewData["Title"] = "Create Groups";
+}
+
+    <h3>Create Group</h3>
+
+    <form action="/Delta/CreateGroup" method="post">
+        <label for="name">Name</label>
+        <br />
+        <input type="text" name="name" value="Vlakové nádraží" />
+        <br />
+
+        <label for="unitType">Type</label>
+        <br />
+        <select name="unitType">
+            @foreach (var unitType in Model.UnitTypes)
+            {
+                <option name="@unitType.Type">@unitType.Type</option>
+            }
+        </select><br />
+
+        <label for="address">Address</label><br />
+        <label>TODO!!!</label><br />
+
+        <label for="note">Note</label><br />
+        <textarea name="note">Naše krásné špinavé nádraží</textarea><br />
+
+        <input type="submit" value="Create">
+    </form>
