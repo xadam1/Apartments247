@@ -12,6 +12,8 @@ namespace MVC.Controllers
 {
     public class DeltaController : Controller
     {
+        private const int userId = 1;
+
         public IActionResult Index()
         {
             return RedirectToAction("Overview", "Delta");
@@ -19,107 +21,136 @@ namespace MVC.Controllers
 
         public IActionResult Overview()
         {
-            // TODO
             return View();
         }
 
         public IActionResult ListGroups()
         {
-            const int userId = 14;
             ApartmentsDbContext con = new ApartmentsDbContext();
-            User user = con.Users.Where(user => user.Id == userId).First();
             UnitGroup[] groups = con.UnitGroups.Where(group => group.UserId == userId).ToArray();
             ListOfGroupsModel m = new ListOfGroupsModel() { Groups = groups };
             return View(m);
         }
 
-        public IActionResult ListUnits()
-        {
-            const int groupId = 8;
-            ApartmentsDbContext con = new ApartmentsDbContext();
-            Unit[] units = con.Units.Where(unit => unit.UnitGroupId == groupId).ToArray();
-            ListOfUnitsModel m = new ListOfUnitsModel() { Units = units };
-            return View(m);
-        }
-        public IActionResult NewGroup()
+        public IActionResult ListUnits(int groupId=-1)
         {
             ApartmentsDbContext con = new ApartmentsDbContext();
-            UnitType[] unitTypes = con.UnitTypes.ToArray();
-            NewGroupModel m = new NewGroupModel() {UnitTypes = unitTypes };
-            return View(m);
-        }
-        public IActionResult NewUnit()
-        {
-            ApartmentsDbContext con = new ApartmentsDbContext();
-            UnitType[] unitTypes = con.UnitTypes.ToArray();
-            Color[] colors = con.Colors.ToArray();
-            NewUnitModel m = new NewUnitModel() { UnitTypes = unitTypes, Colors = colors};
+            UnitGroup[] groups = con.UnitGroups.Where(group => group.UserId == userId).ToArray();
+            Unit[] units = new Unit[0];
+
+            if (groups.Length > 0)
+            {
+                int specId = 0;
+                if (groupId == -1)
+                {
+                    // Nezadáno
+                    specId = groups.First().Specification.Id;
+                }
+                else
+                {
+                    // Zadáno
+                    specId = groups.Where(group => group.Id == groupId).FirstOrDefault().Specification.Id;
+                }
+                units = con.Units.Where(unit => unit.SpecificationId == specId).ToArray();
+            }
+
+            ListOfGroupsAndUnitsModel m = new ListOfGroupsAndUnitsModel()
+            {
+                Groups = groups,
+                Units = units
+            };
+
             return View(m);
         }
 
         [HttpPost]
-        public IActionResult CreateGroup(string name, string colorString, string note)
+        public IActionResult EditGroup(int id, string name, string colorString, string note)
         {
             ApartmentsDbContext con = new ApartmentsDbContext();
 
             Color color = con.Colors.Where(c => c.Name == colorString).FirstOrDefault();
 
-            Specification spec = new Specification()
+            UnitGroup edited = con.UnitGroups.Where(group => group.Id == id).FirstOrDefault();
+            if (edited == null)
             {
-                Name = name,
-                Color = color,
-                //Address = ???,
-                Note = note
-            };
+                // Vytváří se nový
+                Specification spec = new Specification()
+                {
+                    Name = name,
+                    Color = color,
+                    //Address = ???,
+                    Note = note
+                };
 
-            UnitGroup group = new UnitGroup()
+                edited = new UnitGroup()
+                {
+                    //User = ???,
+                    Specification = spec
+                };
+
+                con.UnitGroups.Add(edited);
+            }
+            else
             {
-                //User = ???,
-                Specification = spec
-            };
+                edited.Specification.Name = name;
+                edited.Specification.Color = color;
+                edited.Specification.Note = note;
+                con.UnitGroups.Update(edited);
+            }
 
-            con.UnitGroups.Add(group);
-
-            return RedirectToAction("EditGroup", "Delta");
+            return RedirectToAction("EditGroups", "Delta");
         }
 
         [HttpPost]
-        public IActionResult CreateUnit(string name, string unitTypeString, string note, string currentCapacityString, string maxCapacityString, string colorString)
+        public IActionResult EditUnit(int id, string name, string unitTypeString, string note, string currentCapacityString, string maxCapacityString, string colorString)
         {
             ApartmentsDbContext con = new ApartmentsDbContext();
 
             Color color = con.Colors.Where(c => c.Name == colorString).FirstOrDefault();
-            Specification spec = new Specification()
-            {
-                Name = name,
-                Color = color,
-                //AddressId = AddressId
-                Note = note,
-            };
 
             int currentCapacity = 0, maxCapacity = 0;
             int.TryParse(currentCapacityString, out currentCapacity);
             int.TryParse(maxCapacityString, out maxCapacity);
             UnitType unitType = con.UnitTypes.Where(ut => ut.Type == unitTypeString).FirstOrDefault();
 
-            Unit unit = new Unit()
+            Unit edited = con.Units.Where(unit => unit.Id == id).FirstOrDefault();
+            if (edited == null)
             {
-                CurrentCapacity = currentCapacity,
-                MaxCapacity = maxCapacity,
-                Specification = spec,
-                UnitType = unitType,
-                //UnitGroupId = newUnit.UnitGroupId
-                //ContractLink = newUnit.ContractLink,
-            };
+                // Vytváří se nový
+                Specification spec = new Specification()
+                {
+                    Name = name,
+                    Color = color,
+                    //AddressId = AddressId
+                    Note = note,
+                };
 
-            con.Units.Add(unit);
+                Unit unit = new Unit()
+                {
+                    CurrentCapacity = currentCapacity,
+                    MaxCapacity = maxCapacity,
+                    Specification = spec,
+                    UnitType = unitType,
+                    //UnitGroupId = newUnit.UnitGroupId
+                    //ContractLink = newUnit.ContractLink,
+                };
+
+                con.Units.Add(unit);
+            }
+            else
+            {
+                edited.CurrentCapacity = currentCapacity;
+                edited.MaxCapacity = maxCapacity;
+                edited.UnitType = unitType;
+
+                edited.Specification.Name = name;
+                edited.Specification.Color = color;
+                edited.Specification.Note = note;
+
+                con.Units.Update(edited);
+            }            
 
             return RedirectToAction("EditUnit", "Delta");
-        }
-
-        public IActionResult EditUnit()
-        {
-            return View();
         }
     }
 }
