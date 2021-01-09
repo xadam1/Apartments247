@@ -24,16 +24,16 @@ namespace WebAPI.Controllers
 
         // GET: api/<UsersController>
         [HttpGet]
-        public async Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsers()
+        public async Task<IEnumerable<UserIdNameEmailAdminDTO>> GetAllUsers()
         {
             return await _userFacade.GetAllUsersAsync();
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public async Task<UserNameEmailAdminDTO> GetUser(int id)
+        public async Task<UserIdNameEmailAdminDTO> GetUser(int id)
         {
-            return await _userFacade.GetUserAsync(id);
+            return await _userFacade.GetUserAsync<UserIdNameEmailAdminDTO>(id);
         }
 
         // POST api/<UsersController>
@@ -52,12 +52,37 @@ namespace WebAPI.Controllers
             await _userFacade.RegisterUserAsync(userDto);
         }
 
-        /*
-        // PUT api/<UsersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT api/<UsersController>/5/false
+        [HttpPut("{userToBeChangedId}/{newIsAdmin}")]
+        public void Put(int userToBeChangedId, string newUsername, string newPassword, string newEmail, bool newIsAdmin=false)
         {
-        }*/
+            var userTask = _userFacade.GetUserAsync<UserNamePasswordEmailAdminDTO>(userToBeChangedId);
+            userTask.Wait();
+
+            var user = userTask.Result;
+
+            if (!string.IsNullOrEmpty(newUsername))
+            {
+                user.Username = newUsername;
+            }
+
+            if (!string.IsNullOrEmpty(newPassword))
+            {
+                user.Password = newPassword;
+            }
+
+            if (!string.IsNullOrEmpty(newEmail))
+            {
+                user.Email = newEmail;
+            }
+
+            if (user.IsAdmin != newIsAdmin)
+            {
+                user.IsAdmin = newIsAdmin;
+            }
+
+            _userFacade.UpdateUserAsync(userToBeChangedId, user).Wait();
+        }
 
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]

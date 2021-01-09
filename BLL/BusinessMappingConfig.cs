@@ -28,9 +28,10 @@ namespace BLL
             config.CreateMap<UnitType, UnitTypeDTO>().ReverseMap();
 
             config.CreateMap<User, UserNameDTO>().ReverseMap();
-            config.CreateMap<User, UserNameEmailAdminDTO>().ReverseMap();
+            config.CreateMap<User, UserIdNameEmailAdminDTO>().ReverseMap();
             config.CreateMap<User, UserNameEmailDTO>().ReverseMap();
             config.CreateMap<User, UserCreateDTO>().ReverseMap();
+            config.CreateMap<User, UserNamePasswordEmailAdminDTO>().ReverseMap();
         }
     }
 }
