@@ -1,52 +1,79 @@
-﻿@model MVC.Models.ListOfGroupsAndUnitsModel
+﻿@model MVC.Models.ListUnitsModel
 
 @{
     ViewData["Title"] = "Show Units";
+    var groupId = Model.UnitGroupId;
     var groups = Model.Groups;
     var units = Model.Units;
 }
 @if (groups.Length == 0)
 {
-    <p>You don't have any UnitGroups.</p><br />
-    <p>Let's <a href="/Delta/EditGroup/-1">create</a> one.</p>
+<p>You don't have any UnitGroups.</p>
+<br />
+<p>TODO Create Group</p>
+<br />
+<p>Let's <a href="/Delta/EditGroup/-1">create</a> one.</p>
 }
 else
 {
-    @*Výběr pro přepínání mezi skupinami jednotek*@
-    <label>Choose UnitGroup</label>
-    <select>
-        @foreach (var group in groups)
+@*Výběr pro přepínání mezi skupinami jednotek*@
+<label>Choose UnitGroup</label>
+<select id="dropDownList" onchange="changeGroup()">
+    @foreach (var group in groups)
         {
-            <option value="@group.Id">@group.Specification.Name</option>
+    <option id="@group.Id" value="@group.Id">@group.Name</option>
         }
-    </select>
+</select>
 
-    @if (units.Length == 0)
-    {
-        <p>This UnitGroup is empty.</p><br />
-        <p>Let's <a href="/Delta/EditUnit/-1">create</a> new Unit in this group.</p>
+<script>
+    document.getElementById("@groupId").selected = true;
+</script>
+
+<script>
+    function changeGroup() {
+        newGroupId = document.getElementById("dropDownList").value;
+        location.href = "/Delta/ListUnits?groupId=" + newGroupId;
     }
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Color</th>
-            <th>Note</th>
-            <th>CurrentCapacity</th>
-            <th>MaxCapacity</th>
-            <th>UnitType</th>
-            <th>ContractLink</th>
-        </tr>
-        @foreach (var unit in units)
-        {
-            <tr>
-                <td>@unit.Specification.Name</td>
-                <td>@unit.Specification.Color</td>
-                <td>@unit.Specification.Note</td>
-                <td>@unit.CurrentCapacity</td>
-                <td>@unit.MaxCapacity</td>
-                <td>@unit.UnitType.Type</td>
-                <td>@unit.ContractLink</td>
-            </tr>
-        }
-    </table>
+</script>
+
+@if (units.Length == 0)
+    {
+<p>This UnitGroup is empty.</p>
+<br />
+<p>TODO Create new Unit</p>
+<br />
+<p>Let's <a href="/Delta/EditUnit/-1">create</a> new Unit in this group.</p>
+    }
+    else
+    {
+<table>
+    <tr>
+        <th>UnitType</th>
+        <th>Name</th>
+        <th>Color</th>
+        <th>Note</th>
+        <th>CurrentCapacity</th>
+        <th>MaxCapacity</th>
+        <th>ContractLink</th>
+    </tr>
+    <tr>
+        <td>
+            TODO Create Unit
+        </td>
+    </tr>
+    @foreach (var unit in units)
+            {
+    <tr>
+        <td>@unit.UnitType</td>
+        <td>@unit.Name</td>
+        <td>@unit.Color</td>
+        <td>@unit.Note</td>
+        <td>@unit.CurrentCapacity</td>
+        <td>@unit.MaxCapacity</td>
+        <td>@unit.ContractLink</td>
+        <td>TODO Edit Unit</td>
+    </tr>
+            }
+</table>
+    }
 }

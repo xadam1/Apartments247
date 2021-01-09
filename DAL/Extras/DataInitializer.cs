@@ -145,7 +145,47 @@ namespace DAL.Extras
                      Street = "Hybešova",
                      Number = "3",
                      Zip = "44 55"
+                 },
+                 new Address()
+                 {
+                     Id = 14,
+                     State = "Dánsko",
+                     City = "Kodaň",
+                     Street = "Celní",
+                     Number = "18b",
+                     Zip = "58 96"
+                 },
+                 // Tomčiho dědictví - Le Mont Saint Michel
+                 new Address()
+                 {
+                     Id = 15,
+                     State = "Francie",
+                     City = "Hora sv. Michala",
+                     Street = "-",
+                     Number = "-",
+                     Zip = "-"
+                 },
+                 // Tomčiho dědictví - Pevnost Alcatraz
+                 new Address()
+                 {
+                     Id = 16,
+                     State = "San Francisko",
+                     City = "-",
+                     Street = "-",
+                     Number = "-",
+                     Zip = "-",
+                 },
+                 // Tomčiho majetek - Wirkout hřiště Hroch
+                 new Address()
+                 {
+                     Id = 17,
+                     State = "Švédsko",
+                     City = "Stockholm",
+                     Street = "Brigádnická",
+                     Number = "6a",
+                     Zip = "548 02",
                  }
+                 // Id = 18
              );
             #endregion
             
@@ -256,6 +296,7 @@ namespace DAL.Extras
                      Note = "Hliňasovo království",
                      AddressId = 6
                  },
+                 // Tomčiho majetek
                  new Specification()
                  {
                      Id = 7,
@@ -264,6 +305,7 @@ namespace DAL.Extras
                      Note = "Tady bylo vyhuleno mnoho trávy",
                      AddressId = 7
                  },
+                 // Tomčiho majetek
                  new Specification()
                  {
                      Id = 8,
@@ -271,6 +313,15 @@ namespace DAL.Extras
                      ColorId = 6,
                      Note = "Je v něm spousta plyšáků",
                      AddressId = 8
+                 },
+                 // Tomčiho majetek
+                 new Specification
+                 {
+                     Id = 17,
+                     Name = "Workout hřiště Hroch",
+                     ColorId = 5,
+                     Note = "Hřiště pro posilování a řeka pro otužování",
+                     AddressId = 17,
                  },
                  new Specification()
                  {
@@ -311,7 +362,34 @@ namespace DAL.Extras
                      ColorId = 1,
                      Note = "Tohle všechno mi patří",
                      AddressId = 13
+                 },
+                 new Specification()
+                 {
+                     Id=14,
+                     Name = "Dědictví po prastrýci",
+                     ColorId = 2,
+                     Note = "Dědictví od zapomenutého prastrýce, jenž emigroval do USA",
+                     AddressId = 14
+                 },
+                 // Tomčiho dědictví - Le Mont Saint Michel
+                 new Specification()
+                 {
+                     Id = 15,
+                     Name = "Hrad Le Mont Saint Michel",
+                     ColorId = 3,
+                     Note = "80 metrů vysoký přílivový ostrov",
+                     AddressId = 15
+                 },
+                 // Tomčiho dědictví - Pevnost Alcatraz
+                 new Specification()
+                 {
+                     Id = 16,
+                     Name = "Pevnost Alcatraz",
+                     ColorId = 4,
+                     Note = "Bývalá vojenská věznice, nyní historická památka",
+                     AddressId = 16,
                  }
+                 // Id = 18
              );
             #endregion
 
@@ -379,6 +457,13 @@ namespace DAL.Extras
                      SpecificationId = 10,
                      UserId = 1
                  },
+                 // Tomčiho dědictví
+                 new UnitGroup()
+                 {
+                     Id = 5,
+                     SpecificationId = 14,
+                     UserId = 1
+                 },
                  // Škola
                  new UnitGroup()
                  {
@@ -400,6 +485,7 @@ namespace DAL.Extras
                      SpecificationId = 13,
                      UserId = 4
                  }
+                 // Id = 6
              );
             #endregion
 
@@ -445,104 +531,162 @@ namespace DAL.Extras
                 {
                     Id = 8,
                     Type = "Autobusová zastávka"
+                },
+                new UnitType()
+                {
+                    Id = 9,
+                    Type = "Hrad na ostrově"
+                },
+                new UnitType()
+                {
+                    Id = 10,
+                    Type = "Vojenská věznice",
+                },
+                new UnitType()
+                {
+                    Id = 11,
+                    Type = "Workout hřiště"
                 }
             );
             #endregion
-            
+
             #region Units
-             builder.Entity<Unit>().HasData
-             (
-                 new Unit()
-                 {
-                     Id = 1,
-                     CurrentCapacity = 2,
-                     MaxCapacity = 4,
-                     UnitTypeId = 1,
-                     SpecificationId = 8,
-                     ContractLink = null,
-                     UnitGroupId = 1
-                 },
-                 new Unit()
-                 {
-                     Id = 2,
-                     CurrentCapacity = 0,
-                     MaxCapacity = 6,
-                     UnitTypeId = 7,
-                     SpecificationId = 1,
-                     ContractLink = null,
-                     UnitGroupId = 2
-                 },
-                 new Unit()
-                 {
-                     Id = 3,
-                     CurrentCapacity = 3,
-                     MaxCapacity = 3,
-                     UnitTypeId = 6,
-                     SpecificationId = 1,
-                     ContractLink = null,
-                     UnitGroupId = 3
-                 },
-                 new Unit()
-                 {
-                     Id = 4,
-                     CurrentCapacity = 1,
-                     MaxCapacity = 5,
-                     UnitTypeId = 5,
-                     SpecificationId = 1,
-                     ContractLink = null,
-                     UnitGroupId = 4
-                 },
-                 new Unit()
-                 {
-                     Id = 5,
-                     CurrentCapacity = 7,
-                     MaxCapacity = 7,
-                     UnitTypeId = 4,
-                     SpecificationId = 1,
-                     ContractLink = null,
-                     UnitGroupId = 1
-                 },
-                 new Unit()
-                 {
-                     Id = 6,
-                     CurrentCapacity = 23,
-                     MaxCapacity = 13,
-                     UnitTypeId = 3,
-                     SpecificationId = 1,
-                     ContractLink = null,
-                     UnitGroupId = 2
-                 },
-                 new Unit()
-                 {
-                     Id = 7,
-                     CurrentCapacity = 1,
-                     MaxCapacity = 1,
-                     UnitTypeId = 2,
-                     SpecificationId = 1,
-                     ContractLink = null,
-                     UnitGroupId = 3
-                 },
-                 new Unit()
-                 {
-                     Id = 8,
-                     CurrentCapacity = 0,
-                     MaxCapacity = 2,
-                     UnitTypeId = 1,
-                     SpecificationId = 1,
-                     ContractLink = null,
-                     UnitGroupId = 4
-                 },
-                 new Unit()
-                 {
-                     Id = 9,
-                     CurrentCapacity = 3,
-                     MaxCapacity = 5,
-                     UnitTypeId = 8,
-                     SpecificationId = 1,
-                     ContractLink = null,
-                     UnitGroupId = 1
-                 }
-             );
+            builder.Entity<Unit>().HasData
+            (
+                // Leitnerka
+                new Unit()
+                {
+                    Id = 1,
+                    CurrentCapacity = 2,
+                    MaxCapacity = 4,
+                    UnitTypeId = 1,
+                    SpecificationId = 1,
+                    ContractLink = null,
+                    UnitGroupId = 2,
+                },
+                // Prostřední byt
+                new Unit()
+                {
+                    Id = 2,
+                    CurrentCapacity = 0,
+                    MaxCapacity = 6,
+                    UnitTypeId = 7,
+                    SpecificationId = 2,
+                    ContractLink = null,
+                    UnitGroupId = 2
+                },
+                // Byt 13
+                new Unit()
+                {
+                    Id = 3,
+                    CurrentCapacity = 3,
+                    MaxCapacity = 3,
+                    UnitTypeId = 6,
+                    SpecificationId = 3,
+                    ContractLink = null,
+                    UnitGroupId = 3
+                },
+                // D1
+                new Unit()
+                {
+                    Id = 4,
+                    CurrentCapacity = 1,
+                    MaxCapacity = 5,
+                    UnitTypeId = 5,
+                    SpecificationId = 4,
+                    ContractLink = null,
+                    UnitGroupId = 4
+                },
+                // B311
+                new Unit()
+                {
+                    Id = 5,
+                    CurrentCapacity = 7,
+                    MaxCapacity = 7,
+                    UnitTypeId = 4,
+                    SpecificationId = 5,
+                    ContractLink = null,
+                    UnitGroupId = 2
+                },
+                // Hliněného kabinet
+                new Unit()
+                {
+                    Id = 6,
+                    CurrentCapacity = 23,
+                    MaxCapacity = 13,
+                    UnitTypeId = 3,
+                    SpecificationId = 6,
+                    ContractLink = null,
+                    UnitGroupId = 2
+                },
+                // Tomčiho majetek - Tomčiho chata
+                new Unit()
+                {
+                    Id = 7,
+                    CurrentCapacity = 1,
+                    MaxCapacity = 1,
+                    UnitTypeId = 2,
+                    SpecificationId = 7,
+                    ContractLink = null,
+                    UnitGroupId = 1
+                },
+                // Tomčiho majetek - Tomčiho dětský pokoj
+                new Unit()
+                {
+                    Id = 8,
+                    CurrentCapacity = 0,
+                    MaxCapacity = 2,
+                    UnitTypeId = 1,
+                    SpecificationId = 8,
+                    ContractLink = null,
+                    UnitGroupId = 1
+                },
+                // Tomčiho majetek - Workout hřiště Hroch
+                new Unit()
+                {
+                    Id = 12,
+                    CurrentCapacity = 50,
+                    MaxCapacity = 51,
+                    UnitTypeId = 11,
+                    SpecificationId = 17,
+                    ContractLink = null,
+                    UnitGroupId = 1,
+                },
+                // Jančiho dům
+                new Unit()
+                {
+                    Id = 9,
+                    CurrentCapacity = 3,
+                    MaxCapacity = 5,
+                    UnitTypeId = 8,
+                    SpecificationId = 9,
+                    ContractLink = null,
+                    UnitGroupId = 2
+                },
+                // Tomčiho dědictví - Le Mont Saint Michel
+                new Unit()
+                {
+                    Id = 10,
+                    CurrentCapacity = 0,
+                    MaxCapacity = 150,
+                    UnitTypeId = 9,
+                    SpecificationId = 15,
+                    ContractLink = null,
+                    UnitGroupId = 5
+                },
+                // Tomčiho dědictví - Pevnost Alcatraz
+                new Unit()
+                {
+                    Id = 11,
+                    CurrentCapacity = 18,
+                    MaxCapacity = 23,
+                    UnitTypeId = 10,
+                    SpecificationId = 16,
+                    ContractLink = null,
+                    UnitGroupId = 5,
+                }
+                // Id = 13
+            );
             #endregion
             
             #region Photo
