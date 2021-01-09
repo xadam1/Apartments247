@@ -30,9 +30,9 @@ namespace WebAPI.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public string GetUser(int id)
+        public async Task<UserNameEmailAdminDTO> GetUser(int id)
         {
-            return "value";
+            return await _userFacade.GetUserAsync(id);
         }
 
         // POST api/<UsersController>

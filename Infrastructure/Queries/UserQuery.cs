@@ -13,6 +13,12 @@ namespace Infrastructure.Queries
             return this;
         }
 
+        public UserQuery GetUserById(int id)
+        {
+            _query = _query.Where(user => user.Id == id);
+            return this;
+        }
+
         public UserQuery GetUserByName(string name)
         {
             _query = _query.Where(user => user.Username == name);

@@ -23,6 +23,11 @@ namespace BLL.Facades
             return await _userService.GetAllUsersAsync();
         }
 
+        public async Task<UserNameEmailAdminDTO> GetUserAsync(int id)
+        {
+            return await _userService.GetUserAsync(id);
+        }
+
         public async Task<UserShowDTO> LoginAsync(UserLoginDTO userLogin)
         {
             var user = await _userService.AuthorizeUserAsync(userLogin);

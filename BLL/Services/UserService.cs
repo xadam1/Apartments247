@@ -100,19 +100,16 @@ namespace BLL.Services
 
         public async Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync()
         {
-            var query = _unitOfWork.UserQuery;
-            query.GetAllUsers();
-            var usersDb = await query.ExecuteAsync();
-
-            /*var usersDTO = new List<UserNameEmailAdminDTO>();
-            foreach (var userDb in usersDb)
-            {
-                usersDTO.Add(_mapper.Map<UserNameEmailAdminDTO>(userDb));
-            }
-
-            return usersDTO;*/
+            var usersDb = await _unitOfWork.UserRepository.GetAllAsync();
 
             return _mapper.Map<IEnumerable<UserNameEmailAdminDTO>>(usersDb);
+        }
+
+        public async Task<UserNameEmailAdminDTO> GetUserAsync(int id)
+        {
+            var userDb = await _unitOfWork.UserRepository.GetByIdAsync(id);
+
+            return _mapper.Map<UserNameEmailAdminDTO>(userDb);
         }
     }
 }
