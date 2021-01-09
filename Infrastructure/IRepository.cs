@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Infrastructure
@@ -8,7 +7,9 @@ namespace Infrastructure
     {
         void Add(TEntity entity);
 
-        Task<TEntity> GetById(int id);
+        Task<TEntity> GetByIdAsync(int id);
+
+        Task<IEnumerable<TEntity>> GetAllAsync();
 
         void Update(TEntity updatedEntity);
 

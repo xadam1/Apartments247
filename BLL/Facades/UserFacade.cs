@@ -2,6 +2,7 @@
 using BLL.Services;
 using Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BLL.Facades
@@ -15,6 +16,16 @@ namespace BLL.Facades
         {
             _unitOfWork = unitOfWork;
             _userService = userService;
+        }
+
+        public async Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync()
+        {
+            return await _userService.GetAllUsersAsync();
+        }
+
+        public async Task<UserNameEmailAdminDTO> GetUserAsync(int id)
+        {
+            return await _userService.GetUserAsync(id);
         }
 
         public async Task<UserShowDTO> LoginAsync(UserLoginDTO userLogin)

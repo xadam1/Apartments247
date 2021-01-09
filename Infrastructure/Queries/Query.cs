@@ -15,7 +15,7 @@ namespace Infrastructure.Queries
         {
             _query = dbContext.Set<TEntity>();
         }
-        
+
         public async Task<IEnumerable<TEntity>> ExecuteAsync()
         {
             return await _query?.ToListAsync() ?? new List<TEntity>();

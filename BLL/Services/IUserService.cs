@@ -1,6 +1,5 @@
 ﻿using BLL.DTOs;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -14,5 +13,9 @@ namespace BLL.Services
         Task<UserShowDTO> AuthorizeUserAsync(UserLoginDTO login);
 
         void RegisterUser(UserCreateDTO user);
+
+        Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync();
+
+        Task<UserNameEmailAdminDTO> GetUserAsync(int id);
     }
 }

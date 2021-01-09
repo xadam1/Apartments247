@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using DAL;
+﻿using DAL;
 using DAL.Models;
+using System.Linq;
 
 namespace Infrastructure.Queries
 {
@@ -10,6 +10,12 @@ namespace Infrastructure.Queries
 
         public UserQuery GetAllUsers()
         {
+            return this;
+        }
+
+        public UserQuery GetUserById(int id)
+        {
+            _query = _query.Where(user => user.Id == id);
             return this;
         }
 

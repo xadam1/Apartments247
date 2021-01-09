@@ -25,7 +25,7 @@ namespace Infrastructure
             builder.RegisterType<SpecificationQuery>()
                 .AsSelf()
                 .InstancePerDependency();
-            
+
             builder.RegisterType<UnitGroupQuery>()
                 .AsSelf()
                 .InstancePerDependency();

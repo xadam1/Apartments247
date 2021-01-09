@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DAL.Models
+﻿namespace DAL.Models
 {
     public class Color : BaseEntity
     {

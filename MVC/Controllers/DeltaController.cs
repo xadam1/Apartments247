@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DAL;
+﻿using DAL;
 using DAL.Models;
+using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
-using DAL.Extras;
+using System.Linq;
 
 namespace MVC.Controllers
 {
@@ -32,7 +28,7 @@ namespace MVC.Controllers
             return View(m);
         }
 
-        public IActionResult ListUnits(int groupId=-1)
+        public IActionResult ListUnits(int groupId = -1)
         {
             ApartmentsDbContext con = new ApartmentsDbContext();
             UnitGroup[] groups = con.UnitGroups.Where(group => group.UserId == userId).ToArray();
@@ -148,7 +144,7 @@ namespace MVC.Controllers
                 edited.Specification.Note = note;
 
                 con.Units.Update(edited);
-            }            
+            }
 
             return RedirectToAction("EditUnit", "Delta");
         }

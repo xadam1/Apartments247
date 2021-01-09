@@ -85,7 +85,6 @@ namespace DAL
                 .WithMany(ug => ug.Units)
                 .HasForeignKey(u => u.UnitGroupId);
 
-            //TODO Vojta
             modelBuilder.Seed();
         }
     }

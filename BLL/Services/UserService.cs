@@ -3,6 +3,7 @@ using BLL.DTOs;
 using DAL.Models;
 using Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -29,13 +30,17 @@ namespace BLL.Services
             _unitOfWork.UserRepository.Add(_mapper.Map<User>(user));
         }
 
+
         public async Task<UserShowDTO> GetUserAccordingToEmailAsync(string email)
         {
-            /*var query = _unitOfWork.UserQuery.GetUserByEmail(email);
+            //TODO
+            /*
+             var query = _unitOfWork.UserQuery.GetUserByEmail(email);
             var result = await query.ExecuteAsync();
             var user = result.First();
-            return _mapper.Map<UserShowDTO>(user);*/
-            return null;
+            return _mapper.Map<UserShowDTO>(user);
+            */
+            throw new NotImplementedException();
         }
 
         public async Task<UserShowDTO> AuthorizeUserAsync(UserLoginDTO login)
@@ -47,7 +52,7 @@ namespace BLL.Services
             }
 
             //get user entity
-            var user = await _unitOfWork.UserRepository.GetById(userDto.Id);
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(userDto.Id);
 
             var (hash, salt) = user != null ? GetPassAndSalt(user.Password) : (string.Empty, string.Empty);
 
@@ -61,7 +66,6 @@ namespace BLL.Services
             user.Password = string.Join(',', hash, salt);
 
             Create(user);
-
         }
 
         private (string, string) GetPassAndSalt(string passwordHash)
@@ -95,6 +99,20 @@ namespace BLL.Services
 
                 return Tuple.Create(Convert.ToBase64String(subkey), Convert.ToBase64String(salt));
             }
+        }
+
+        public async Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync()
+        {
+            var usersDb = await _unitOfWork.UserRepository.GetAllAsync();
+
+            return _mapper.Map<IEnumerable<UserNameEmailAdminDTO>>(usersDb);
+        }
+
+        public async Task<UserNameEmailAdminDTO> GetUserAsync(int id)
+        {
+            var userDb = await _unitOfWork.UserRepository.GetByIdAsync(id);
+
+            return _mapper.Map<UserNameEmailAdminDTO>(userDb);
         }
     }
 }
