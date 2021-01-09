@@ -1,4 +1,4 @@
-﻿using DAL;
+using DAL;
 using DAL.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +9,17 @@ namespace Infrastructure.Queries
     {
         public UnitQuery(ApartmentsDbContext context) : base(context) { }
 
+        //TODO Vojta
+        /*
         public UnitQuery FilterUnitsByGroupID(int groupID)
         {
             //_query = _query.Where(unit => unit.UnitGroups.Any(ug => ug.Specification.Id == groupID));
+
+            _query = _query.Where(unit => unit.UnitGroup.Specification.Id == groupID);
+
             return this;
         }
+        */
 
         public List<(int, string)> MapUnitsToIDsNames()
         {

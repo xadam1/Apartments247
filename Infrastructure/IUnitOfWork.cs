@@ -23,5 +23,7 @@ namespace Infrastructure
         UnitGroupsWithUsersWithSpecificationsQuery UnitGroupsWithUsersWithSpecificationsQuery { get; }
         UnitGroupsWithUsersQuery UnitGroupsWithUsersQuery { get; }
         UserQuery UserQuery { get; }
+        UsersUnitGroupsWithUnitsQuery UsersUnitGroupsWithUnitsQuery { get; }
+
     }
 }
