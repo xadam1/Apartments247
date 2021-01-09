@@ -3,6 +3,7 @@ using BLL.Services;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace BLL.Facades
@@ -16,6 +17,15 @@ namespace BLL.Facades
         {
             _unitOfWork = unitOfWork;
             _userService = userService;
+        }
+
+        public HttpStatusCode DeleteUser(int id)
+        {
+            var httpStatusCode = _userService.DeleteUser(id);
+
+            _unitOfWork.CommitAsync().Wait();
+
+            return httpStatusCode;
         }
 
         public async Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync()

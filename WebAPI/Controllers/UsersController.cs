@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using BLL.DTOs;
 using BLL.Facades;
@@ -50,8 +51,9 @@ namespace WebAPI.Controllers
 
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public HttpStatusCode Delete(int id)
         {
+            return _userFacade.DeleteUser(id);
         }
     }
 }
