@@ -1,9 +1,6 @@
-﻿using System.Linq;
+﻿using DAL;
 using System;
-using BLL;
-using DAL;
-using DAL.Models;
-using DAL.Extras;
+using System.Linq;
 
 namespace FrontendConsole
 {

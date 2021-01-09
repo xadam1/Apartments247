@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using DAL;
+﻿using DAL;
 using DAL.Models;
+using System.Linq;
 
 namespace Infrastructure.Queries
 {
