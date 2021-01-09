@@ -38,8 +38,18 @@ namespace WebAPI.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async void Post(string username, string password, string email)
         {
+            var userDto = new UserCreateDTO()
+            {
+                Username = username,
+                Password = password,
+                Email = email
+            };
+
+            //TODO check valid input
+
+            await _userFacade.RegisterUserAsync(userDto);
         }
 
         /*
