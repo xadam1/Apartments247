@@ -12,9 +12,35 @@ namespace WebAPI.Extras
                 Id = group.Id,
                 UserId = group.UserId,
                 Name = group.Specification.Name,
-                Color = group.Specification.Color,
+                ColorId = group.Specification.ColorId,
+                Color = group.Specification.Color.Name,
                 AddressId = group.Specification.AddressId,
                 Note = group.Specification.Note
+            };
+        }
+
+        public static UnitWithSpecificationModel Convert(Unit unit)
+        {
+            return new UnitWithSpecificationModel()
+            {
+                Id = unit.Id,
+                CurrentCapacity = unit.CurrentCapacity.Value,
+                MaxCapacity = unit.MaxCapacity.Value,
+                Name = unit.Specification.Name,
+                Color = unit.Specification.Color.Name,
+                AddressId = unit.Specification.AddressId,
+                Note = unit.Specification.Note,
+                UnitType = unit.UnitType.Type,
+                ContractLink = unit.ContractLink
+            };
+        }
+
+        public static UnitTypeModel Convert(UnitType unitType)
+        {
+            return new UnitTypeModel()
+            {
+                Id = unitType.Id,
+                Type = unitType.Type,
             };
         }
     }

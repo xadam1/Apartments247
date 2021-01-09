@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApartmentsDbContext))]
-    partial class ApartmentsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210109153919_Kdo_jinému_jámu_kopá_sám_do_ní_padá")]
+    partial class Kdo_jinému_jámu_kopá_sám_do_ní_padá
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -690,7 +692,7 @@ namespace DAL.Migrations
                             CurrentCapacity = 2,
                             MaxCapacity = 4,
                             SpecificationId = 1,
-                            UnitGroupId = 2,
+                            UnitGroupId = 1,
                             UnitTypeId = 1
                         },
                         new

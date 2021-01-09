@@ -1,9 +1,0 @@
-﻿using DAL.Models;
-
-namespace MVC.Models
-{
-    public class ListOfGroupsModel
-    {
-        public UnitGroup[] Groups { get; set; }
-    }
-}
