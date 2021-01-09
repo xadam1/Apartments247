@@ -1,0 +1,22 @@
+﻿@model MVC.Models.ListOfGroupsModel
+
+@{
+    ViewData["Title"] = "Show Groups";
+    var groups = Model.Groups;
+}
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Color</th>
+        <th>Note</th>
+    </tr>
+    @foreach (var group in groups)
+    {
+        <tr>
+            <td>@group.Specification.Name</td>
+            <td>@group.Specification.Color</td>
+            <td>@group.Specification.Note</td>
+            <td><a href="/Delta/Edit/@group.Id">Details</a></td>
+        </tr>
+    }
+ </table>

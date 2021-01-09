@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System;
 using BLL;
+using DAL;
 using DAL.Models;
 using DAL.Extras;
 
@@ -11,7 +12,9 @@ namespace FrontendConsole
         static void Main()
         {
             // Spuštění aplikace
-            new ConsoleApp();
+            //new ConsoleApp();
+            ApartmentsDbContext con = new ApartmentsDbContext();
+            Console.WriteLine(con.UnitTypes.First().Type);
         }
     }
 

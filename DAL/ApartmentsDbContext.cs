@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using DAL.Extras;
 
 namespace DAL
 {
@@ -17,7 +18,7 @@ namespace DAL
 
         public ApartmentsDbContext()
         {
-            _connectionString = _connections["localDb"];
+            _connectionString = _connections["sharedServer"];
         }
 
         public DbSet<User> Users { get; set; }
@@ -31,6 +32,8 @@ namespace DAL
         public DbSet<Specification> Specifications { get; set; }
 
         public DbSet<Equipment> Equipment { get; set; }
+
+        public DbSet<Color> Colors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -90,7 +93,7 @@ namespace DAL
                 .HasForeignKey(u => u.UnitGroupId);
 
             //TODO Vojta
-            //modelBuilder.Seed();
+            modelBuilder.Seed();
         }
     }
 }
