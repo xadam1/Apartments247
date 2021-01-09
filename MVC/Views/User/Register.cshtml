@@ -1,4 +1,4 @@
-﻿@model BLL.DTOs.UserNameEmailPassDTO
+﻿@model BLL.DTOs.UserCreateDTO
 @{
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,15 +17,22 @@
                 <label for=usernameInput>Username</label>
                 @Html.TextBoxFor(m => m.Username, new
                 {
-                    @class = "form-control",
-                    @placeholder = "Terminator689",
-                    @id = "usernameInput"
+                   @class = "form-control",
+                   @placeholder = "Terminator689",
+                   @id = "usernameInput",
+                   @required = true
+
                 })
             </div>
 
             <div class="form-group col-md-6">
                 <label for="">Password</label>
-                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type = "password" })
+                @Html.TextBoxFor(m => m.Password, new
+                {
+                   @class = "form-control",
+                   @type = "password",
+                   @required = true
+                })
             </div>
         </div>
 
@@ -35,7 +42,8 @@
             {
                 @class = "form-control",
                 @placeholder = "FrantaPepa1@gmail.com",
-                @id = "emailInput"
+                @id = "emailInput",
+                @required = true
             })
         </div>
 

@@ -6,7 +6,7 @@ namespace BLL.DTOs
     {
         [StringLength(64)]
         public string Street { get; set; }
-        
+
         [StringLength(64)]
         public string Number { get; set; }
     }

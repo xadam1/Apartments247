@@ -1,13 +1,17 @@
 ﻿using BLL.DTOs;
+using BLL.Facades;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace MVC.Controllers
 {
     public class UserController : Controller
     {
-        public UserController()
-        {
+        private readonly IUserFacade _userFacade;
 
+        public UserController(IUserFacade userFacade)
+        {
+            _userFacade = userFacade;
         }
 
         public ActionResult Register()
@@ -16,10 +20,10 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateUser(UserNameEmailPassDTO userDto)
+        public async Task<ActionResult> CreateUser(UserCreateDTO userDto)
         {
-
-
+            // todo check infa
+            await _userFacade.RegisterUserAsync(userDto);
             return new EmptyResult();
         }
 

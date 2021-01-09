@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BLL.DTOs
+﻿namespace BLL.DTOs
 {
     public class UserNameDTO
     {

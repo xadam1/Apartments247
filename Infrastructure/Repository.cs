@@ -1,14 +1,14 @@
-﻿using System;
+﻿using DAL;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DAL;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public class Repository<TEntity> : IRepository<TEntity> 
+    public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
         private readonly ApartmentsDbContext _context;
@@ -21,12 +21,12 @@ namespace Infrastructure
         #region IRepository Methods
 
         public void Add(TEntity entity)
-        {  
+        {
             _context.Set<TEntity>().Add(entity);
             _context.SaveChanges();
         }
-                
-        public async Task<TEntity> GetByIdAsync(int id) 
+
+        public async Task<TEntity> GetByIdAsync(int id)
             => await _context.Set<TEntity>().FindAsync(id);
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -43,7 +43,7 @@ namespace Infrastructure
             => _context.Set<TEntity>().Remove(entity);
 
         #endregion
-        
+
         public TEntity Find(Expression<Func<TEntity, bool>> predicate)
             => _context.Set<TEntity>().Where(predicate).First();
     }

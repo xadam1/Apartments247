@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="bootstrap" Version="4.5.3" />
     <PackageReference Include="bootstrap.sass" Version="4.5.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
