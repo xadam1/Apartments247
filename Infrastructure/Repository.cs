@@ -40,7 +40,9 @@ namespace Infrastructure
         }
 
         public void Delete(TEntity entity)
-            => _context.Set<TEntity>().Remove(entity);
+        {
+            _context.Set<TEntity>().Remove(entity);
+        }
 
         #endregion
 

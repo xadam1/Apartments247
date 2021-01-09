@@ -1,5 +1,7 @@
 ﻿using BLL.DTOs;
 using System.Collections.Generic;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services
@@ -17,5 +19,7 @@ namespace BLL.Services
         Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync();
 
         Task<UserNameEmailAdminDTO> GetUserAsync(int id);
+
+        HttpStatusCode DeleteUser(int id);
     }
 }

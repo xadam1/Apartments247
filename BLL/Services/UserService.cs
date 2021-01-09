@@ -5,6 +5,7 @@ using Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
@@ -113,6 +114,22 @@ namespace BLL.Services
             var userDb = await _unitOfWork.UserRepository.GetByIdAsync(id);
 
             return _mapper.Map<UserNameEmailAdminDTO>(userDb);
+        }
+
+        public HttpStatusCode DeleteUser(int id)
+        {
+            var taskUser = _unitOfWork.UserRepository.GetByIdAsync(id);
+            taskUser.Wait();
+            var user = taskUser.Result;
+            if (user == null)
+            {
+                // User doesn't exist in db
+                return HttpStatusCode.NoContent;
+            }
+
+            _unitOfWork.UserRepository.Delete(taskUser.Result);
+
+            return HttpStatusCode.OK;
         }
     }
 }
