@@ -10,5 +10,7 @@ namespace BLL.Facades
         Task<UserShowDTO> LoginAsync(UserLoginDTO userLogin);
 
         Task RegisterUserAsync(UserCreateDTO user);
+
+        Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync();
     }
 }

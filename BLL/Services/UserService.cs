@@ -3,6 +3,7 @@ using BLL.DTOs;
 using DAL.Models;
 using Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace BLL.Services
             }
 
             //get user entity
-            var user = await _unitOfWork.UserRepository.GetById(userDto.Id);
+            var user = await _unitOfWork.UserRepository.GetByIdAsync(userDto.Id);
 
             var (hash, salt) = user != null ? GetPassAndSalt(user.Password) : (string.Empty, string.Empty);
 
@@ -95,6 +96,23 @@ namespace BLL.Services
 
                 return Tuple.Create(Convert.ToBase64String(subkey), Convert.ToBase64String(salt));
             }
+        }
+
+        public async Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync()
+        {
+            var query = _unitOfWork.UserQuery;
+            query.GetAllUsers();
+            var usersDb = await query.ExecuteAsync();
+
+            /*var usersDTO = new List<UserNameEmailAdminDTO>();
+            foreach (var userDb in usersDb)
+            {
+                usersDTO.Add(_mapper.Map<UserNameEmailAdminDTO>(userDb));
+            }
+
+            return usersDTO;*/
+
+            return _mapper.Map<IEnumerable<UserNameEmailAdminDTO>>(usersDb);
         }
     }
 }

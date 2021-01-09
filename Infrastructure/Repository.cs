@@ -26,10 +26,10 @@ namespace Infrastructure
             _context.SaveChanges();
         }
                 
-        public async Task<TEntity> GetById(int id) 
+        public async Task<TEntity> GetByIdAsync(int id) 
             => await _context.Set<TEntity>().FindAsync(id);
 
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
             => await _context.Set<TEntity>().ToListAsync();
 
         public void Update(TEntity updatedEntity)

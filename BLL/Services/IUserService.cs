@@ -14,5 +14,7 @@ namespace BLL.Services
         Task<UserShowDTO> AuthorizeUserAsync(UserLoginDTO login);
 
         void RegisterUser(UserCreateDTO user);
+
+        Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync();
     }
 }
