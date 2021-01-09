@@ -1,4 +1,4 @@
-﻿@model MVC.Models.ListOfGroupsModel
+﻿@model MVC.Models.ListGroupsModel
 
 @{
     ViewData["Title"] = "Show Groups";
@@ -10,13 +10,18 @@
         <th>Color</th>
         <th>Note</th>
     </tr>
+    <tr>
+        <td>
+            TODO Vytvořit nový
+        </td>
+    </tr>
     @foreach (var group in groups)
     {
         <tr>
-            <td>@group.Specification.Name</td>
-            <td>@group.Specification.Color</td>
-            <td>@group.Specification.Note</td>
-            <td><a href="/Delta/Edit/@group.Id">Details</a></td>
+            <td>@group.Name</td>
+            <td>@group.Color</td>
+            <td>@group.Note</td>
+            <td>TODO EDIT</td>
         </tr>
     }
  </table>
