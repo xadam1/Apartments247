@@ -24,7 +24,6 @@ namespace WebAPI.Extras
             return new UnitWithSpecificationModel()
             {
                 Id = unit.Id,
-                UnitGroupId = unit.UnitGroupId,
                 CurrentCapacity = unit.CurrentCapacity.Value,
                 MaxCapacity = unit.MaxCapacity.Value,
                 Name = unit.Specification.Name,

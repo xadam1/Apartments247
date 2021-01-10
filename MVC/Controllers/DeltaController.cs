@@ -115,35 +115,17 @@ namespace MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditUnit(int groupId, int unitId = -1)
+        public IActionResult EditUnit(int groupId, int unitId)
         {
             EditUnitModel m = new EditUnitModel();
 
             using (HttpClient client = new HttpClient())
             {
-                if (unitId == -1)
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"GetUnitById?unitId={unitId}").Result)
                 {
-                    m.Unit = new UnitWithSpecificationModel()
-                    {
-                        Id = -1,
-                        Name = "Domeček lásky",
-                        ColorId = 10,
-                        AddressId = -1, // TODO
-                        Note = "Skvělé místo pro zamilované skupiny libovolné arity",
-                        UnitTypeId = 6,
-                        CurrentCapacity = 0,
-                        MaxCapacity = 2,
-                        ContractLink = "nezadáno",
-                    };
-                }
-                else
-                {
-                    using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"GetUnitById?unitId={unitId}").Result)
-                    {
-                        string content = respond.Content.ReadAsStringAsync().Result;
-                        UnitWithSpecificationModel unit = JsonConvert.DeserializeObject<UnitWithSpecificationModel>(content);
-                        m.Unit = unit;
-                    }
+                    string content = respond.Content.ReadAsStringAsync().Result;
+                    UnitWithSpecificationModel unit = JsonConvert.DeserializeObject<UnitWithSpecificationModel>(content);
+                    m.Unit = unit;
                 }
 
                 using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"GetColors").Result)
@@ -153,7 +135,7 @@ namespace MVC.Controllers
                     m.Colors = colors;
                 }
 
-                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"GetUnitTypes").Result)
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"GetColors").Result)
                 {
                     string content = respond.Content.ReadAsStringAsync().Result;
                     UnitTypeModel[] unitTypes = JsonConvert.DeserializeObject<UnitTypeModel[]>(content);
@@ -176,9 +158,7 @@ namespace MVC.Controllers
                     ColorId = colorSelect,
                     Note = note
                 };
-
-                string commandUrl = $"SaveUnitGroup?userId={userId}&groupId={groupId}&name={name}&colorId={colorSelect}&note={note}";
-                using (HttpResponseMessage respond = client.GetAsync(apiUrl + commandUrl).Result)
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"SaveUnitGroup?userId={userId}&groupId={groupId}&name={name}&colorId={colorSelect}&note={note}").Result)
                 {
                     string c = respond.Content.ReadAsStringAsync().Result;
                     groupId = JsonConvert.DeserializeObject<int>(c);
@@ -189,14 +169,13 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveUnit(int unitId, int groupId, string name, int selectColor, string note, int selectUnitType, int currentCapacity, int maxCapacity, string contractLink)
+        public IActionResult SaveUnit(int unitId, string name, int selectColor, string note, int selectUnitType, int currentCapacity, int maxCapacity, string contractLink)
         {
             using (HttpClient client = new HttpClient())
             {
                 UnitWithSpecificationModel m = new UnitWithSpecificationModel()
                 {
                     Id = unitId,
-                    UnitGroupId = groupId,
                     Name = name,
                     ColorId = selectColor,
                     AddressId = -1, // TODO!!!!
@@ -206,15 +185,14 @@ namespace MVC.Controllers
                     MaxCapacity = maxCapacity,
                     ContractLink = contractLink
                 };
-                string commandUrl = $"SaveUnit?groupId={groupId}&unitId={unitId}&name={name}&colorId={selectColor}&note={note}&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}&contractLink={contractLink}";
-                using (HttpResponseMessage respond = client.GetAsync(apiUrl + commandUrl).Result)
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"Sigma/unitId={unitId}&name={name}&colorId={selectColor}&note={note}&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}&contractLink={contractLink}").Result)
                 {
                     string content = respond.Content.ReadAsStringAsync().Result;
-                    unitId = JsonConvert.DeserializeObject<int>(content);
+                    // deserialize result
                 }
             }
 
-            return RedirectToAction($"EditUnit", "Delta", new { unitId = unitId });
+                return RedirectToAction();
         }
     }
 }

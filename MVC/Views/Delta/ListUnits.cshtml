@@ -58,7 +58,7 @@ else
     </tr>
     <tr>
         <td>
-            <a href="/Delta/EditUnit?groupId=@groupId&unitId=-1"><button type="button">Create new unit in this group</button></a>
+            TODO Create Unit
         </td>
     </tr>
     @foreach (var unit in units)
@@ -71,7 +71,7 @@ else
         <td>@unit.CurrentCapacity</td>
         <td>@unit.MaxCapacity</td>
         <td>@unit.ContractLink</td>
-        <td><a href="/Delta/EditUnit?groupId=@groupId&unitId=@unit.Id"><button type="button">Show details</button></a></td>
+        <td><a href="/Delta/EditUnit?groupId=@groupId&unitId=@unit.Id"></a></td>
     </tr>
             }
 </table>
