@@ -162,14 +162,24 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveUnit(int groupId, int unitId, string name, int selectColor, string note)
+        public IActionResult SaveUnit(int unitId, string name, int selectColor, string note)
         {
             using (HttpClient client = new HttpClient())
             {
+                /*
                 UnitWithSpecificationModel m = new UnitWithSpecificationModel()
                 {
-
-                };
+                    Id = unitId,
+        Name = name,
+        ColorId = selectColor,
+        AddressId
+        public string Note { get; set; }
+        public string UnitType { get; set; }
+        public int CurrentCapacity { get; set; }
+        public int MaxCapacity { get; set; }
+        public string ContractLink { get; set; }
+    };
+                */
             }
 
                 return RedirectToAction();
