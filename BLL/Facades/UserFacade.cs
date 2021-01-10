@@ -28,14 +28,14 @@ namespace BLL.Facades
             return httpStatusCode;
         }
 
-        public async Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserIdNameEmailAdminDTO>> GetAllUsersAsync()
         {
             return await _userService.GetAllUsersAsync();
         }
 
-        public async Task<UserNameEmailAdminDTO> GetUserAsync(int id)
+        public async Task<TDto> GetUserAsync<TDto>(int id)
         {
-            return await _userService.GetUserAsync(id);
+            return await _userService.GetUserAsync<TDto>(id);
         }
 
         public async Task<UserShowDTO> LoginAsync(UserLoginDTO userLogin)
@@ -52,6 +52,12 @@ namespace BLL.Facades
         public async Task RegisterUserAsync(UserCreateDTO user)
         {
             _userService.RegisterUser(user);
+            await _unitOfWork.CommitAsync();
+        }
+
+        public async Task UpdateUserAsync(int id, UserNamePasswordEmailAdminDTO userDto)
+        {
+            await _userService.UpdateUserAsync(id, userDto);
             await _unitOfWork.CommitAsync();
         }
     }

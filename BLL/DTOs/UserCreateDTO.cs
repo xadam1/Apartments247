@@ -4,8 +4,6 @@ namespace BLL.DTOs
 {
     public class UserCreateDTO
     {
-        public int Id { get; set; }
-
         [Required]
         public string Username { get; set; }
 
