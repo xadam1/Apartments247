@@ -16,7 +16,7 @@ namespace MVC.Controllers
     public class DeltaController : Controller
     {
         private const int userId = 1;
-        private const string apiUrl = "http://localhost:5000/Sigma/";
+        private const string apiUrl = "http://cassiopeia.serveirc.com:5000/";
 
         public IActionResult Index()
         {
@@ -115,9 +115,35 @@ namespace MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditUnit(int id, string name, string unitTypeString, string note, string currentCapacityString, string maxCapacityString, string colorString)
+        public IActionResult EditUnit(int groupId, int unitId)
         {
-            return View();
+            EditUnitModel m = new EditUnitModel();
+
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"GetUnitById?unitId={unitId}").Result)
+                {
+                    string content = respond.Content.ReadAsStringAsync().Result;
+                    UnitWithSpecificationModel unit = JsonConvert.DeserializeObject<UnitWithSpecificationModel>(content);
+                    m.Unit = unit;
+                }
+
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"GetColors").Result)
+                {
+                    string content = respond.Content.ReadAsStringAsync().Result;
+                    Color[] colors = JsonConvert.DeserializeObject<Color[]>(content);
+                    m.Colors = colors;
+                }
+
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"GetColors").Result)
+                {
+                    string content = respond.Content.ReadAsStringAsync().Result;
+                    UnitTypeModel[] unitTypes = JsonConvert.DeserializeObject<UnitTypeModel[]>(content);
+                    m.UnitTypes = unitTypes;
+                }
+            }
+
+            return View(m);
         }
 
         [HttpPost]
@@ -140,6 +166,33 @@ namespace MVC.Controllers
             }
 
             return RedirectToAction($"EditGroup", "Delta", new { groupId = groupId });
+        }
+
+        [HttpPost]
+        public IActionResult SaveUnit(int unitId, string name, int selectColor, string note, int selectUnitType, int currentCapacity, int maxCapacity, string contractLink)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                UnitWithSpecificationModel m = new UnitWithSpecificationModel()
+                {
+                    Id = unitId,
+                    Name = name,
+                    ColorId = selectColor,
+                    AddressId = -1, // TODO!!!!
+                    Note = note,
+                    UnitTypeId = selectUnitType,
+                    CurrentCapacity = currentCapacity,
+                    MaxCapacity = maxCapacity,
+                    ContractLink = contractLink
+                };
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"Sigma/unitId={unitId}&name={name}&colorId={selectColor}&note={note}&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}&contractLink={contractLink}").Result)
+                {
+                    string content = respond.Content.ReadAsStringAsync().Result;
+                    // deserialize result
+                }
+            }
+
+                return RedirectToAction();
         }
     }
 }
