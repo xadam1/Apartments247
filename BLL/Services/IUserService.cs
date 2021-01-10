@@ -10,8 +10,6 @@ namespace BLL.Services
     {
         void Create(UserCreateDTO user);
 
-        Task<UserShowDTO> GetUserAccordingToEmailAsync(string name);
-
         Task<UserShowDTO> AuthorizeUserAsync(UserLoginDTO login);
 
         void RegisterUser(UserCreateDTO user);
