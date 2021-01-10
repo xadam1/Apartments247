@@ -7,32 +7,36 @@
 <h1>Login</h1>
 <br />
 
-<div class="row">
-    <div class="col s12">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+@using (Html.BeginForm("Login", "Users"))
+{
+    @Html.AntiForgeryToken()
 
-            <p class="text-red">@Html.ValidationSummary(false, "")</p>
+    <p class="text-warning align-content-lg-center">@Html.ValidationSummary(false, "")</p>
 
-            <div class="row valign-wrapper">
-                <div class="col s12 l4">Email:</div>
+    <!-- Center Form -->
+    <div class="col-md-5">
+        <div class="form-group">
+            <label for=emailInput>Email</label>
+            @Html.TextBoxFor(m => m.Email, new
+            {
+                @class = "form-control",
+                @placeholder = "Login *",
+                @id = "emailInput",
+                @required = true
+            })
+        </div>
 
-                <div class="input-field col s12 l8">
-                    @Html.TextBoxFor(model => model.Email, new { placeholder = "Email", required = true })
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="">Password</label>
+            @Html.TextBoxFor(m => m.Password, new
+            {
+                @class = "form-control",
+                @placeholder = "Password",
+                @type = "password",
+                @required = true
+            })
+        </div>
 
-            <div class="row valign-wrapper">
-                <div class="col s12 l4">Password:</div>
-                <div class="input-field col s12 l8">
-                    @Html.PasswordFor(model => model.Password, new { placeholder = "Password", required = true })
-                </div>
-            </div>
-
-            <div class="row">
-                <input type="submit" value="Log In" class="btn orange col s12" />
-            </div>
-        }
+        <button type="submit" class="btn btn-primary col-md-3">Log In</button>
     </div>
-</div>
+}
