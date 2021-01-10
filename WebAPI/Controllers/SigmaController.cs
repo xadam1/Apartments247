@@ -95,14 +95,14 @@ namespace WebAPI.Controllers
                 {
                     Name = name,
                     ColorId = colorId,
-                    Note = note
+                    Note = note,
+                    AddressId = -1, // TODO
                 };
-
+                
                 group = new UnitGroup()
                 {
-                    Id = groupId,
                     UserId = userId,
-                    Specification = spec
+                    Specification = spec,
                 };
 
                 con.UnitGroups.Add(group);
@@ -120,6 +120,50 @@ namespace WebAPI.Controllers
             return group.Id;
         }
 
-        // Save Unit
+        [HttpGet]
+        [Route("SaveUnit")]
+        public int SaveUnit(int groupId, int unitId, string name, int colorId, string note, int unitTypeId, int currentCapacity, int maxCapacity, string contractLink)
+        {
+            Unit unit = con.Units.Where(unit => unit.Id == unitId).FirstOrDefault();
+
+            if (unit == null)
+            {
+                Specification spec = new Specification()
+                {
+                    Name = name,
+                    ColorId = colorId,
+                    AddressId = -1, // TODO
+                    Note = note,
+                };
+
+                unit = new Unit()
+                {
+                    Specification = spec,
+                    UnitGroupId = groupId,
+                    UnitTypeId = unitTypeId,
+                    CurrentCapacity = currentCapacity,
+                    MaxCapacity = maxCapacity,
+                    ContractLink = contractLink,
+                };
+
+                con.Units.Add(unit);
+            }
+            else
+            {
+                unit.Specification.Name = name;
+                unit.Specification.ColorId = colorId;
+                unit.Specification.Note = note;
+                unit.UnitTypeId = unitTypeId;
+                unit.CurrentCapacity = currentCapacity;
+                unit.MaxCapacity = maxCapacity;
+                unit.ContractLink = contractLink;
+
+                con.Units.Update(unit);
+            }
+
+            con.SaveChanges();
+
+            return unit.Id;
+        }
     }
 }

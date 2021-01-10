@@ -28,7 +28,26 @@
     <label>Note</label><br />
     <input type="text" name="note" value="@unit.Note"><br />
 
+    <label>UnitType</label><br />
+    <select name="selectUnitType">
+        @foreach (var unitType in unitTypes)
+        {
+            <option id="unitType_@unitType.Id" value="@unitType.Id">@unitType.Type</option>
+        }
+    </select><br />
+
+    <script>
+        document.getElementById("unitType_@unit.UnitTypeId").selected = true;
+    </script>
+
+    <label>CurrentCapacity</label><br />
+    <input type="text" name="currentCapacity" value="@unit.CurrentCapacity" /><br />
+
+    <label>MaxCapacity</label><br />
+    <input type="text" name="maxCapacity" value="@unit.MaxCapacity" /><br />
+
     <input type="hidden" name="unitId" value="@unit.Id" />
+    <input type="hidden" name="groupId" value="@unit.UnitGroupId" />
 
     <input type="submit" value="Save"/>
 </form>
