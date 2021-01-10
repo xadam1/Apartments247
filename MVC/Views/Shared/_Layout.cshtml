@@ -65,25 +65,29 @@
 
             <div class="collapse navbar-collapse" id="navbarColor01" wfd-id="462">
                 <ul class="navbar-nav mr-auto" wfd-id="464">
-                    <li class="nav-item active" wfd-id="470">
+                    <!--<li class="nav-item active" wfd-id="470">
                         <a class="nav-link" asp-controller="Delta" asp-action="Overview">
                             Home
                             <span class="sr-only" wfd-id="471">(current)</span>
                         </a>
-                    </li>
+                    </li>-->
 
                     <li class="nav-item" wfd-id="469">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" asp-controller="Delta" asp-action="ListGroups">My Unit Groups</a>
                     </li>
 
                     <li class="nav-item" wfd-id="468">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <a class="nav-link" asp-controller="Delta" asp-action="ListUnits">My Units</a>
                     </li>
 
                     <li class="nav-item" wfd-id="467">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" asp-controller="Delta" asp-action="EditGroup">Edit Group</a>
                     </li>
-                    <li class="nav-item dropdown" wfd-id="465">
+
+                    <li class="nav-item" wfd-id="465">
+                        <a class="nav-link" asp-controller="Delta" asp-action="EditUnit">Edit Unit</a>
+                    </li>
+                    <!--<li class="nav-item dropdown" wfd-id="465">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                         <div class="dropdown-menu" wfd-id="466">
                             <a class="dropdown-item" href="#">Action</a>
@@ -93,6 +97,7 @@
                             <a class="dropdown-item" href="#">Separated link</a>
                         </div>
                     </li>
+                                        -->
                 </ul>
                 <!--
                 <form class="form-inline my-2 my-lg-0" wfd-id="463">
