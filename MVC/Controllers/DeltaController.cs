@@ -16,7 +16,7 @@ namespace MVC.Controllers
     public class DeltaController : Controller
     {
         private const int userId = 1;
-        private const string apiUrl = "http://cassiopeia.serveirc.com:5000/";
+        private const string apiUrl = "http://cassiopeia.serveirc.com:5000/Sigma/";
 
         public IActionResult Index()
         {
