@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using DAL.Extras;
 using DAL.Models;
+using WebAPI.Models;
 
 namespace MVC.Models
 {
     public class EditUnitModel
     {
-        public UnitType[] UnitTypes { get; set; }
+        public UnitWithSpecificationModel Unit { get; set; }
         public Color[] Colors { get; set; }
     }
 }

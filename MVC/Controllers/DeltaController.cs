@@ -16,7 +16,7 @@ namespace MVC.Controllers
     public class DeltaController : Controller
     {
         private const int userId = 1;
-        private const string apiUrl = "http://localhost:5000/Sigma/";
+        private const string apiUrl = "http://cassiopeia.serveirc.com:5000/";
 
         public IActionResult Index()
         {
@@ -115,9 +115,28 @@ namespace MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditUnit(int id, string name, string unitTypeString, string note, string currentCapacityString, string maxCapacityString, string colorString)
+        public IActionResult EditUnit(int groupId, int unitId)
         {
-            return View();
+            EditUnitModel m = new EditUnitModel();
+
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"GetUnitById?unitId={unitId}").Result)
+                {
+                    string content = respond.Content.ReadAsStringAsync().Result;
+                    UnitWithSpecificationModel unit = JsonConvert.DeserializeObject<UnitWithSpecificationModel>(content);
+                    m.Unit = unit;
+                }
+
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"GetColors").Result)
+                {
+                    string content = respond.Content.ReadAsStringAsync().Result;
+                    Color[] colors = JsonConvert.DeserializeObject<Color[]>(content);
+                    m.Colors = colors;
+                }
+            }
+
+            return View(m);
         }
 
         [HttpPost]
@@ -140,6 +159,20 @@ namespace MVC.Controllers
             }
 
             return RedirectToAction($"EditGroup", "Delta", new { groupId = groupId });
+        }
+
+        [HttpPost]
+        public IActionResult SaveUnit(int groupId, int unitId, string name, int selectColor, string note)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                UnitWithSpecificationModel m = new UnitWithSpecificationModel()
+                {
+
+                };
+            }
+
+                return RedirectToAction();
         }
     }
 }

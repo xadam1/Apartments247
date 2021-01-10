@@ -1,5 +1,33 @@
-﻿@{ 
+﻿@model MVC.Models.EditUnitModel
+
+@{ 
     ViewData["Title"] = "Edit Unit";
+    var unit = Model.Unit;
+    var colors = Model.Colors;
 }
 
 <h3>Edit Unit</h3>
+
+<form action="/Delta/SaveUnit" method="post">
+    <label>Name</label><br />
+    <input type="text" name="name" value="@unit.Name"/><br />
+
+    <label>Color</label><br />
+    <select id="selectColor" name="selectColor">
+        @foreach (var color in colors)
+        {
+            <option value="@color.Id">@color.Name</option>
+        }
+    </select><br />
+
+
+    <label>TODO Address</label><br />
+    <input type="text" value="TODO nefunguje" /><br />
+
+    <label>Note</label><br />
+    <input type="text" name="note" value="@unit.Note"><br />
+
+    <input type="hidden" name="groupId" />
+
+    <input type="submit" value="Save"/>
+</form>
