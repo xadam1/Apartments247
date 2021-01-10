@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class _1 : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -170,6 +170,29 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MonthlyCost",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    CostType = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UnitId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MonthlyCost", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MonthlyCost_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Photo",
                 columns: table => new
                 {
@@ -179,7 +202,6 @@ namespace DAL.Migrations
                     Path = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     DateTimeUploaded = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UnitId = table.Column<int>(type: "int", nullable: false),
-                    UnitId1 = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -188,12 +210,6 @@ namespace DAL.Migrations
                     table.ForeignKey(
                         name: "FK_Photo_Units_UnitId",
                         column: x => x.UnitId,
-                        principalTable: "Units",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Photo_Units_UnitId1",
-                        column: x => x.UnitId1,
                         principalTable: "Units",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -364,29 +380,29 @@ namespace DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "Photo",
-                columns: new[] { "Id", "DateTimeUploaded", "Description", "Name", "Path", "UnitId", "UnitId1" },
+                columns: new[] { "Id", "DateTimeUploaded", "Description", "Name", "Path", "UnitId" },
                 values: new object[,]
                 {
-                    { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Výhled z okna", "Okno", "/", 4, null },
-                    { 8, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Výhled na široké okolí", "Rozhledna", "/", 8, null },
-                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aparatura k vaření perníku", "Kuchyně", "/", 3, null },
-                    { 7, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pokoj s postelí a nočním stolkem", "Hotelový pokoj", "/", 7, null },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Janči odnášející mrtvolu do sklepa", "Schody do sklepa", "/", 2, null },
-                    { 6, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Zde se trápí hladem zlobivé děti", "Hladomorna", "/", 6, null },
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Krásná fotografie obýváku", "Obývák", "/", 1, null },
-                    { 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dětské hřiště před domem", "Hřiště", "/", 5, null },
-                    { 9, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Kovář kovající podkovu", "Kovárna", "/", 9, null }
+                    { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Výhled z okna", "Okno", "/", 4 },
+                    { 8, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Výhled na široké okolí", "Rozhledna", "/", 8 },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aparatura k vaření perníku", "Kuchyně", "/", 3 },
+                    { 7, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pokoj s postelí a nočním stolkem", "Hotelový pokoj", "/", 7 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Janči odnášející mrtvolu do sklepa", "Schody do sklepa", "/", 2 },
+                    { 6, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Zde se trápí hladem zlobivé děti", "Hladomorna", "/", 6 },
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Krásná fotografie obýváku", "Obývák", "/", 1 },
+                    { 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Dětské hřiště před domem", "Hřiště", "/", 5 },
+                    { 9, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Kovář kovající podkovu", "Kovárna", "/", 9 }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MonthlyCost_UnitId",
+                table: "MonthlyCost",
+                column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Photo_UnitId",
                 table: "Photo",
                 column: "UnitId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Photo_UnitId1",
-                table: "Photo",
-                column: "UnitId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Specifications_AddressId",
@@ -433,6 +449,9 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "MonthlyCost");
+
             migrationBuilder.DropTable(
                 name: "Photo");
 

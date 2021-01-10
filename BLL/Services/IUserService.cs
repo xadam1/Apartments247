@@ -10,16 +10,16 @@ namespace BLL.Services
     {
         void Create(UserCreateDTO user);
 
-        Task<UserShowDTO> GetUserAccordingToEmailAsync(string name);
-
         Task<UserShowDTO> AuthorizeUserAsync(UserLoginDTO login);
 
         void RegisterUser(UserCreateDTO user);
 
-        Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync();
+        Task<IEnumerable<UserIdNameEmailAdminDTO>> GetAllUsersAsync();
 
-        Task<UserNameEmailAdminDTO> GetUserAsync(int id);
+        Task<TDto> GetUserAsync<TDto>(int id);
 
         HttpStatusCode DeleteUser(int id);
+
+        Task UpdateUserAsync(int id, UserNamePasswordEmailAdminDTO userDto);
     }
 }

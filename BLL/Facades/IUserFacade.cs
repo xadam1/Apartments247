@@ -12,10 +12,12 @@ namespace BLL.Facades
 
         Task RegisterUserAsync(UserCreateDTO user);
 
-        Task<IEnumerable<UserNameEmailAdminDTO>> GetAllUsersAsync();
+        Task<IEnumerable<UserIdNameEmailAdminDTO>> GetAllUsersAsync();
 
-        Task<UserNameEmailAdminDTO> GetUserAsync(int id);
+        Task<TDto> GetUserAsync<TDto>(int id);
 
         HttpStatusCode DeleteUser(int id);
+
+        Task UpdateUserAsync(int id, UserNamePasswordEmailAdminDTO userDto);
     }
 }

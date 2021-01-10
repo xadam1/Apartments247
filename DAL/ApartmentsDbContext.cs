@@ -56,11 +56,15 @@ namespace DAL
                 .WithMany(equipment => equipment.Units)
                 .UsingEntity(j => j.ToTable("UnitEquipment"));
 
-            modelBuilder.Entity<Unit>()
+            /*modelBuilder.Entity<Unit>()
                 .HasMany(unit => unit.Photos)
                 .WithOne()
                 .HasForeignKey(photo => photo.UnitId);
 
+            modelBuilder.Entity<Unit>()
+                .HasMany(unit => unit.MonthlyCosts)
+                .WithOne()
+                .HasForeignKey(cost => cost.UnitId);*/
 
             // UnitGroup
             modelBuilder.Entity<UnitGroup>()

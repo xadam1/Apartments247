@@ -358,6 +358,36 @@ namespace DAL.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DAL.Models.MonthlyCost", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("CostType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("MonthlyCost");
+                });
+
             modelBuilder.Entity("DAL.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -383,14 +413,9 @@ namespace DAL.Migrations
                     b.Property<int>("UnitId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UnitId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UnitId");
-
-                    b.HasIndex("UnitId1");
 
                     b.ToTable("Photo");
 
@@ -1017,18 +1042,24 @@ namespace DAL.Migrations
                     b.ToTable("UnitEquipment");
                 });
 
-            modelBuilder.Entity("DAL.Models.Photo", b =>
+            modelBuilder.Entity("DAL.Models.MonthlyCost", b =>
                 {
-                    b.HasOne("DAL.Models.Unit", null)
-                        .WithMany("Photos")
+                    b.HasOne("DAL.Models.Unit", "Unit")
+                        .WithMany("MonthlyCosts")
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("DAL.Models.Photo", b =>
+                {
                     b.HasOne("DAL.Models.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId1")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany("Photos")
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Unit");
                 });
@@ -1115,6 +1146,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Unit", b =>
                 {
+                    b.Navigation("MonthlyCosts");
+
                     b.Navigation("Photos");
                 });
 
