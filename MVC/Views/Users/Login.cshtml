@@ -1,0 +1,38 @@
+﻿@model BLL.DTOs.UserLoginDTO
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Login</h1>
+<br />
+
+<div class="row">
+    <div class="col s12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <p class="text-red">@Html.ValidationSummary(false, "")</p>
+
+            <div class="row valign-wrapper">
+                <div class="col s12 l4">Email:</div>
+
+                <div class="input-field col s12 l8">
+                    @Html.TextBoxFor(model => model.Email, new { placeholder = "Email", required = true })
+                </div>
+            </div>
+
+            <div class="row valign-wrapper">
+                <div class="col s12 l4">Password:</div>
+                <div class="input-field col s12 l8">
+                    @Html.PasswordFor(model => model.Password, new { placeholder = "Password", required = true })
+                </div>
+            </div>
+
+            <div class="row">
+                <input type="submit" value="Log In" class="btn orange col s12" />
+            </div>
+        }
+    </div>
+</div>
