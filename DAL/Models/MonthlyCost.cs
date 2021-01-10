@@ -1,6 +1,7 @@
 ﻿using DAL.Extras;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -14,5 +15,8 @@ namespace DAL.Models
         public CostType CostType { get; set; }
 
         public DateTime Date { get; set; }
+
+        public int UnitId { get; set; }
+        public virtual Unit Unit { get; set; }
     }
 }
