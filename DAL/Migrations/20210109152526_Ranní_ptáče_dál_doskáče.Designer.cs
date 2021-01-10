@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApartmentsDbContext))]
-    partial class ApartmentsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210109152526_Ranní_ptáče_dál_doskáče")]
+    partial class Ranní_ptáče_dál_doskáče
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,15 +198,6 @@ namespace DAL.Migrations
                             State = "San Francisko",
                             Street = "-",
                             Zip = "-"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            City = "Stockholm",
-                            Number = "6a",
-                            State = "Švédsko",
-                            Street = "Brigádnická",
-                            Zip = "548 02"
                         });
                 });
 
@@ -358,36 +351,6 @@ namespace DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DAL.Models.MonthlyCost", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("CostType")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UnitId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("MonthlyCost");
-                });
-
             modelBuilder.Entity("DAL.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -413,9 +376,14 @@ namespace DAL.Migrations
                     b.Property<int>("UnitId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UnitId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UnitId");
+
+                    b.HasIndex("UnitId1");
 
                     b.ToTable("Photo");
 
@@ -601,14 +569,6 @@ namespace DAL.Migrations
                         },
                         new
                         {
-                            Id = 17,
-                            AddressId = 17,
-                            ColorId = 5,
-                            Name = "Workout hřiště Hroch",
-                            Note = "Hřiště pro posilování a řeka pro otužování"
-                        },
-                        new
-                        {
                             Id = 9,
                             AddressId = 9,
                             ColorId = 5,
@@ -715,7 +675,7 @@ namespace DAL.Migrations
                             CurrentCapacity = 2,
                             MaxCapacity = 4,
                             SpecificationId = 1,
-                            UnitGroupId = 2,
+                            UnitGroupId = 1,
                             UnitTypeId = 1
                         },
                         new
@@ -751,7 +711,7 @@ namespace DAL.Migrations
                             CurrentCapacity = 7,
                             MaxCapacity = 7,
                             SpecificationId = 5,
-                            UnitGroupId = 2,
+                            UnitGroupId = 1,
                             UnitTypeId = 4
                         },
                         new
@@ -769,7 +729,7 @@ namespace DAL.Migrations
                             CurrentCapacity = 1,
                             MaxCapacity = 1,
                             SpecificationId = 7,
-                            UnitGroupId = 1,
+                            UnitGroupId = 3,
                             UnitTypeId = 2
                         },
                         new
@@ -778,17 +738,8 @@ namespace DAL.Migrations
                             CurrentCapacity = 0,
                             MaxCapacity = 2,
                             SpecificationId = 8,
-                            UnitGroupId = 1,
+                            UnitGroupId = 4,
                             UnitTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CurrentCapacity = 50,
-                            MaxCapacity = 51,
-                            SpecificationId = 17,
-                            UnitGroupId = 1,
-                            UnitTypeId = 11
                         },
                         new
                         {
@@ -796,7 +747,7 @@ namespace DAL.Migrations
                             CurrentCapacity = 3,
                             MaxCapacity = 5,
                             SpecificationId = 9,
-                            UnitGroupId = 2,
+                            UnitGroupId = 1,
                             UnitTypeId = 8
                         },
                         new
@@ -939,11 +890,6 @@ namespace DAL.Migrations
                         {
                             Id = 10,
                             Type = "Vojenská věznice"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Type = "Workout hřiště"
                         });
                 });
 
@@ -1042,24 +988,18 @@ namespace DAL.Migrations
                     b.ToTable("UnitEquipment");
                 });
 
-            modelBuilder.Entity("DAL.Models.MonthlyCost", b =>
-                {
-                    b.HasOne("DAL.Models.Unit", "Unit")
-                        .WithMany("MonthlyCosts")
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Unit");
-                });
-
             modelBuilder.Entity("DAL.Models.Photo", b =>
                 {
-                    b.HasOne("DAL.Models.Unit", "Unit")
+                    b.HasOne("DAL.Models.Unit", null)
                         .WithMany("Photos")
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("DAL.Models.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId1")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Unit");
                 });
@@ -1146,8 +1086,6 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Unit", b =>
                 {
-                    b.Navigation("MonthlyCosts");
-
                     b.Navigation("Photos");
                 });
 
