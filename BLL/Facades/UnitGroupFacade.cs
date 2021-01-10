@@ -1,29 +1,17 @@
-﻿using BLL.DTOs;
-using BLL.Services;
+﻿using BLL.Services;
 using Infrastructure;
-using System.Threading.Tasks;
 
 namespace BLL.Facades
 {
     public class UnitGroupFacade : IUnitGroupFacade
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUnitGroupService _unitGroupService;
+        private readonly IUserService _userService;
 
-        public UnitGroupFacade(IUnitOfWork unitOfWork, IUnitGroupService unitGroupService)
+        public UnitGroupFacade(IUnitOfWork unitOfWork, IUserService userService)
         {
             _unitOfWork = unitOfWork;
-            _unitGroupService = unitGroupService;
-        }
-
-        public async Task<T[]> GetUnitGroupNamesByUserId<T>(int id)
-        {
-            return await _unitGroupService.GetUnitGroupNamesByUserId<T>(id);
-        }
-
-        public async Task<T[]> GetUnitGroupsByUserIdAsync<T>(int id)
-        {
-            return await _unitGroupService.GetUnitGroupsByUserIdAsync<T>(id);
+            _userService = userService;
         }
 
         /*public Task<Dictionary<UnitGroupNameDto, List<UnitNameDto>>> GetAllUsersUnitGroupsWithUnits()

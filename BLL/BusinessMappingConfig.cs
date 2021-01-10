@@ -24,7 +24,6 @@ namespace BLL
             config.CreateMap<Unit, UnitTypeDTO>().ReverseMap();
 
             config.CreateMap<UnitGroup, UnitGroupSpecificationUnitsDTO>().ReverseMap();
-            config.CreateMap<UnitGroup, UnitGroupDTO>().ReverseMap();
 
             config.CreateMap<UnitType, UnitTypeDTO>().ReverseMap();
 
