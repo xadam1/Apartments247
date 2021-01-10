@@ -142,7 +142,7 @@ namespace WebAPI.Controllers
         [Route("SaveUnit")]
         public int SaveUnit(int groupId, int unitId, string name, int colorId, string note, int unitTypeId, int currentCapacity, int maxCapacity, string contractLink)
         {
-            /*Unit unit = con.Units.Where(unit => unit.Id == unitId).FirstOrDefault();
+            Unit unit = con.Units.Where(unit => unit.Id == unitId).FirstOrDefault();
 
             if (unit == null)
             {
@@ -181,8 +181,7 @@ namespace WebAPI.Controllers
 
             con.SaveChanges();
 
-            return unit.Id;*/
-            return 1;
+            return unit.Id;
         }
     }
 }
