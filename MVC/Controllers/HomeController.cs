@@ -6,8 +6,7 @@ namespace MVC.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("EditGroup", "Delta");
-            //return RedirectToAction("Overview", "Delta");
+            return RedirectToAction("Overview", "Delta");
         }
     }
 }

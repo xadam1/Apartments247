@@ -134,6 +134,13 @@ namespace MVC.Controllers
                     Color[] colors = JsonConvert.DeserializeObject<Color[]>(content);
                     m.Colors = colors;
                 }
+
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"GetColors").Result)
+                {
+                    string content = respond.Content.ReadAsStringAsync().Result;
+                    UnitTypeModel[] unitTypes = JsonConvert.DeserializeObject<UnitTypeModel[]>(content);
+                    m.UnitTypes = unitTypes;
+                }
             }
 
             return View(m);
@@ -162,24 +169,27 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveUnit(int unitId, string name, int selectColor, string note)
+        public IActionResult SaveUnit(int unitId, string name, int selectColor, string note, int selectUnitType, int currentCapacity, int maxCapacity, string contractLink)
         {
             using (HttpClient client = new HttpClient())
             {
-                /*
                 UnitWithSpecificationModel m = new UnitWithSpecificationModel()
                 {
                     Id = unitId,
-        Name = name,
-        ColorId = selectColor,
-        AddressId
-        public string Note { get; set; }
-        public string UnitType { get; set; }
-        public int CurrentCapacity { get; set; }
-        public int MaxCapacity { get; set; }
-        public string ContractLink { get; set; }
-    };
-                */
+                    Name = name,
+                    ColorId = selectColor,
+                    AddressId = -1, // TODO!!!!
+                    Note = note,
+                    UnitTypeId = selectUnitType,
+                    CurrentCapacity = currentCapacity,
+                    MaxCapacity = maxCapacity,
+                    ContractLink = contractLink
+                };
+                using (HttpResponseMessage respond = client.GetAsync(apiUrl + $"Sigma/unitId={unitId}&name={name}&colorId={selectColor}&note={note}&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}&contractLink={contractLink}").Result)
+                {
+                    string content = respond.Content.ReadAsStringAsync().Result;
+                    // deserialize result
+                }
             }
 
                 return RedirectToAction();
