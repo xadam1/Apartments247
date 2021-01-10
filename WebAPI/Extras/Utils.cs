@@ -27,9 +27,11 @@ namespace WebAPI.Extras
                 CurrentCapacity = unit.CurrentCapacity.Value,
                 MaxCapacity = unit.MaxCapacity.Value,
                 Name = unit.Specification.Name,
+                ColorId = unit.Specification.ColorId,
                 Color = unit.Specification.Color.Name,
                 AddressId = unit.Specification.AddressId,
                 Note = unit.Specification.Note,
+                UnitTypeId = unit.UnitTypeId,
                 UnitType = unit.UnitType.Type,
                 ContractLink = unit.ContractLink
             };
