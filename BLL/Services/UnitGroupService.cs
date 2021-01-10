@@ -1,5 +1,9 @@
 ﻿using AutoMapper;
+using BLL.DTOs;
 using Infrastructure;
+using Infrastructure.Queries;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -14,6 +18,18 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
+        public async Task<T[]> GetUnitGroupNamesByUserId<T>(int id)
+        {
+            var query = _unitOfWork.UnitGroupsWithUsersWithSpecificationsQuery.FilterByUserId(id);
+            var unitGroups = await query.ExecuteAsync();
+            return _mapper.Map<T[]>(unitGroups);
+        }
 
+        public async Task<T[]> GetUnitGroupsByUserIdAsync<T>(int id)
+        {
+            var query = _unitOfWork.UnitGroupsWithUsersQuery.FilterByUserId(id);
+            var unitGroups = await query.ExecuteAsync();
+            return _mapper.Map<T[]>(unitGroups);
+        }
     }
 }
