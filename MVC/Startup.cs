@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace MVC
 {
@@ -22,11 +23,23 @@ namespace MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Added
+            services.AddSession(options =>
+            {
+                //sessions hold for 20 minutes
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+            });
+            #endregion
+
             services.AddControllersWithViews();
+
+            #region Added
+            services.AddRazorPages();
 
             //cookie authorization
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(o => o.LoginPath = new PathString("/User/Login"));
+            #endregion
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -56,6 +69,12 @@ namespace MVC
 
             app.UseRouting();
 
+            #region Added
+            app.UseCookiePolicy();
+            app.UseSession();
+            app.UseAuthentication();
+            #endregion
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -63,6 +82,7 @@ namespace MVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

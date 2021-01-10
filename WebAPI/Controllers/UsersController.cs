@@ -81,6 +81,8 @@ namespace WebAPI.Controllers
                 user.IsAdmin = newIsAdmin;
             }
 
+            //TODO check valid input
+
             _userFacade.UpdateUserAsync(userToBeChangedId, user).Wait();
         }
 
