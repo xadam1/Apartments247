@@ -25,42 +25,28 @@ namespace MVC.Controllers
                 UserId = userId,
                 GroupId = groupId,
                 CreateNew = createNew,
+                Colors = Utils.GetColors(),
             };
 
-            using (HttpClient client = new HttpClient())
+            if (createNew)
             {
-                if (createNew)
+                m.Group = new UnitGroupWithSpecificationModel()
                 {
-                    m.Group = new UnitGroupWithSpecificationModel()
-                    {
-                        Id = -1,
-                        UserId = userId,
-                        Name = "Výzkumné středisko CERN",
-                        ColorId = 7,
-                        Note = "Hadronový urychlovač částic a další věci",
-                        State = "state",
-                        City = "city",
-                        Street = "street",
-                        Number = "number",
-                        Zip = "zip",
-                    };
-                }
-                else
-                {
-                    using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitGroupById?groupId={groupId}").Result)
-                    {
-                        string content = respond.Content.ReadAsStringAsync().Result;
-                        UnitGroupWithSpecificationModel group = JsonConvert.DeserializeObject<UnitGroupWithSpecificationModel>(content);
-                        m.Group = group;
-                    }
-                }
-
-                using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetColors").Result)
-                {
-                    string content = respond.Content.ReadAsStringAsync().Result;
-                    Color[] colors = JsonConvert.DeserializeObject<Color[]>(content);
-                    m.Colors = colors;
-                }
+                    Id = -1,
+                    UserId = userId,
+                    Name = "Výzkumné středisko CERN",
+                    ColorId = 7,
+                    Note = "Hadronový urychlovač částic a další věci",
+                    State = "state",
+                    City = "city",
+                    Street = "street",
+                    Number = "number",
+                    Zip = "zip",
+                };
+            }
+            else
+            {
+                m.Group = Utils.GetUnitGroupById(groupId);
             }
 
             return View(m);
@@ -101,13 +87,10 @@ namespace MVC.Controllers
                 {
                     // Nothing to do
                 }
-
-                using (HttpResponseMessage response = client.GetAsync(Utils.apiUrl + $"GetFirstUnitGroupIdByUserId?userId={userId}").Result)
-                {
-                    string content = response.Content.ReadAsStringAsync().Result;
-                    groupId = JsonConvert.DeserializeObject<int>(content);
-                }
             }
+
+            groupId = Utils.GetFirstUnitGroupIdByUserId(userId);
+
             return RedirectToAction("ListGroups", "ListGroups", new { userId = userId, groupId = groupId });
         }
     }

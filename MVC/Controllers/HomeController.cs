@@ -9,14 +9,8 @@ namespace MVC.Controllers
         public IActionResult Index()
         {
             int userId = 1; // TODO
-            int groupId = -1;
+            int groupId = Utils.GetFirstUnitGroupIdByUserId(userId);
 
-            using (HttpClient client = new HttpClient())
-                using (HttpResponseMessage response = client.GetAsync(Utils.apiUrl + $"GetFirstUnitGroupIdByUserId?userId={userId}").Result)
-            {
-                string content = response.Content.ReadAsStringAsync().Result;
-                groupId = JsonConvert.DeserializeObject<int>(content);
-            }
             return RedirectToAction("Overview", "Overview", new { userId = userId, groupId = groupId });
         }
     }

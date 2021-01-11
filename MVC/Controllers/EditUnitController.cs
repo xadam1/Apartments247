@@ -14,66 +14,40 @@ namespace MVC.Controllers
     public class EditUnitController : Controller
     {
         [HttpGet]
-        public IActionResult EditUnit(int userId, int groupId, int unitId=-1)
+        public IActionResult EditUnit(int userId, int groupId, int unitId = -1)
         {
             EditUnitModel m = new EditUnitModel()
             {
                 UserId = userId,
                 GroupId = groupId,
                 UnitId = unitId,
+                Colors = Utils.GetColors(),
+                UnitTypes = Utils.GetUnitTypes(),
+                UnitGroups = Utils.GetUnitGroupNamesByUserId(userId),
             };
 
-            using (HttpClient client = new HttpClient())
+            if (unitId == -1)
             {
-                if (unitId == -1)
+                m.Unit = new UnitWithSpecificationModel()
                 {
-                    m.Unit = new UnitWithSpecificationModel()
-                    {
-                        Id = -1,
-                        Name = "Domeček lásky",
-                        ColorId = 10,
-                        State = "state",
-                        City = "city",
-                        Street = "street",
-                        Number = "number",
-                        Zip = "zip",
-                        Note = "Skvělé místo pro zamilované skupiny libovolné arity",
-                        UnitTypeId = 6,
-                        CurrentCapacity = 0,
-                        MaxCapacity = 2,
-                        ContractLink = "nezadáno",
-                    };
-                }
-                else
-                {
-                    using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitById?unitId={unitId}").Result)
-                    {
-                        string content = respond.Content.ReadAsStringAsync().Result;
-                        UnitWithSpecificationModel unit = JsonConvert.DeserializeObject<UnitWithSpecificationModel>(content);
-                        m.Unit = unit;
-                    }
-                }
-
-                using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetColors").Result)
-                {
-                    string content = respond.Content.ReadAsStringAsync().Result;
-                    Color[] colors = JsonConvert.DeserializeObject<Color[]>(content);
-                    m.Colors = colors;
-                }
-
-                using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitTypes").Result)
-                {
-                    string content = respond.Content.ReadAsStringAsync().Result;
-                    UnitTypeModel[] unitTypes = JsonConvert.DeserializeObject<UnitTypeModel[]>(content);
-                    m.UnitTypes = unitTypes;
-                }
-
-                using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitGroupNamesByUserId?userId={userId}").Result)
-                {
-                    string content = respond.Content.ReadAsStringAsync().Result;
-                    UnitGroupNameModel[] unitGroups = JsonConvert.DeserializeObject<UnitGroupNameModel[]>(content);
-                    m.UnitGroups = unitGroups;
-                }
+                    Id = -1,
+                    Name = "Domeček lásky",
+                    ColorId = 10,
+                    State = "state",
+                    City = "city",
+                    Street = "street",
+                    Number = "number",
+                    Zip = "zip",
+                    Note = "Skvělé místo pro zamilované skupiny libovolné arity",
+                    UnitTypeId = 6,
+                    CurrentCapacity = 0,
+                    MaxCapacity = 2,
+                    ContractLink = "nezadáno",
+                };
+            }
+            else
+            {
+                m.Unit = Utils.GetUnitById(unitId);
             }
 
             return View(m);

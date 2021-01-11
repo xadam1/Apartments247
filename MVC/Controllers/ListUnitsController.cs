@@ -19,24 +19,11 @@ namespace MVC.Controllers
             {
                 UserId = userId,
                 GroupId = groupId,
+                Groups = Utils.GetUnitGroupNamesByUserId(userId),
+                Units = Utils.GetUnitsByUnitGroupId(groupId),
             };
 
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitGroupNamesByUserId?userId={userId}").Result)
-                {
-                    string content = respond.Content.ReadAsStringAsync().Result;
-                    m.Groups = JsonConvert.DeserializeObject<UnitGroupNameModel[]>(content);
-                }
-
-                using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitsByUnitGroupId?groupId={groupId}").Result)
-                {
-                    string content = respond.Content.ReadAsStringAsync().Result;
-                    m.Units = JsonConvert.DeserializeObject<UnitWithSpecificationModel[]>(content);
-                }
-
-                return View(m);
-            }
+            return View(m);
         }
     }
 }

@@ -11,21 +11,13 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult ListGroups(int userId, int groupId)
         {
-            using (HttpClient client = new HttpClient())
+            ListGroupsModel m = new ListGroupsModel()
             {
-                using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitGroupsByUserId?userId={userId}").Result)
-                {
-                    string content = respond.Content.ReadAsStringAsync().Result;
-                    UnitGroupWithSpecificationModel[] groups = JsonConvert.DeserializeObject<UnitGroupWithSpecificationModel[]>(content);
-                    ListGroupsModel m = new ListGroupsModel()
-                    {
-                        UserId = userId,
-                        GroupId = groupId,
-                        Groups = groups,
-                    };
-                    return View(m);
-                }
-            }
+                UserId = userId,
+                GroupId = groupId,
+                Groups = Utils.GetUnitGroupsByUserId(userId),
+            };
+            return View(m);
         }
     }
 }
