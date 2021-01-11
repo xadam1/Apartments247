@@ -2,6 +2,8 @@
 
 @{ 
     ViewData["Title"] = "Edit Unit";
+    ViewData["UserId"] = Model.UserId;
+    var userId = Model.UserId;
     var unit = Model.Unit;
     var colors = Model.Colors;
     var unitTypes = Model.UnitTypes;
@@ -9,7 +11,7 @@
 
 <h3>Edit Unit</h3>
 
-<form action="/Delta/SaveUnit" method="post">
+<form action="/EditUnit/SaveUnit" method="post">
     <label>Name</label><br />
     <input type="text" name="name" value="@unit.Name"/><br />
 
@@ -17,9 +19,13 @@
     <select id="selectColor" name="selectColor">
         @foreach (var color in colors)
         {
-            <option value="@color.Id">@color.Name</option>
+            <option id="color_@color.Id" value="@color.Id">@color.Name</option>
         }
     </select><br />
+
+    <script>
+        document.getElementById("color_@unit.ColorId").selected = true;
+    </script>
 
 
     <label>TODO Address</label><br />
@@ -46,6 +52,7 @@
     <label>MaxCapacity</label><br />
     <input type="text" name="maxCapacity" value="@unit.MaxCapacity" /><br />
 
+    <input type="hidden" name="userId" value="@userId" />
     <input type="hidden" name="unitId" value="@unit.Id" />
     <input type="hidden" name="groupId" value="@unit.UnitGroupId" />
 

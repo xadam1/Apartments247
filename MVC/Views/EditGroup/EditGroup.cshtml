@@ -2,13 +2,15 @@
 
 @{
     ViewData["Title"] = "Group Details";
+    ViewData["UserId"] = Model.UserId;
+    var userId = Model.UserId;
     var group = Model.Group;
-var colors = Model.Colors;
+    var colors = Model.Colors;
 }
 
     <h3>Edit Group</h3>
 
-    <form action="/Delta/SaveGroup" method="post">
+    <form action="/EditGroup/SaveGroup" method="post">
         <label for="name">Name</label>
         <br />
         <input type="text" name="name" value="@group.Name" />
@@ -35,6 +37,7 @@ var colors = Model.Colors;
         <label for="note">Note</label><br />
         <textarea name="note">@group.Note</textarea><br />
 
+        <input type="hidden" name="userId" value="@userId" />
         <input type="hidden" name="groupId" value="@group.Id" />
 
         <input type="submit" value="Save">

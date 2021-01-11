@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Show Groups";
+    ViewData["UserId"] = Model.UserId;
+    var userId = Model.UserId;
     var groups = Model.Groups;
 }
 <table>
@@ -12,7 +14,7 @@
     </tr>
     <tr>
         <td>
-            <a href="/Delta/EditGroup?groupId=-1"><button type="button">Create new unit</button></a>
+            <a href="/EditGroup/EditGroup?userId=@userId&groupId=-1"><button type="button">Create new unit</button></a>
         </td>
     </tr>
     @foreach (var group in groups)
@@ -21,7 +23,7 @@
             <td>@group.Name</td>
             <td>@group.Color</td>
             <td>@group.Note</td>
-            <td><a href="/Delta/EditGroup?groupId=@group.Id"><button type="button">Show details</button></a></td>
+            <td><a href="/EditGroup/EditGroup?userId=@userId&groupId=@group.Id"><button type="button">Show details</button></a></td>
         </tr>
     }
  </table>

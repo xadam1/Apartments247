@@ -10,6 +10,7 @@ namespace MVC.Models
 {
     public class EditUnitModel
     {
+        public int UserId { get; set; }
         public UnitWithSpecificationModel Unit { get; set; }
         public Color[] Colors { get; set; }
         public UnitTypeModel[] UnitTypes { get; set; }
