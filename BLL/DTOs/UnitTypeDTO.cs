@@ -4,7 +4,8 @@ namespace BLL.DTOs
 {
     public class UnitTypeDTO
     {
-        [StringLength(64)]
+        public int Id { get; set; }
+
         public string Type { get; set; }
     }
 }

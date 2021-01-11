@@ -38,7 +38,7 @@ namespace WebAPI.Extras
             };
         }
 
-        public static UnitTypeModel Convert(UnitType unitType)
+        public static UnitTypeModel Convert(UnitTypeDTO unitType)
         {
             return new UnitTypeModel()
             {

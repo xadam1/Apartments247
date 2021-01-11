@@ -18,13 +18,15 @@ namespace WebAPI.Controllers
         private readonly IUnitGroupFacade _unitGroupFacade;
         private readonly IUnitFacade _unitFacade;
         private readonly IColorFacade _colorFacade;
+        private readonly IUnitTypeFacade _unitTypeFacade;
 
-        public SigmaController(IUnitGroupFacade unitGroupFacade, IUnitFacade unitFacade, IColorFacade colorFacade)
+        public SigmaController(IUnitGroupFacade unitGroupFacade, IUnitFacade unitFacade, IColorFacade colorFacade, IUnitTypeFacade unitTypeFacade)
         {
             //con = new ApartmentsDbContext();
             _unitGroupFacade = unitGroupFacade;
             _unitFacade = unitFacade;
             _colorFacade = colorFacade;
+            _unitTypeFacade = unitTypeFacade;
         }
 
         [HttpGet]
@@ -107,16 +109,20 @@ namespace WebAPI.Controllers
         {
             /*Color[] colors = con.Colors.ToArray();
             return colors;*/
+
             return await _colorFacade.GetColorsAsync<ColorDTO>();
         }
 
         [HttpGet]
         [Route("GetUnitTypes")]
-        public UnitTypeModel[] GetUnitTypes()
+        public async Task<UnitTypeModel[]> GetUnitTypes()
         {
             /*UnitType[] unitTypes = con.UnitTypes.ToArray();
             return unitTypes.Select(unitType => Utils.Convert(unitType)).ToArray();*/
-            return new UnitTypeModel[] { };
+
+            var unitTypesDTOs = await _unitTypeFacade.GetUnitTypesAsync<UnitTypeDTO>();
+
+            return unitTypesDTOs.Select(unitType => Utils.Convert(unitType)).ToArray();
         }
 
         [HttpGet]
