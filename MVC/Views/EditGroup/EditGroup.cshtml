@@ -25,14 +25,26 @@
             }
         </select><br />
 
-                 <script>
+        <script>
             if (@group.ColorId != -1) {
                 document.getElementById("color_" + @group.ColorId).selected = true;
             }
-                 </script>
+        </script>
 
-        <label for="address">Address</label><br />
-        <label>TODO!!!</label><br />
+        <label>State</label><br />
+        <input type="text" name="state" value="@group.State" /><br />
+
+        <label>City</label><br />
+        <input type="text" name="city" value="@group.City" /><br />
+
+        <label>Street</label><br />
+        <input type="text" name="street" value="@group.Street" /><br />
+
+        <label>Number</label><br />
+        <input type="text" name="number" value="@group.Number" /><br />
+
+        <label>Zip</label><br />
+        <input type="text" name="zip" value="@group.Zip" /><br />
 
         <label for="note">Note</label><br />
         <textarea name="note">@group.Note</textarea><br />

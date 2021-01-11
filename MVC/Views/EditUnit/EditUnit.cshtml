@@ -4,6 +4,7 @@
     ViewData["Title"] = "Edit Unit";
     ViewData["UserId"] = Model.UserId;
     var userId = Model.UserId;
+    var groupId = Model.GroupId;
     var unit = Model.Unit;
     var colors = Model.Colors;
     var unitTypes = Model.UnitTypes;
@@ -13,7 +14,7 @@
 
 <form action="/EditUnit/SaveUnit" method="post">
     <label>Name</label><br />
-    <input type="text" name="name" value="@unit.Name"/><br />
+    <input type="text" name="name" value="@unit.Name" /><br />
 
     <label>Color</label><br />
     <select id="selectColor" name="selectColor">
@@ -28,8 +29,21 @@
     </script>
 
 
-    <label>TODO Address</label><br />
-    <input type="text" value="TODO nefunguje" /><br />
+
+    <label>State</label><br />
+    <input type="text" name="state" value="@unit.State" /><br />
+
+    <label>City</label><br />
+    <input type="text" name="city" value="@unit.City" /><br />
+
+    <label>Street</label><br />
+    <input type="text" name="street" value="@unit.Street" /><br />
+
+    <label>Number</label><br />
+    <input type="text" name="number" value="@unit.Number" /><br />
+
+    <label>Zip</label><br />
+    <input type="text" name="zip" value="@unit.Zip" /><br />
 
     <label>Note</label><br />
     <input type="text" name="note" value="@unit.Note"><br />
@@ -54,7 +68,7 @@
 
     <input type="hidden" name="userId" value="@userId" />
     <input type="hidden" name="unitId" value="@unit.Id" />
-    <input type="hidden" name="groupId" value="@unit.UnitGroupId" />
+    <input type="hidden" name="groupId" value="@groupId" />
 
-    <input type="submit" value="Save"/>
+    <input type="submit" value="Save" />
 </form>

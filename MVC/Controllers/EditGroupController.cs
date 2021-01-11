@@ -58,10 +58,11 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveGroup(int userId, int groupId, string name, int colorSelect, string note)
+        public IActionResult SaveGroup(int userId, int groupId, string name, int colorSelect, string note, string state, string city, string street, string number, string zip)
         {
             using (HttpClient client = new HttpClient())
             {
+                /*
                 UnitGroupWithSpecificationModel m = new UnitGroupWithSpecificationModel()
                 {
                     Id = groupId,
@@ -69,8 +70,9 @@ namespace MVC.Controllers
                     ColorId = colorSelect,
                     Note = note
                 };
+                */
 
-                string commandUrl = $"SaveUnitGroup?userId={userId}&groupId={groupId}&name={name}&colorId={colorSelect}&note={note}";
+                string commandUrl = $"SaveUnitGroup?userId={userId}&groupId={groupId}&name={name}&colorId={colorSelect}&note={note}&state={state}&city={city}&street={street}&number={number}&zip={zip}";
                 using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + commandUrl).Result)
                 {
                     string c = respond.Content.ReadAsStringAsync().Result;

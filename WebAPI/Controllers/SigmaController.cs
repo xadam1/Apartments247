@@ -85,18 +85,27 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("SaveUnitGroup")]
-        public int SaveUnitGroup(int userId, int groupId, string name, int colorId, string note)
+        public int SaveUnitGroup(int userId, int groupId, string name, int colorId, string note, string state, string city, string street, string number, string zip)
         {
             UnitGroup group = con.UnitGroups.Where(group => group.Id == groupId).FirstOrDefault();
 
             if (group == null)
             {
+                Address address = new Address()
+                {
+                    State = state,
+                    City = city,
+                    Street = street,
+                    Number = number,
+                    Zip = zip,
+                };
+
                 Specification spec = new Specification()
                 {
                     Name = name,
                     ColorId = colorId,
                     Note = note,
-                    AddressId = -1, // TODO
+                    Address = address,
                 };
                 
                 group = new UnitGroup()
@@ -113,6 +122,12 @@ namespace WebAPI.Controllers
                 group.Specification.ColorId = colorId;
                 group.Specification.Note = note;
 
+                group.Specification.Address.State = state;
+                group.Specification.Address.City = city;
+                group.Specification.Address.Street = street;
+                group.Specification.Address.Number = number;
+                group.Specification.Address.Zip = zip;
+
                 con.UnitGroups.Update(group);
             }
             con.SaveChanges();
@@ -122,17 +137,26 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("SaveUnit")]
-        public int SaveUnit(int groupId, int unitId, string name, int colorId, string note, int unitTypeId, int currentCapacity, int maxCapacity, string contractLink)
+        public int SaveUnit(int groupId, int unitId, string name, int colorId, string note, int unitTypeId, int currentCapacity, int maxCapacity, string contractLink, string state, string city, string street, string number, string zip)
         {
             Unit unit = con.Units.Where(unit => unit.Id == unitId).FirstOrDefault();
 
             if (unit == null)
             {
+                Address address = new Address()
+                {
+                    State = state,
+                    City = city,
+                    Street = street,
+                    Number = number,
+                    Zip = zip,
+                };
+
                 Specification spec = new Specification()
                 {
                     Name = name,
                     ColorId = colorId,
-                    AddressId = -1, // TODO
+                    Address = address,
                     Note = note,
                 };
 
@@ -153,6 +177,13 @@ namespace WebAPI.Controllers
                 unit.Specification.Name = name;
                 unit.Specification.ColorId = colorId;
                 unit.Specification.Note = note;
+
+                unit.Specification.Address.State = state;
+                unit.Specification.Address.City = city;
+                unit.Specification.Address.Street = street;
+                unit.Specification.Address.Number = number;
+                unit.Specification.Address.Zip = zip;
+
                 unit.UnitTypeId = unitTypeId;
                 unit.CurrentCapacity = currentCapacity;
                 unit.MaxCapacity = maxCapacity;

@@ -18,7 +18,8 @@ namespace MVC.Controllers
         {
             EditUnitModel m = new EditUnitModel()
             {
-                UserId = userId
+                UserId = userId,
+                GroupId = groupId,
             };
 
             using (HttpClient client = new HttpClient())
@@ -67,7 +68,7 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveUnit(int userId, int unitId, int groupId, string name, int selectColor, string note, int selectUnitType, int currentCapacity, int maxCapacity, string contractLink)
+        public IActionResult SaveUnit(int userId, int unitId, int groupId, string name, int selectColor, string note, int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city, string street, string number, string zip)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -84,7 +85,7 @@ namespace MVC.Controllers
                     MaxCapacity = maxCapacity,
                     ContractLink = contractLink
                 };
-                string commandUrl = $"SaveUnit?groupId={groupId}&unitId={unitId}&name={name}&colorId={selectColor}&note={note}&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}&contractLink={contractLink}";
+                string commandUrl = $"SaveUnit?groupId={groupId}&unitId={unitId}&name={name}&colorId={selectColor}&note={note}&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}&contractLink={contractLink}&state={state}&city={city}&street={street}&number={number}&zip={zip}";
                 using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + commandUrl).Result)
                 {
                     string content = respond.Content.ReadAsStringAsync().Result;
