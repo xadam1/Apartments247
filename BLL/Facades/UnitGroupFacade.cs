@@ -16,9 +16,14 @@ namespace BLL.Facades
             _unitGroupService = unitGroupService;
         }
 
+        public async Task<T> GetUnitGroupByIdAsync<T>(int id)
+        {
+            return await _unitGroupService.GetUnitGroupByIdAsync<T>(id);
+        }
+
         public async Task<T[]> GetUnitGroupNamesByUserId<T>(int id)
         {
-            return await _unitGroupService.GetUnitGroupNamesByUserId<T>(id);
+            return await _unitGroupService.GetUnitGroupNamesByUserIdAsync<T>(id);
         }
 
         public async Task<T[]> GetUnitGroupsByUserIdAsync<T>(int id)

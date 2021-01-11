@@ -8,5 +8,7 @@ namespace BLL.Facades
         Task<T[]> GetUnitGroupsByUserIdAsync<T>(int id);
 
         Task<T[]> GetUnitGroupNamesByUserId<T>(int id);
+
+        Task<T> GetUnitGroupByIdAsync<T>(int id);
     }
 }

@@ -55,14 +55,14 @@ namespace WebAPI.Controllers
             return units.Select(unit => Utils.Convert(unit)).ToArray();*/
 
             UnitWithSpecificationModel[] units = (await _unitFacade.GetUnitsByGroupIdAsync<UnitDTO>(groupId))
-                                 .Select(unit => Utils.Convert(unit)).ToArray();
+                                                                   .Select(unit => Utils.Convert(unit)).ToArray();
 
             return units;
         }
 
         [HttpGet]
         [Route("GetUnitGroupById")]
-        public ActionResult<UnitGroupWithSpecificationModel> GetUnitGroupById(int groupId)
+        public async Task<ActionResult<UnitGroupWithSpecificationModel>> GetUnitGroupByIdAsync(int groupId)
         {
             /*UnitGroup group = con.UnitGroups.Where(group => group.Id == groupId).FirstOrDefault();
             if (group == null)
@@ -70,7 +70,13 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
             return Utils.Convert(group);*/
-            return Ok();
+            UnitGroupDTO group = await _unitGroupFacade.GetUnitGroupByIdAsync<UnitGroupDTO>(groupId);
+            if (group == null)
+            {
+                return BadRequest();
+            }
+
+            return Utils.Convert(group);
         }
 
         [HttpGet]
