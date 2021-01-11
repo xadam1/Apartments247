@@ -16,7 +16,7 @@ namespace WebAppMVC.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Overview", "Delta");
         }
 
         public IActionResult Privacy()
