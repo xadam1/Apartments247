@@ -2,7 +2,9 @@
 
 @{
     ViewData["Title"] = "Show Units";
-    var groupId = Model.UnitGroupId;
+    ViewData["UserId"] = Model.UserId;
+    var userId = Model.UserId;
+    var groupId = Model.GroupId;
     var groups = Model.Groups;
     var units = Model.Units;
 }
@@ -12,7 +14,7 @@
 <br />
 <p>TODO Create Group</p>
 <br />
-<p>Let's <a href="/Delta/EditGroup/-1">create</a> one.</p>
+<p>Let's <a href="/EditGroups/EditGroup?userId=@userId&groupId=-1">create</a> one.</p>
 }
 else
 {
@@ -23,7 +25,7 @@ else
         {
     <option id="@group.Id" value="@group.Id">@group.Name</option>
         }
-</select>
+</select><br />
 
 <script>
     document.getElementById("@groupId").selected = true;
@@ -32,17 +34,14 @@ else
 <script>
     function changeGroup() {
         newGroupId = document.getElementById("dropDownList").value;
-        location.href = "/Delta/ListUnits?groupId=" + newGroupId;
+        location.href = "/ListUnits/ListUnits?userId=@userId&groupId=" + newGroupId;
     }
 </script>
 
 @if (units.Length == 0)
     {
 <p>This UnitGroup is empty.</p>
-<br />
-<p>TODO Create new Unit</p>
-<br />
-<p>Let's <a href="/Delta/EditUnit/-1">create</a> new Unit in this group.</p>
+<p>Let's <a href="/EditUnit/EditUnit?userId=@userId&groupId=@groupId&unitId=-1">create</a> new Unit in this group.</p>
     }
     else
     {
@@ -58,7 +57,7 @@ else
     </tr>
     <tr>
         <td>
-            TODO Create Unit
+            <a href="/EditUnit/EditUnit?userId=@userId&groupId=@groupId&unitId=-1"><button type="button">Create new unit in this group</button></a>
         </td>
     </tr>
     @foreach (var unit in units)
@@ -71,7 +70,7 @@ else
         <td>@unit.CurrentCapacity</td>
         <td>@unit.MaxCapacity</td>
         <td>@unit.ContractLink</td>
-        <td><a href="/Delta/EditUnit?groupId=@groupId&unitId=@unit.Id"></a></td>
+        <td><a href="/EditUnit/EditUnit?userId=@userId&groupId=@groupId&unitId=@unit.Id"><button type="button">Show details</button></a></td>
     </tr>
             }
 </table>

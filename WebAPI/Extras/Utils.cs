@@ -16,7 +16,12 @@ namespace WebAPI.Extras
                 ColorId = group.Specification.ColorId,
                 Color = group.Specification.Color.Name,
                 AddressId = group.Specification.AddressId,
-                Note = group.Specification.Note
+                Note = group.Specification.Note,
+                State = group.Specification.Address.State,
+                City = group.Specification.Address.City,
+                Street = group.Specification.Address.Street,
+                Number = group.Specification.Address.Number,
+                Zip = group.Specification.Address.Zip,
             };
         }
 
@@ -34,8 +39,13 @@ namespace WebAPI.Extras
                 Note = unit.Specification.Note,
                 UnitTypeId = unit.UnitTypeId,
                 UnitType = unit.UnitType.Type,
-                ContractLink = unit.ContractLink
-            };
+                ContractLink = unit.ContractLink,
+                State = unit.Specification.Address.State,
+            City = unit.Specification.Address.City,
+            Street = unit.Specification.Address.Street,
+            Number = unit.Specification.Address.Number,
+            Zip = unit.Specification.Address.Zip,
+        };
         }
 
         public static UnitTypeModel Convert(UnitType unitType)

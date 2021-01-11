@@ -8,7 +8,8 @@ namespace MVC.Models
 {
     public class ListUnitsModel
     {
-        public int UnitGroupId { get; set; }
+        public int UserId { get; set; }
+        public int GroupId { get; set; }
         public UnitGroupNameModel[] Groups { get; set; }
         public UnitWithSpecificationModel[] Units { get; set; }
     }
