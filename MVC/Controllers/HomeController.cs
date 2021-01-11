@@ -6,7 +6,7 @@ namespace MVC.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("Overview", "Overview", new { userId = 1 });
+            return RedirectToAction("Overview", "Overview", new { userId = 1, groupId = 1 });
         }
     }
 }

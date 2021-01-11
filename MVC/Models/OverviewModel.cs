@@ -8,5 +8,6 @@ namespace MVC.Models
     public class OverviewModel
     {
         public int UserId { get; set; }
+        public int GroupId { get; set; }
     }
 }

@@ -57,7 +57,7 @@
 
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="margin: 0 0 24px;">
-            <a class="navbar-brand" asp-controller="Overview" asp-action="Overview" asp-route-UserId="@Model.UserId">A247</a>
+            <a class="navbar-brand" asp-controller="Overview" asp-action="Overview" asp-route-userId="@Model.UserId" asp-route-groupId="@Model.GroupId">A247</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" wfd-id="660">
                 <span class="navbar-toggler-icon" wfd-id="472"></span>
@@ -73,19 +73,19 @@
                     </li>-->
 
                     <li class="nav-item" wfd-id="469">
-                        <a class="nav-link" asp-controller="ListGroups" asp-action="ListGroups" asp-route-UserId="@Model.UserId">My Unit Groups</a>
+                        <a class="nav-link" asp-controller="ListGroups" asp-action="ListGroups" asp-route-UserId="@Model.UserId" asp-route-groupId="@Model.GroupId">My Unit Groups</a>
                     </li>
 
                     <li class="nav-item" wfd-id="468">
-                        <a class="nav-link" asp-controller="ListUnits" asp-action="ListUnits" asp-route-UserId="@Model.UserId">My Units</a>
+                        <a class="nav-link" asp-controller="ListUnits" asp-action="ListUnits" asp-route-UserId="@Model.UserId" asp-route-groupId="@Model.GroupId">My Units</a>
                     </li>
 
                     <li class="nav-item" wfd-id="467">
-                        <a class="nav-link" asp-controller="EditGroup" asp-action="EditGroup" asp-route-UserId="@Model.UserId">Edit Group</a>
+                        <a class="nav-link" asp-controller="EditGroup" asp-action="EditGroup" asp-route-UserId="@Model.UserId" asp-route-groupId="@Model.GroupId">Edit Group</a>
                     </li>
 
                     <li class="nav-item" wfd-id="465">
-                        <a class="nav-link" asp-controller="EditUnit" asp-action="EditUnit" asp-route-UserId="@Model.UserId">Edit Unit</a>
+                        <a class="nav-link" asp-controller="EditUnit" asp-action="EditUnit" asp-route-UserId="@Model.UserId" asp-route-groupId="@Model.GroupId">Edit Unit</a>
                     </li>
                     <!--<li class="nav-item dropdown" wfd-id="465">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>

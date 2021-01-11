@@ -4,11 +4,19 @@
     ViewData["Title"] = "Group Details";
     ViewData["UserId"] = Model.UserId;
     var userId = Model.UserId;
+    var groupId = Model.GroupId;
     var group = Model.Group;
     var colors = Model.Colors;
 }
 
+@if (groupId != -1)
+{
     <h3>Edit Group</h3>
+}
+else
+{
+    <h3>Create New Group</h3>
+}
 
     <form action="/EditGroup/SaveGroup" method="post">
         <label for="name">Name</label>

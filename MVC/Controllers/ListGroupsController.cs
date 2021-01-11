@@ -9,7 +9,7 @@ namespace MVC.Controllers
     public class ListGroupsController : Controller
     {
         [HttpGet]
-        public IActionResult ListGroups(int userId)
+        public IActionResult ListGroups(int userId, int groupId)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -20,7 +20,8 @@ namespace MVC.Controllers
                     ListGroupsModel m = new ListGroupsModel()
                     {
                         UserId = userId,
-                        Groups = groups
+                        GroupId = groupId,
+                        Groups = groups,
                     };
                     return View(m);
                 }

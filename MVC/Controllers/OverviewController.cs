@@ -16,11 +16,12 @@ namespace MVC.Controllers
     public class OverviewController : Controller
     {
         [HttpGet]
-        public IActionResult Overview(int userId)
+        public IActionResult Overview(int userId, int groupId)
         {
             OverviewModel m = new OverviewModel()
             {
-                UserId = userId
+                UserId = userId,
+                GroupId = groupId,
             };
             return View(m);
         }

@@ -20,6 +20,7 @@ namespace MVC.Controllers
             {
                 UserId = userId,
                 GroupId = groupId,
+                UnitId = unitId,
             };
 
             using (HttpClient client = new HttpClient())
@@ -62,6 +63,13 @@ namespace MVC.Controllers
                     UnitTypeModel[] unitTypes = JsonConvert.DeserializeObject<UnitTypeModel[]>(content);
                     m.UnitTypes = unitTypes;
                 }
+
+                using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitGroupNamesByUserId?userId={userId}").Result)
+                {
+                    string content = respond.Content.ReadAsStringAsync().Result;
+                    UnitGroupNameModel[] unitGroups = JsonConvert.DeserializeObject<UnitGroupNameModel[]>(content);
+                    m.UnitGroups = unitGroups;
+                }
             }
 
             return View(m);
@@ -72,6 +80,7 @@ namespace MVC.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
+                /*
                 UnitWithSpecificationModel m = new UnitWithSpecificationModel()
                 {
                     Id = unitId,
@@ -85,6 +94,7 @@ namespace MVC.Controllers
                     MaxCapacity = maxCapacity,
                     ContractLink = contractLink
                 };
+                */
                 string commandUrl = $"SaveUnit?groupId={groupId}&unitId={unitId}&name={name}&colorId={selectColor}&note={note}&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}&contractLink={contractLink}&state={state}&city={city}&street={street}&number={number}&zip={zip}";
                 using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + commandUrl).Result)
                 {
@@ -93,7 +103,7 @@ namespace MVC.Controllers
                 }
             }
 
-            return RedirectToAction($"EditUnit", "EditUnit", new { userId = userId, unitId = unitId });
+            return RedirectToAction($"EditUnit", "EditUnit", new { userId = userId, groupId = groupId, unitId = unitId });
         }
     }
 }

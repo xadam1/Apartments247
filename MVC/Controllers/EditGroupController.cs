@@ -16,11 +16,12 @@ namespace MVC.Controllers
 
 
         [HttpGet]
-        public IActionResult EditGroup(int userId, int groupId=-1)
+        public IActionResult EditGroup(int userId, int groupId)
         {
             EditGroupModel m = new EditGroupModel()
             {
-                UserId = userId
+                UserId = userId,
+                GroupId = groupId,
             };
 
             using (HttpClient client = new HttpClient())

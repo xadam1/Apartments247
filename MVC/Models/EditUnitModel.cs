@@ -12,6 +12,8 @@ namespace MVC.Models
     {
         public int UserId { get; set; }
         public int GroupId { get; set; }
+        public int UnitId { get; set; }
+        public UnitGroupNameModel[] UnitGroups { get; set; }
         public UnitWithSpecificationModel Unit { get; set; }
         public Color[] Colors { get; set; }
         public UnitTypeModel[] UnitTypes { get; set; }

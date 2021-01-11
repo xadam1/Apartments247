@@ -10,6 +10,7 @@ namespace MVC.Models
     public class ListGroupsModel
     {
         public int UserId { get; set; }
+        public int GroupId { get; set; }
         public UnitGroupWithSpecificationModel[] Groups { get; set; }
     }
 }

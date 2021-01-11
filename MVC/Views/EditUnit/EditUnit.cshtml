@@ -5,14 +5,35 @@
     ViewData["UserId"] = Model.UserId;
     var userId = Model.UserId;
     var groupId = Model.GroupId;
+    var unitId = Model.UnitId;
     var unit = Model.Unit;
     var colors = Model.Colors;
     var unitTypes = Model.UnitTypes;
+    var unitGroups = Model.UnitGroups;
 }
 
-<h3>Edit Unit</h3>
+    @if (unitId != -1)
+    {
+<h3>
+    Edit Unit</h3>
+    }
+    else
+    {
+       <h3>Create New Unit</h3 >
+    }
 
 <form action="/EditUnit/SaveUnit" method="post">
+    <select name="groupId">
+        @foreach (var unitGroup in unitGroups)
+        {
+        <option id="unitGroup_@unitGroup.Id" value="@unitGroup.Id">@unitGroup.Name</option>
+        }
+    </select><br />
+
+    <script>
+        document.getElementById("unitGroup_@groupId").selected = true;
+    </script>
+
     <label>Name</label><br />
     <input type="text" name="name" value="@unit.Name" /><br />
 
@@ -68,7 +89,6 @@
 
     <input type="hidden" name="userId" value="@userId" />
     <input type="hidden" name="unitId" value="@unit.Id" />
-    <input type="hidden" name="groupId" value="@groupId" />
 
     <input type="submit" value="Save" />
 </form>
