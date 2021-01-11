@@ -162,6 +162,7 @@ namespace WebAPI.Controllers
         [Route("SaveUnit")]
         public int SaveUnit(int groupId, int unitId, string name, int colorId, string note, int unitTypeId, int currentCapacity, int maxCapacity, string contractLink, string state, string city, string street, string number, string zip)
         {
+            ApartmentsDbContext con = new ApartmentsDbContext();
             Unit unit = con.Units.Where(unit => unit.Id == unitId).FirstOrDefault();
 
             if (unit == null)
