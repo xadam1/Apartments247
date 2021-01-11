@@ -1,4 +1,4 @@
-﻿using BLL.DTOs;
+using BLL.DTOs;
 using BLL.Facades;
 using DAL;
 using DAL.Models;
@@ -14,23 +14,23 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class SigmaController : ControllerBase
     {
-        //private readonly ApartmentsDbContext con;
         private readonly IUnitGroupFacade _unitGroupFacade;
         private readonly IUnitFacade _unitFacade;
+        private readonly IColorFacade _colorFacade;
+        private readonly IUnitTypeFacade _unitTypeFacade;
 
-        public SigmaController(IUnitGroupFacade unitGroupFacade, IUnitFacade unitFacade)
+        public SigmaController(IUnitGroupFacade unitGroupFacade, IUnitFacade unitFacade, IColorFacade colorFacade, IUnitTypeFacade unitTypeFacade)
         {
-            //con = new ApartmentsDbContext();
             _unitGroupFacade = unitGroupFacade;
             _unitFacade = unitFacade;
+            _colorFacade = colorFacade;
+            _unitTypeFacade = unitTypeFacade;
         }
 
         [HttpGet]
         [Route("GetUnitGroupsByUserId")]
         public async Task<UnitGroupWithSpecificationModel[]> GetUnitGroupsByUserIdAsync(int userId)
         {
-            /*UnitGroup[] groups = con.UnitGroups.Where(group => group.UserId == userId).ToArray();
-            return groups.Select(group => Utils.Convert(group)).ToArray();*/
             UnitGroupDTO[] groups = await _unitGroupFacade.GetUnitGroupsByUserIdAsync<UnitGroupDTO>(userId);
             return groups.Select(group => Utils.Convert(group)).ToArray();
         }
@@ -39,9 +39,6 @@ namespace WebAPI.Controllers
         [Route("GetUnitGroupNamesByUserId")]
         public async Task<UnitGroupNameModel[]> GetUnitGroupNamesByUserIdAsync(int userId)
         {
-            /*UnitGroupNameModel[] groups = con.UnitGroups.Where(group => group.UserId == userId)
-                .Select(group => new UnitGroupNameModel(group.Id, group.Specification.Name)).ToArray();
-            return groups;*/
             UnitGroupNameModel[] groups = (await _unitGroupFacade.GetUnitGroupNamesByUserId<UnitGroupDTO>(userId))
                                            .Select(group => new UnitGroupNameModel(group.Id, group.Specification.Name)).ToArray();
             return groups;
@@ -51,64 +48,60 @@ namespace WebAPI.Controllers
         [Route("GetUnitsByUnitGroupId")]
         public async Task<UnitWithSpecificationModel[]> GetUnitsByGroupIdAsync(int groupId)
         {
-            /*Unit[] units = con.Units.Where(unit => unit.UnitGroupId == groupId).ToArray();
-            return units.Select(unit => Utils.Convert(unit)).ToArray();*/
-
             UnitWithSpecificationModel[] units = (await _unitFacade.GetUnitsByGroupIdAsync<UnitDTO>(groupId))
-                                 .Select(unit => Utils.Convert(unit)).ToArray();
+                                                                   .Select(unit => Utils.Convert(unit)).ToArray();
 
             return units;
         }
 
         [HttpGet]
         [Route("GetUnitGroupById")]
-        public ActionResult<UnitGroupWithSpecificationModel> GetUnitGroupById(int groupId)
+        public async Task<ActionResult<UnitGroupWithSpecificationModel>> GetUnitGroupByIdAsync(int groupId)
         {
-            /*UnitGroup group = con.UnitGroups.Where(group => group.Id == groupId).FirstOrDefault();
+            UnitGroupDTO group = await _unitGroupFacade.GetUnitGroupByIdAsync<UnitGroupDTO>(groupId);
             if (group == null)
             {
                 return BadRequest();
             }
-            return Utils.Convert(group);*/
-            return Ok();
+
+            return Utils.Convert(group);
         }
 
         [HttpGet]
         [Route("GetUnitById")]
-        public ActionResult<UnitWithSpecificationModel> GetUnitById(int unitId)
+        public async Task<ActionResult<UnitWithSpecificationModel>> GetUnitById(int unitId)
         {
-            /*Unit unit = con.Units.Where(unit => unit.Id == unitId).FirstOrDefault();
+            UnitDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
             if (unit == null)
             {
                 return BadRequest();
             }
-            return Utils.Convert(unit);*/
-            return Ok();
+
+            return Utils.Convert(unit);
         }
 
         [HttpGet]
         [Route("GetColors")]
-        public Color[] GetColors()
+        public async Task<ColorDTO[]> GetColors()
         {
-            /*Color[] colors = con.Colors.ToArray();
-            return colors;*/
-            return new Color[] { };
+            return await _colorFacade.GetColorsAsync<ColorDTO>();
         }
 
         [HttpGet]
         [Route("GetUnitTypes")]
-        public UnitTypeModel[] GetUnitTypes()
+        public async Task<UnitTypeModel[]> GetUnitTypes()
         {
-            /*UnitType[] unitTypes = con.UnitTypes.ToArray();
-            return unitTypes.Select(unitType => Utils.Convert(unitType)).ToArray();*/
-            return new UnitTypeModel[] { };
+            var unitTypesDTOs = await _unitTypeFacade.GetUnitTypesAsync<UnitTypeDTO>();
+
+            return unitTypesDTOs.Select(unitType => Utils.Convert(unitType)).ToArray();
         }
+
 
         [HttpGet]
         [Route("SaveUnitGroup")]
-        public int SaveUnitGroup(int userId, int groupId, string name, int colorId, string note, string state, string city, string street, string number, string zip)
+        public async Task<int> SaveUnitGroupAsync(int userId, int groupId, string name, int colorId, string note, string state, string city, string street, string number, string zip)
         {
-            /*UnitGroup group = con.UnitGroups.Where(group => group.Id == groupId).FirstOrDefault();
+            UnitGroupDTO group = await _unitGroupFacade.GetUnitGroupByIdAsync<UnitGroupDTO>(groupId);
 
             if (group == null)
             {
@@ -129,14 +122,13 @@ namespace WebAPI.Controllers
                     Address = address,
                 };
 
-                group = new UnitGroup()
+                group = new UnitGroupDTO()
                 {
-                    Id = groupId,
                     UserId = userId,
-                    Specification = spec
+                    Specification = spec,
                 };
 
-                con.UnitGroups.Add(group);
+                await _unitGroupFacade.CreateUnitGroupAsync(group);
             }
             else
             {
@@ -150,21 +142,18 @@ namespace WebAPI.Controllers
                 group.Specification.Address.Number = number != null ? number : string.Empty;
                 group.Specification.Address.Zip = zip != null ? zip : string.Empty;
 
-                con.UnitGroups.Update(group);
+                await _unitGroupFacade.UpdateUnitGroupAsync(groupId, group);
             }
-            con.SaveChanges();
 
-            return group.Id;*/
-            return 1;
+            return group.Id;
         }
+
 
         [HttpGet]
         [Route("SaveUnit")]
-        public int SaveUnit(int groupId, int unitId, string name, int colorId, string note, int unitTypeId, int currentCapacity, int maxCapacity, string contractLink, string state, string city, string street, string number, string zip)
+        public async Task<int> SaveUnitAsync(int groupId, int unitId, string name, int colorId, string note, int unitTypeId, int currentCapacity, int maxCapacity, string contractLink, string state, string city, string street, string number, string zip)
         {
-            ApartmentsDbContext con = new ApartmentsDbContext();
-            Unit unit = con.Units.Where(unit => unit.Id == unitId).FirstOrDefault();
-
+            UnitDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
             if (unit == null)
             {
                 Address address = new Address()
@@ -184,7 +173,7 @@ namespace WebAPI.Controllers
                     Note = note != null ? note : string.Empty,
                 };
 
-                unit = new Unit()
+                unit = new UnitDTO()
                 {
                     Specification = spec,
                     UnitGroupId = groupId,
@@ -193,8 +182,8 @@ namespace WebAPI.Controllers
                     MaxCapacity = maxCapacity,
                     ContractLink = contractLink != null ? contractLink : string.Empty,
                 };
-
-                con.Units.Add(unit);
+                
+                await _unitFacade.CreateUnitAsync(unit);
             }
             else
             {
@@ -214,10 +203,8 @@ namespace WebAPI.Controllers
                 unit.MaxCapacity = maxCapacity;
                 unit.ContractLink = contractLink != null ? contractLink : string.Empty;
 
-                con.Units.Update(unit);
+                await _unitFacade.UpdateUnitAsync(unitId, unit);
             }
-
-            con.SaveChanges();
 
             return unit.Id;
         }

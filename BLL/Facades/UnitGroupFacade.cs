@@ -16,14 +16,33 @@ namespace BLL.Facades
             _unitGroupService = unitGroupService;
         }
 
+        public async Task CreateUnitGroupAsync(UnitGroupDTO unitGroupDTO)
+        {
+            _unitGroupService.CreateUnitGroup(unitGroupDTO);
+
+            await _unitOfWork.CommitAsync();
+        }
+
+        public async Task<T> GetUnitGroupByIdAsync<T>(int id)
+        {
+            return await _unitGroupService.GetUnitGroupByIdAsync<T>(id);
+        }
+
         public async Task<T[]> GetUnitGroupNamesByUserId<T>(int id)
         {
-            return await _unitGroupService.GetUnitGroupNamesByUserId<T>(id);
+            return await _unitGroupService.GetUnitGroupNamesByUserIdAsync<T>(id);
         }
 
         public async Task<T[]> GetUnitGroupsByUserIdAsync<T>(int id)
         {
             return await _unitGroupService.GetUnitGroupsByUserIdAsync<T>(id);
+        }
+
+        public async Task UpdateUnitGroupAsync(int id, UnitGroupDTO unitGroupDTO)
+        {
+            await _unitGroupService.UpdateUnitGroupAsync(id, unitGroupDTO);
+
+            await _unitOfWork.CommitAsync();
         }
 
         /*public Task<Dictionary<UnitGroupNameDto, List<UnitNameDto>>> GetAllUsersUnitGroupsWithUnits()

@@ -10,6 +10,7 @@ namespace BLL
         {
             config.CreateMap<Address, AddressCityLocalDTO>().ReverseMap();
             config.CreateMap<Address, AddressFullDTO>().ReverseMap();
+            config.CreateMap<Address, AddressDTO>().ReverseMap();
 
             config.CreateMap<Equipment, EquipmentTypeDTO>().ReverseMap();
             config.CreateMap<Equipment, EquipmentUnitAvailableEquipmentDTO>().ReverseMap();
@@ -35,6 +36,8 @@ namespace BLL
             config.CreateMap<User, UserCreateDTO>().ReverseMap();
             config.CreateMap<User, UserNamePasswordEmailAdminDTO>().ReverseMap();
             config.CreateMap<User, UserShowDTO>().ReverseMap();
+
+            config.CreateMap<Color, ColorDTO>().ReverseMap();
         }
     }
 }
