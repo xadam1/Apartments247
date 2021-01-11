@@ -6,6 +6,6 @@ namespace BLL.Services
     {
         Task<T[]> GetUnitsByGroupIdAsync<T>(int id);
 
-        //Task<T[]> GetUnitGroupNamesByUserId<T>(int id);
+        Task<T> GetUnitByIdAsync<T>(int id);
     }
 }

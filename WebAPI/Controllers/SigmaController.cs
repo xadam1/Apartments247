@@ -70,6 +70,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
             return Utils.Convert(group);*/
+
             UnitGroupDTO group = await _unitGroupFacade.GetUnitGroupByIdAsync<UnitGroupDTO>(groupId);
             if (group == null)
             {
@@ -81,7 +82,7 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("GetUnitById")]
-        public ActionResult<UnitWithSpecificationModel> GetUnitById(int unitId)
+        public async Task<ActionResult<UnitWithSpecificationModel>> GetUnitById(int unitId)
         {
             /*Unit unit = con.Units.Where(unit => unit.Id == unitId).FirstOrDefault();
             if (unit == null)
@@ -89,7 +90,13 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
             return Utils.Convert(unit);*/
-            return Ok();
+
+            UnitDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
+            if (unit == null)
+            {
+                return BadRequest();
+            }
+            return Utils.Convert(unit);
         }
 
         [HttpGet]

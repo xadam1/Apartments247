@@ -15,6 +15,13 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
+        public async Task<T> GetUnitByIdAsync<T>(int id)
+        {
+            var unitGroup = await _unitOfWork.UnitRepository.GetByIdAsync(id);
+
+            return _mapper.Map<T>(unitGroup);
+        }
+
         public async Task<T[]> GetUnitsByGroupIdAsync<T>(int id)
         {
             var query = _unitOfWork.UnitsWithUnitGroupsQuery.FilterByUnitGroupId(id);
