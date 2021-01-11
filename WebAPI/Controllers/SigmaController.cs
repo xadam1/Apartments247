@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("GetUnitGroupNamesByUserId")]
-        public async Task<UnitGroupNameModel[]> GetUnitGroupNamesByUserId(int userId)
+        public async Task<UnitGroupNameModel[]> GetUnitGroupNamesByUserIdAsync(int userId)
         {
             /*UnitGroupNameModel[] groups = con.UnitGroups.Where(group => group.UserId == userId)
                 .Select(group => new UnitGroupNameModel(group.Id, group.Specification.Name)).ToArray();
@@ -49,11 +49,15 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("GetUnitsByUnitGroupId")]
-        public UnitWithSpecificationModel[] GetUnitsByGroupId(int groupId)
+        public async Task<UnitWithSpecificationModel[]> GetUnitsByGroupIdAsync(int groupId)
         {
             /*Unit[] units = con.Units.Where(unit => unit.UnitGroupId == groupId).ToArray();
             return units.Select(unit => Utils.Convert(unit)).ToArray();*/
-            return new UnitWithSpecificationModel[] { };
+
+            UnitWithSpecificationModel[] units = (await _unitFacade.GetUnitsByGroupIdAsync<UnitDTO>(groupId))
+                                 .Select(unit => Utils.Convert(unit)).ToArray();
+
+            return units;
         }
 
         [HttpGet]

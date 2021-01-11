@@ -20,7 +20,7 @@ namespace WebAPI.Extras
             };
         }
 
-        public static UnitWithSpecificationModel Convert(Unit unit)
+        public static UnitWithSpecificationModel Convert(UnitDTO unit)
         {
             return new UnitWithSpecificationModel()
             {
