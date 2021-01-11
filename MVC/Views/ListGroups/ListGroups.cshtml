@@ -7,6 +7,9 @@
     var groupId = Model.GroupId;
     var groups = Model.Groups;
 }
+
+@if (groups.Length > 0)
+{
 <table>
     <tr>
         <th>Name</th>
@@ -28,3 +31,9 @@
         </tr>
     }
  </table>
+}
+else
+{
+    <p>You dont have any Unit Groups.</p>
+    <p>Let's <a href="/EditGroup/EditGroup?userId=@userId&groupId=-1">create</a> one.</p>
+}

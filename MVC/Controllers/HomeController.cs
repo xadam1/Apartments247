@@ -12,7 +12,7 @@ namespace MVC.Controllers
         {
             if (userId == -1)
             {
-                userId = 1; // TODO
+                userId = 40; // TODO
             }
             if (groupId == -1)
             {
