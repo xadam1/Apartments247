@@ -1,4 +1,4 @@
-﻿using BLL.DTOs;
+using BLL.DTOs;
 using BLL.Facades;
 using DAL;
 using DAL.Models;
@@ -154,7 +154,6 @@ namespace WebAPI.Controllers
         public async Task<int> SaveUnitAsync(int groupId, int unitId, string name, int colorId, string note, int unitTypeId, int currentCapacity, int maxCapacity, string contractLink, string state, string city, string street, string number, string zip)
         {
             UnitDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
-
             if (unit == null)
             {
                 Address address = new Address()
@@ -183,7 +182,7 @@ namespace WebAPI.Controllers
                     MaxCapacity = maxCapacity,
                     ContractLink = contractLink != null ? contractLink : string.Empty,
                 };
-
+                
                 await _unitFacade.CreateUnitAsync(unit);
             }
             else
@@ -208,6 +207,34 @@ namespace WebAPI.Controllers
             }
 
             return unit.Id;
+        }
+
+        [HttpGet]
+        [Route("DeleteGroup")]
+        public void DeleteGroup(int groupId)
+        {
+            ApartmentsDbContext con = new ApartmentsDbContext();
+            UnitGroup unitGroup = con.UnitGroups.Where(unitGroup => unitGroup.Id == groupId).FirstOrDefault();
+            con.UnitGroups.Remove(unitGroup);
+            con.SaveChanges();
+        }
+
+        [HttpGet]
+        [Route("DeleteUnit")]
+        public void DeleteUnit(int unitId)
+        {
+            ApartmentsDbContext con = new ApartmentsDbContext();
+            Unit unit = con.Units.Where(unit => unit.Id == unitId).FirstOrDefault();
+            con.Units.Remove(unit);
+            con.SaveChanges();
+        }
+
+        [HttpGet]
+        [Route("GetFirstUnitGroupIdByUserId")]
+        public int GetFirstUnitGroupIdByUserId(int userId)
+        {
+            ApartmentsDbContext con = new ApartmentsDbContext();
+            return con.UnitGroups.Where(unitGroup => unitGroup.UserId == userId).FirstOrDefault().Id;
         }
     }
 }
