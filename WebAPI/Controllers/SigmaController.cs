@@ -17,12 +17,14 @@ namespace WebAPI.Controllers
         //private readonly ApartmentsDbContext con;
         private readonly IUnitGroupFacade _unitGroupFacade;
         private readonly IUnitFacade _unitFacade;
+        private readonly IColorFacade _colorFacade;
 
-        public SigmaController(IUnitGroupFacade unitGroupFacade, IUnitFacade unitFacade)
+        public SigmaController(IUnitGroupFacade unitGroupFacade, IUnitFacade unitFacade, IColorFacade colorFacade)
         {
             //con = new ApartmentsDbContext();
             _unitGroupFacade = unitGroupFacade;
             _unitFacade = unitFacade;
+            _colorFacade = colorFacade;
         }
 
         [HttpGet]
@@ -101,11 +103,11 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("GetColors")]
-        public Color[] GetColors()
+        public async Task<ColorDTO[]> GetColors()
         {
             /*Color[] colors = con.Colors.ToArray();
             return colors;*/
-            return new Color[] { };
+            return await _colorFacade.GetColorsAsync<ColorDTO>();
         }
 
         [HttpGet]
