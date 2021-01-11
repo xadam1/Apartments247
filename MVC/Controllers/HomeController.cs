@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace MVC.Controllers
 {
@@ -6,7 +8,16 @@ namespace MVC.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("Overview", "Overview", new { userId = 1, groupId = 1 });
+            int userId = 1; // TODO
+            int groupId = -1;
+
+            using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = client.GetAsync(Utils.apiUrl + $"GetFirstUnitGroupIdByUserId?userId={userId}").Result)
+            {
+                string content = response.Content.ReadAsStringAsync().Result;
+                groupId = JsonConvert.DeserializeObject<int>(content);
+            }
+            return RedirectToAction("Overview", "Overview", new { userId = userId, groupId = groupId });
         }
     }
 }

@@ -7,6 +7,7 @@
     var groupId = Model.GroupId;
     var group = Model.Group;
     var colors = Model.Colors;
+    var createNew = Model.CreateNew;
 }
 
 @if (groupId != -1)
@@ -60,5 +61,19 @@ else
         <input type="hidden" name="userId" value="@userId" />
         <input type="hidden" name="groupId" value="@group.Id" />
 
-        <input type="submit" value="Save">
+        <input type="submit" value="Save"><br />
     </form>
+
+@if (!createNew)
+{
+   <button type="button" onclick="confirmDelete()">Delete Group</button>
+
+   <script>
+    function confirmDelete() {
+        result = confirm("Are you sure?");
+        if (result) {
+            location.href = "/EditGroup/DeleteGroup?userId=@userId&groupId=@groupId";
+        }
+    };
+   </script>
+}

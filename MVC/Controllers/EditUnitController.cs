@@ -32,7 +32,11 @@ namespace MVC.Controllers
                         Id = -1,
                         Name = "Domeček lásky",
                         ColorId = 10,
-                        AddressId = -1, // TODO
+                        State = "state",
+                        City = "city",
+                        Street = "street",
+                        Number = "number",
+                        Zip = "zip",
                         Note = "Skvělé místo pro zamilované skupiny libovolné arity",
                         UnitTypeId = 6,
                         CurrentCapacity = 0,

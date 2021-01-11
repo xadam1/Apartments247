@@ -197,5 +197,23 @@ namespace WebAPI.Controllers
 
             return unit.Id;
         }
+
+        [HttpGet]
+        [Route("DeleteGroup")]
+        public void DeleteGroup(int groupId)
+        {
+            ApartmentsDbContext con = new ApartmentsDbContext();
+            UnitGroup unitGroup = con.UnitGroups.Where(unitGroup => unitGroup.Id == groupId).FirstOrDefault();
+            con.UnitGroups.Remove(unitGroup);
+            con.SaveChanges();
+        }
+
+        [HttpGet]
+        [Route("GetFirstUnitGroupIdByUserId")]
+        public int GetFirstUnitGroupIdByUserId(int userId)
+        {
+            ApartmentsDbContext con = new ApartmentsDbContext();
+            return con.UnitGroups.Where(unitGroup => unitGroup.UserId == userId).FirstOrDefault().Id;
+        }
     }
 }
