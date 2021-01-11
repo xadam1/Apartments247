@@ -81,7 +81,19 @@ namespace MVC.Controllers
                 }
             }
 
-            return RedirectToAction($"EditUnit", "EditUnit", new { userId = userId, groupId = groupId, unitId = unitId });
+            return RedirectToAction("EditUnit", "EditUnit", new { userId = userId, groupId = groupId, unitId = unitId });
+        }
+
+        [HttpGet]
+        public IActionResult DeleteUnit(int userId, int groupId, int unitId)
+        {
+            using (HttpClient client = new HttpClient())
+            using (HttpResponseMessage response = client.GetAsync(Utils.apiUrl + $"DeleteUnit?unitId={unitId}").Result)
+            {
+                // Nothing to do
+            }
+
+            return RedirectToAction("ListUnits", "ListUnits", new { userId = userId, groupId = groupId });
         }
     }
 }

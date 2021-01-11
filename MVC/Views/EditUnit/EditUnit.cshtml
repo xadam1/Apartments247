@@ -92,3 +92,16 @@
 
     <input type="submit" value="Save" />
 </form>
+
+@if (unitId != -1)
+{
+    <button type="button" onclick="confirmDeleteUnit()">Delete unit</button>
+    <script>
+        function confirmDeleteUnit() {
+            result = confirm("Are you sure?");
+            if (result) {
+                location.href = "/EditUnit/DeleteUnit?userId=@userId&groupId=@groupId&unitId=@unitId";
+            }
+        };
+    </script>
+}

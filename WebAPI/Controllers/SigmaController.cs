@@ -209,6 +209,16 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("DeleteUnit")]
+        public void DeleteUnit(int unitId)
+        {
+            ApartmentsDbContext con = new ApartmentsDbContext();
+            Unit unit = con.Units.Where(unit => unit.Id == unitId).FirstOrDefault();
+            con.Units.Remove(unit);
+            con.SaveChanges();
+        }
+
+        [HttpGet]
         [Route("GetFirstUnitGroupIdByUserId")]
         public int GetFirstUnitGroupIdByUserId(int userId)
         {

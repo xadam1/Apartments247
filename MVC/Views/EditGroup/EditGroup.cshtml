@@ -66,10 +66,10 @@ else
 
 @if (!createNew)
 {
-   <button type="button" onclick="confirmDelete()">Delete Group</button>
+   <button type="button" onclick="confirmDeleteGroup()">Delete Group</button>
 
    <script>
-    function confirmDelete() {
+    function confirmDeleteGroup() {
         result = confirm("Are you sure?");
         if (result) {
             location.href = "/EditGroup/DeleteGroup?userId=@userId&groupId=@groupId";
