@@ -23,6 +23,7 @@ namespace Infrastructure
         public UnitGroupsWithUsersQuery UnitGroupsWithUsersQuery { get; }
         public UserQuery UserQuery { get; }
         public UsersUnitGroupsWithUnitsQuery UsersUnitGroupsWithUnitsQuery { get; }
+        public UnitsWithUnitGroupsQuery UnitsWithUnitGroupsQuery { get; }
 
 
         // Constructor
@@ -43,6 +44,7 @@ namespace Infrastructure
             UnitGroupsWithUsersQuery = new UnitGroupsWithUsersQuery(_dbContext);
             UserQuery = new UserQuery(_dbContext);
             UsersUnitGroupsWithUnitsQuery = new UsersUnitGroupsWithUnitsQuery(_dbContext);
+            UnitsWithUnitGroupsQuery = new UnitsWithUnitGroupsQuery(_dbContext);
         }
 
 
