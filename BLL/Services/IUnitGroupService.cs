@@ -10,5 +10,9 @@ namespace BLL.Services
         Task<T[]> GetUnitGroupNamesByUserIdAsync<T>(int id);
 
         Task<T> GetUnitGroupByIdAsync<T>(int id);
+
+        void CreateUnitGroup(UnitGroupDTO unitGroupDTO);
+
+        Task UpdateUnitGroupAsync(int id, UnitGroupDTO unitGroupDTO);
     }
 }

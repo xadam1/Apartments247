@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using BLL.DTOs;
+using System.Threading.Tasks;
 
 namespace BLL.Facades
 {
@@ -7,5 +8,9 @@ namespace BLL.Facades
         Task<T[]> GetUnitsByGroupIdAsync<T>(int id);
 
         Task<T> GetUnitByIdAsync<T>(int id);
+
+        Task CreateUnitAsync(UnitDTO unitDTO);
+
+        Task UpdateUnitAsync(int id, UnitDTO unitDTO);
     }
 }
