@@ -1,6 +1,6 @@
 ﻿namespace BLL.Facades
 {
-    public class UnitFacade
+    public class UnitFacade : IUnitFacade
     {
 
     }
