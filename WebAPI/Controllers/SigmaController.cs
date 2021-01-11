@@ -8,7 +8,7 @@ using WebAPI.Models;
 namespace WebAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class SigmaController : Controller
     {
         private readonly ApartmentsDbContext con;
@@ -220,10 +220,15 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("GetFirstUnitGroupIdByUserId")]
-        public int GetFirstUnitGroupIdByUserId(int userId)
+        public ActionResult<int> GetFirstUnitGroupIdByUserId(int userId)
         {
             ApartmentsDbContext con = new ApartmentsDbContext();
-            return con.UnitGroups.Where(unitGroup => unitGroup.UserId == userId).FirstOrDefault().Id;
+            UnitGroup unitGroup = con.UnitGroups.Where(unitGroup => unitGroup.UserId == userId).FirstOrDefault();
+            if (unitGroup == null)
+            {
+                return NotFound();
+            }
+            return unitGroup.Id;
         }
     }
 }

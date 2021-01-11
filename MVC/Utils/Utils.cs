@@ -12,13 +12,18 @@ namespace MVC.Controllers
     public static class Utils
     {
         //public const string apiUrl = "https://localhost:44306/Sigma/";
-        public const string apiUrl = "http://cassiopeia.serveirc.com:5000/Sigma/";
+        public const string apiUrl = "http://cassiopeia.serveirc.com:5000/Sigma/api/";
 
         public static int GetFirstUnitGroupIdByUserId(int userId)
         {
             using (HttpClient client = new HttpClient())
             using (HttpResponseMessage response = client.GetAsync(Utils.apiUrl + $"GetFirstUnitGroupIdByUserId?userId={userId}").Result)
             {
+                if (! response.IsSuccessStatusCode)
+                {
+                    return -1;
+                }
+
                 string content = response.Content.ReadAsStringAsync().Result;
                 int groupId = JsonConvert.DeserializeObject<int>(content);
                 return groupId;
