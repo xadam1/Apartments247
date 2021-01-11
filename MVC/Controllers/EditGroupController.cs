@@ -28,7 +28,7 @@ namespace MVC.Controllers
                 Colors = Utils.GetColors(),
             };
 
-            if (createNew)
+            if (createNew || groupId == -1)
             {
                 m.Group = new UnitGroupWithSpecificationModel()
                 {
