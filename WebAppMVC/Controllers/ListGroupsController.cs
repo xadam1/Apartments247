@@ -1,19 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
-using WebAppMVC.Utils;
 
 namespace WebAppMVC.Controllers
 {
     public class ListGroupsController : Controller
     {
         [HttpGet]
-        public IActionResult ListGroups(int groupId)
+        public IActionResult ListGroups(int userId, int groupId)
         {
             ListGroupsModel m = new ListGroupsModel()
             {
-                UserId = UserInfoManager.UserId,
+                UserId = userId,
                 GroupId = groupId,
-                Groups = Utils.Utils.GetUnitGroupsByUserId(),
+                Groups = Utils.Utils.GetUnitGroupsByUserId(userId),
             };
             return View(m);
         }

@@ -3,23 +3,22 @@ using MVC.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
 using WebAPI.Models;
-using WebAppMVC.Utils;
 
 namespace WebAppMVC.Controllers
 {
     public class EditUnitController : Controller
     {
         [HttpGet]
-        public IActionResult EditUnit(int groupId, int unitId = -1)
+        public IActionResult EditUnit(int userId, int groupId, int unitId = -1)
         {
             EditUnitModel m = new EditUnitModel()
             {
-                UserId = UserInfoManager.UserId,
+                UserId = userId,
                 GroupId = groupId,
                 UnitId = unitId,
                 Colors = Utils.Utils.GetColors(),
                 UnitTypes = Utils.Utils.GetUnitTypes(),
-                UnitGroups = Utils.Utils.GetUnitGroupNamesByUserId(),
+                UnitGroups = Utils.Utils.GetUnitGroupNamesByUserId(userId),
             };
 
             if (unitId == -1)
@@ -50,7 +49,7 @@ namespace WebAppMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveUnit(int unitId, int groupId, string name, int selectColor, string note,
+        public IActionResult SaveUnit(int userId, int unitId, int groupId, string name, int selectColor, string note,
             int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
             string street, string number, string zip)
         {
@@ -82,11 +81,11 @@ namespace WebAppMVC.Controllers
                 }
             }
 
-            return RedirectToAction("EditUnit", "EditUnit", new { groupId = groupId, unitId = unitId });
+            return RedirectToAction("EditUnit", "EditUnit", new { userId = userId, groupId = groupId, unitId = unitId });
         }
 
         [HttpGet]
-        public IActionResult DeleteUnit(int groupId, int unitId)
+        public IActionResult DeleteUnit(int userId, int groupId, int unitId)
         {
             using (HttpClient client = new HttpClient())
             using (HttpResponseMessage response = client.GetAsync(Utils.ApiConnectionUrls.API_URL + $"DeleteUnit?unitId={unitId}").Result)
@@ -94,7 +93,7 @@ namespace WebAppMVC.Controllers
                 // Nothing to do
             }
 
-            return RedirectToAction("ListUnits", "ListUnits", new { groupId = groupId });
+            return RedirectToAction("ListUnits", "ListUnits", new { userId = userId, groupId = groupId });
         }
     }
 }
