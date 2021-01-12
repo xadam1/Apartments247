@@ -12,14 +12,14 @@ namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SigmaController : Controller
+    public class ApiController : Controller
     {
         private readonly IUnitGroupFacade _unitGroupFacade;
         private readonly IUnitFacade _unitFacade;
         private readonly IColorFacade _colorFacade;
         private readonly IUnitTypeFacade _unitTypeFacade;
 
-        public SigmaController(IUnitGroupFacade unitGroupFacade, IUnitFacade unitFacade, IColorFacade colorFacade, IUnitTypeFacade unitTypeFacade)
+        public ApiController(IUnitGroupFacade unitGroupFacade, IUnitFacade unitFacade, IColorFacade colorFacade, IUnitTypeFacade unitTypeFacade)
         {
             _unitGroupFacade = unitGroupFacade;
             _unitFacade = unitFacade;
