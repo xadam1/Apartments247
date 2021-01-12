@@ -82,13 +82,9 @@ namespace WebAppMVC.Areas.Identity.Pages.Account
 
                 if (result.Succeeded || result.RequiresTwoFactor)    // ours
                 {
-                    var applicationUser = new ApplicationUser
-                    {
-                        UserName = Input.Username,
-                        Email = "Unknown"
-                    };
+                    var applicationUser = await _userManager.FindByNameAsync(Input.Username);
 
-                    UserManager.SetUserIdByApplicationUser(applicationUser);
+                    UserInfoManager.SetUserIdByApplicationUser(applicationUser);
                 }
 
                 if (result.Succeeded)

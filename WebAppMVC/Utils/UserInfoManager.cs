@@ -5,7 +5,7 @@ using WebAppMVC.Areas.Identity.Data;
 
 namespace WebAppMVC.Utils
 {
-    public static class UserManager
+    public static class UserInfoManager
     {
         public static int UserId { get; private set; }
 

@@ -11,7 +11,7 @@ namespace WebAppMVC.Controllers
         {
             ListGroupsModel m = new ListGroupsModel()
             {
-                UserId = UserManager.UserId,
+                UserId = UserInfoManager.UserId,
                 GroupId = groupId,
                 Groups = Utils.Utils.GetUnitGroupsByUserId(),
             };
