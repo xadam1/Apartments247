@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVC.Controllers;
 using MVC.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -19,7 +18,7 @@ namespace WebAppMVC.Controllers
                 UserId = userId,
                 GroupId = groupId,
                 CreateNew = createNew,
-                Colors = Utils.GetColors(),
+                Colors = Utils.Utils.GetColors(),
             };
 
             if (createNew || groupId == -1)
@@ -40,7 +39,7 @@ namespace WebAppMVC.Controllers
             }
             else
             {
-                m.Group = Utils.GetUnitGroupById(groupId);
+                m.Group = Utils.Utils.GetUnitGroupById(groupId);
             }
 
             return View(m);
@@ -62,7 +61,7 @@ namespace WebAppMVC.Controllers
                 */
 
                 string commandUrl = $"SaveUnitGroup?userId={userId}&groupId={groupId}&name={name}&colorId={colorSelect}&note={note}&state={state}&city={city}&street={street}&number={number}&zip={zip}";
-                using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + commandUrl).Result)
+                using (HttpResponseMessage respond = client.GetAsync(Utils.Utils.apiUrl + commandUrl).Result)
                 {
                     string content = respond.Content.ReadAsStringAsync().Result;
                     groupId = JsonConvert.DeserializeObject<int>(content);
@@ -77,13 +76,13 @@ namespace WebAppMVC.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = client.GetAsync(Utils.apiUrl + $"DeleteGroup?groupId={groupId}").Result)
+                using (HttpResponseMessage response = client.GetAsync(Utils.Utils.apiUrl + $"DeleteGroup?groupId={groupId}").Result)
                 {
                     // Nothing to do
                 }
             }
 
-            groupId = Utils.GetFirstUnitGroupIdByUserId(userId);
+            groupId = Utils.Utils.GetFirstUnitGroupIdByUserId(userId);
 
             return RedirectToAction("ListGroups", "ListGroups", new { userId = userId, groupId = groupId });
         }

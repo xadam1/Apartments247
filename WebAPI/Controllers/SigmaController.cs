@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
         public async Task<UnitGroupWithSpecificationModel[]> GetUnitGroupsByUserIdAsync(int userId)
         {
             UnitGroupDTO[] groups = await _unitGroupFacade.GetUnitGroupsByUserIdAsync<UnitGroupDTO>(userId);
-            return groups.Select(group => Utils.Convert(group)).ToArray();
+            return groups.Select(Utils.Convert).ToArray();
         }
 
         [HttpGet]
@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
         public async Task<UnitWithSpecificationModel[]> GetUnitsByGroupIdAsync(int groupId)
         {
             UnitWithSpecificationModel[] units = (await _unitFacade.GetUnitsByGroupIdAsync<UnitDTO>(groupId))
-                                                                   .Select(unit => Utils.Convert(unit)).ToArray();
+                                                                   .Select(Utils.Convert).ToArray();
 
             return units;
         }
@@ -93,7 +93,7 @@ namespace WebAPI.Controllers
         {
             var unitTypesDTOs = await _unitTypeFacade.GetUnitTypesAsync<UnitTypeDTO>();
 
-            return unitTypesDTOs.Select(unitType => Utils.Convert(unitType)).ToArray();
+            return unitTypesDTOs.Select(Utils.Convert).ToArray();
         }
 
 
@@ -107,18 +107,18 @@ namespace WebAPI.Controllers
             {
                 Address address = new Address()
                 {
-                    State = state != null ? state : string.Empty,
-                    City = city != null ? city : string.Empty,
-                    Street = street != null ? street : string.Empty,
-                    Number = number != null ? number : string.Empty,
-                    Zip = zip != null ? zip : string.Empty,
+                    State = state ?? string.Empty,
+                    City = city ?? string.Empty,
+                    Street = street ?? string.Empty,
+                    Number = number ?? string.Empty,
+                    Zip = zip ?? string.Empty,
                 };
 
                 Specification spec = new Specification()
                 {
-                    Name = name != null ? name : string.Empty,
+                    Name = name ?? string.Empty,
                     ColorId = colorId,
-                    Note = note != null ? note : string.Empty,
+                    Note = note ?? string.Empty,
                     Address = address,
                 };
 
@@ -132,15 +132,15 @@ namespace WebAPI.Controllers
             }
             else
             {
-                group.Specification.Name = name != null ? name : string.Empty;
+                group.Specification.Name = name ?? string.Empty;
                 group.Specification.ColorId = colorId;
-                group.Specification.Note = note != null ? note : string.Empty;
+                group.Specification.Note = note ?? string.Empty;
 
-                group.Specification.Address.State = state != null ? state : string.Empty;
-                group.Specification.Address.City = city != null ? city : string.Empty;
-                group.Specification.Address.Street = street != null ? street : string.Empty;
-                group.Specification.Address.Number = number != null ? number : string.Empty;
-                group.Specification.Address.Zip = zip != null ? zip : string.Empty;
+                group.Specification.Address.State = state ?? string.Empty;
+                group.Specification.Address.City = city ?? string.Empty;
+                group.Specification.Address.Street = street ?? string.Empty;
+                group.Specification.Address.Number = number ?? string.Empty;
+                group.Specification.Address.Zip = zip ?? string.Empty;
 
                 await _unitGroupFacade.UpdateUnitGroupAsync(groupId, group);
             }
@@ -158,7 +158,7 @@ namespace WebAPI.Controllers
             {
                 Address address = new Address()
                 {
-                    State = state != null ? state : string.Empty,
+                    State = state ?? string.Empty,
                     City = city != null ? state : string.Empty,
                     Street = street != null ? state : string.Empty,
                     Number = number != null ? state : string.Empty,
@@ -167,10 +167,10 @@ namespace WebAPI.Controllers
 
                 Specification spec = new Specification()
                 {
-                    Name = name != null ? name : string.Empty,
+                    Name = name ?? string.Empty,
                     ColorId = colorId,
                     Address = address,
-                    Note = note != null ? note : string.Empty,
+                    Note = note ?? string.Empty,
                 };
 
                 unit = new UnitDTO()
@@ -180,28 +180,28 @@ namespace WebAPI.Controllers
                     UnitTypeId = unitTypeId,
                     CurrentCapacity = currentCapacity,
                     MaxCapacity = maxCapacity,
-                    ContractLink = contractLink != null ? contractLink : string.Empty,
+                    ContractLink = contractLink ?? string.Empty,
                 };
-                
+
                 await _unitFacade.CreateUnitAsync(unit);
             }
             else
             {
-                unit.Specification.Name = name != null ? name : string.Empty;
+                unit.Specification.Name = name ?? string.Empty;
                 unit.Specification.ColorId = colorId;
-                unit.Specification.Note = note != null ? note : string.Empty;
+                unit.Specification.Note = note ?? string.Empty;
 
-                unit.Specification.Address.State = state != null ? state : string.Empty;
-                unit.Specification.Address.City = city != null ? city : string.Empty;
-                unit.Specification.Address.Street = street != null ? street : string.Empty;
-                unit.Specification.Address.Number = number != null ? number : string.Empty;
-                unit.Specification.Address.Zip = zip != null ? zip : string.Empty;
+                unit.Specification.Address.State = state ?? string.Empty;
+                unit.Specification.Address.City = city ?? string.Empty;
+                unit.Specification.Address.Street = street ?? string.Empty;
+                unit.Specification.Address.Number = number ?? string.Empty;
+                unit.Specification.Address.Zip = zip ?? string.Empty;
 
                 unit.UnitTypeId = unitTypeId;
                 unit.UnitGroupId = groupId;
                 unit.CurrentCapacity = currentCapacity;
                 unit.MaxCapacity = maxCapacity;
-                unit.ContractLink = contractLink != null ? contractLink : string.Empty;
+                unit.ContractLink = contractLink ?? string.Empty;
 
                 await _unitFacade.UpdateUnitAsync(unitId, unit);
             }
@@ -214,7 +214,7 @@ namespace WebAPI.Controllers
         public void DeleteGroup(int groupId)
         {
             ApartmentsDbContext con = new ApartmentsDbContext();
-            UnitGroup unitGroup = con.UnitGroups.Where(unitGroup => unitGroup.Id == groupId).FirstOrDefault();
+            UnitGroup unitGroup = con.UnitGroups.FirstOrDefault(unitGroup => unitGroup.Id == groupId);
             con.UnitGroups.Remove(unitGroup);
             con.SaveChanges();
         }
@@ -224,7 +224,7 @@ namespace WebAPI.Controllers
         public void DeleteUnit(int unitId)
         {
             ApartmentsDbContext con = new ApartmentsDbContext();
-            Unit unit = con.Units.Where(unit => unit.Id == unitId).FirstOrDefault();
+            Unit unit = con.Units.FirstOrDefault(unit => unit.Id == unitId);
             con.Units.Remove(unit);
             con.SaveChanges();
         }
@@ -234,7 +234,7 @@ namespace WebAPI.Controllers
         public ActionResult<int> GetFirstUnitGroupIdByUserId(int userId)
         {
             ApartmentsDbContext con = new ApartmentsDbContext();
-            UnitGroup unitGroup = con.UnitGroups.Where(unitGroup => unitGroup.UserId == userId).FirstOrDefault();
+            UnitGroup unitGroup = con.UnitGroups.FirstOrDefault(unitGroup => unitGroup.UserId == userId);
             if (unitGroup == null)
             {
                 return NotFound();

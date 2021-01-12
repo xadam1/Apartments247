@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVC.Controllers;
 using MVC.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -17,9 +16,9 @@ namespace WebAppMVC.Controllers
                 UserId = userId,
                 GroupId = groupId,
                 UnitId = unitId,
-                Colors = Utils.GetColors(),
-                UnitTypes = Utils.GetUnitTypes(),
-                UnitGroups = Utils.GetUnitGroupNamesByUserId(userId),
+                Colors = Utils.Utils.GetColors(),
+                UnitTypes = Utils.Utils.GetUnitTypes(),
+                UnitGroups = Utils.Utils.GetUnitGroupNamesByUserId(userId),
             };
 
             if (unitId == -1)
@@ -43,14 +42,16 @@ namespace WebAppMVC.Controllers
             }
             else
             {
-                m.Unit = Utils.GetUnitById(unitId);
+                m.Unit = Utils.Utils.GetUnitById(unitId);
             }
 
             return View(m);
         }
 
         [HttpPost]
-        public IActionResult SaveUnit(int userId, int unitId, int groupId, string name, int selectColor, string note, int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city, string street, string number, string zip)
+        public IActionResult SaveUnit(int userId, int unitId, int groupId, string name, int selectColor, string note,
+            int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
+            string street, string number, string zip)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -69,8 +70,11 @@ namespace WebAppMVC.Controllers
                     ContractLink = contractLink
                 };
                 */
-                string commandUrl = $"SaveUnit?groupId={groupId}&unitId={unitId}&name={name}&colorId={selectColor}&note={note}&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}&contractLink={contractLink}&state={state}&city={city}&street={street}&number={number}&zip={zip}";
-                using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + commandUrl).Result)
+                string commandUrl = $"SaveUnit?groupId={groupId}&unitId={unitId}&name={name}&colorId={selectColor}&note={note}" +
+                                    $"&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}" +
+                                    $"&contractLink={contractLink}&state={state}&city={city}&street={street}&number={number}&zip={zip}";
+
+                using (HttpResponseMessage respond = client.GetAsync(Utils.Utils.apiUrl + commandUrl).Result)
                 {
                     string content = respond.Content.ReadAsStringAsync().Result;
                     unitId = JsonConvert.DeserializeObject<int>(content);
@@ -84,7 +88,7 @@ namespace WebAppMVC.Controllers
         public IActionResult DeleteUnit(int userId, int groupId, int unitId)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = client.GetAsync(Utils.apiUrl + $"DeleteUnit?unitId={unitId}").Result)
+            using (HttpResponseMessage response = client.GetAsync(Utils.Utils.apiUrl + $"DeleteUnit?unitId={unitId}").Result)
             {
                 // Nothing to do
             }

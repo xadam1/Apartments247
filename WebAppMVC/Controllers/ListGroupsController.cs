@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVC.Controllers;
 using MVC.Models;
 
 namespace WebAppMVC.Controllers
@@ -13,7 +12,7 @@ namespace WebAppMVC.Controllers
             {
                 UserId = userId,
                 GroupId = groupId,
-                Groups = Utils.GetUnitGroupsByUserId(userId),
+                Groups = Utils.Utils.GetUnitGroupsByUserId(userId),
             };
             return View(m);
         }

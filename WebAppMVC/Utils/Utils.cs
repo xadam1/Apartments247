@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net.Http;
+﻿using DAL.Models;
 using Newtonsoft.Json;
+using System.Net.Http;
 using WebAPI.Models;
-using DAL.Models;
 
-namespace MVC.Controllers
+namespace WebAppMVC.Utils
 {
     public static class Utils
     {
@@ -19,7 +15,7 @@ namespace MVC.Controllers
             using (HttpClient client = new HttpClient())
             using (HttpResponseMessage response = client.GetAsync(Utils.apiUrl + $"GetFirstUnitGroupIdByUserId?userId={userId}").Result)
             {
-                if (! response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
                 {
                     return -1;
                 }
