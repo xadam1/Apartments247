@@ -7,10 +7,10 @@ namespace WebAppMVC.Utils
 {
     public static class Utils
     {
-        public static int GetFirstUnitGroupIdByUserId()
+        public static int GetFirstUnitGroupIdByUserId(int userId)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = client.GetAsync(ApiConnectionUrls.API_URL + $"GetFirstUnitGroupIdByUserId?userId={UserInfoManager.UserId}").Result)
+            using (HttpResponseMessage response = client.GetAsync(ApiConnectionUrls.API_URL + $"GetFirstUnitGroupIdByUserId?userId={userId}").Result)
             {
                 if (!response.IsSuccessStatusCode)
                 {
@@ -23,10 +23,10 @@ namespace WebAppMVC.Utils
             }
         }
 
-        public static UnitGroupWithSpecificationModel[] GetUnitGroupsByUserId()
+        public static UnitGroupWithSpecificationModel[] GetUnitGroupsByUserId(int userId)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage respond = client.GetAsync(ApiConnectionUrls.API_URL + $"GetUnitGroupsByUserId?userId={UserInfoManager.UserId}").Result)
+            using (HttpResponseMessage respond = client.GetAsync(ApiConnectionUrls.API_URL + $"GetUnitGroupsByUserId?userId={userId}").Result)
             {
                 string content = respond.Content.ReadAsStringAsync().Result;
                 UnitGroupWithSpecificationModel[] groups = JsonConvert.DeserializeObject<UnitGroupWithSpecificationModel[]>(content);
@@ -34,10 +34,10 @@ namespace WebAppMVC.Utils
             }
         }
 
-        public static UnitGroupNameModel[] GetUnitGroupNamesByUserId()
+        public static UnitGroupNameModel[] GetUnitGroupNamesByUserId(int userId)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage respond = client.GetAsync(ApiConnectionUrls.API_URL + $"GetUnitGroupNamesByUserId?userId={UserInfoManager.UserId}").Result)
+            using (HttpResponseMessage respond = client.GetAsync(ApiConnectionUrls.API_URL + $"GetUnitGroupNamesByUserId?userId={userId}").Result)
             {
                 string content = respond.Content.ReadAsStringAsync().Result;
                 UnitGroupNameModel[] unitGroupNames = JsonConvert.DeserializeObject<UnitGroupNameModel[]>(content);

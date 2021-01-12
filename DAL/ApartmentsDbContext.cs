@@ -54,7 +54,7 @@ namespace DAL
                 .HasMany(unit => unit.AvailableEquipment)
                 .WithMany(equipment => equipment.Units)
                 .UsingEntity(j => j.ToTable("UnitEquipment"));*/
-
+            
 
             modelBuilder.Entity<Unit>()
                 .HasMany(unit => unit.Photos)

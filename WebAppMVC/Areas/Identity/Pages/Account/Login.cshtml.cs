@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppMVC.Areas.Identity.Data;
-using WebAppMVC.Utils;
 
 namespace WebAppMVC.Areas.Identity.Pages.Account
 {
@@ -79,14 +78,6 @@ namespace WebAppMVC.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-
-                if (result.Succeeded || result.RequiresTwoFactor)    // ours
-                {
-                    var applicationUser = await _userManager.FindByNameAsync(Input.Username);
-
-                    UserInfoManager.SetUserIdByApplicationUser(applicationUser);
-                }
-
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
