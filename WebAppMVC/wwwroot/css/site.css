@@ -24,6 +24,11 @@ a {
     border-color: #1861ac;
 }
 
+.nav-item {
+    padding: 10px 24px
+}
+
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
