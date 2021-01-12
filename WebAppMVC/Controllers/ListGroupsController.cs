@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using WebAPI.Models;
-using Newtonsoft.Json;
+using MVC.Controllers;
 using MVC.Models;
 
-namespace MVC.Controllers
+namespace WebAppMVC.Controllers
 {
     public class ListGroupsController : Controller
     {

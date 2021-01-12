@@ -10,30 +10,30 @@
 
 @if (groups.Length > 0)
 {
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Color</th>
-        <th>Note</th>
-    </tr>
-    <tr>
-        <td>
-            <a href="/EditGroup/EditGroup?userId=@userId&groupId=@groupId&createNewInt=1"><button type="button">Create new group</button></a>
-        </td>
-    </tr>
-    @foreach (var group in groups)
-    {
+    <table>
         <tr>
-            <td>@group.Name</td>
-            <td>@group.Color</td>
-            <td>@group.Note</td>
-            <td><a href="/EditGroup/EditGroup?userId=@userId&groupId=@group.Id"><button type="button">Show details</button></a></td>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Note</th>
         </tr>
-    }
- </table>
+        <tr>
+            <td>
+                <a href="/EditGroup/EditGroup?userId=@userId&groupId=@groupId&createNewInt=1"><button type="button">Create new group</button></a>
+            </td>
+        </tr>
+        @foreach (var group in groups)
+        {
+            <tr>
+                <td>@group.Name</td>
+                <td>@group.Color</td>
+                <td>@group.Note</td>
+                <td><a href="/EditGroup/EditGroup?userId=@userId&groupId=@group.Id"><button type="button">Show details</button></a></td>
+            </tr>
+        }
+    </table>
 }
 else
 {
-    <p>You dont have any Unit Groups.</p>
+    <p>You don't have any Unit Groups.</p>
     <p>Let's <a href="/EditGroup/EditGroup?userId=@userId&groupId=-1">create</a> one.</p>
 }

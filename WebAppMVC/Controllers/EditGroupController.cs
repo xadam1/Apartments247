@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MVC.Controllers;
 using MVC.Models;
-using WebAPI.Models;
-using System.Net.Http;
 using Newtonsoft.Json;
-using DAL.Models;
+using System.Net.Http;
+using WebAPI.Models;
 
-namespace MVC.Controllers
+namespace WebAppMVC.Controllers
 {
     public class EditGroupController : Controller
     {
