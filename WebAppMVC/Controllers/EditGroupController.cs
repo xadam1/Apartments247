@@ -9,8 +9,6 @@ namespace WebAppMVC.Controllers
 {
     public class EditGroupController : Controller
     {
-
-
         [HttpGet]
         public IActionResult EditGroup(int userId, int groupId, int createNewInt)
         {
