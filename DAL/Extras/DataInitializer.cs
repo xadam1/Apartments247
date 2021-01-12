@@ -1,5 +1,6 @@
 ﻿using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DAL.Extras
 {
@@ -632,10 +633,194 @@ namespace DAL.Extras
             );
             #endregion
 
-            // Unit With Equipment
-            //builder.Entity<Unit>()
-            //    .HasData();
+            #region MonthlyCost
+            builder.Entity<MonthlyCost>().HasData
+            (
+                new MonthlyCost
+                {
+                    Id = 1,
+                    Name = "Nájem",
+                    Price = 20000,
+                    CostType = CostType.Income,
+                    Date = DateTime.Now,
+                    UnitId = 1
+                },
+                new MonthlyCost
+                {
+                    Id = 2,
+                    Name = "Podnájem",
+                    Price = 10000,
+                    CostType = CostType.Income,
+                    Date = DateTime.Now,
+                    UnitId = 2
+                },
+                new MonthlyCost
+                {
+                    Id = 3,
+                    Name = "Cena za vodu",
+                    Price = 2000,
+                    CostType = CostType.Income,
+                    Date = DateTime.Now,
+                    UnitId = 3
+                },
+                new MonthlyCost
+                {
+                    Id = 4,
+                    Name = "Cena za elektřinu",
+                    Price = 1500,
+                    CostType = CostType.Income,
+                    Date = DateTime.Now,
+                    UnitId = 4
+                },
+                new MonthlyCost
+                {
+                    Id = 5,
+                    Name = "Oprava pračky",
+                    Price = 12000,
+                    CostType = CostType.Outcome,
+                    Date = DateTime.Now,
+                    UnitId = 5
+                },
+                new MonthlyCost
+                {
+                    Id = 6,
+                    Name = "Nová televize",
+                    Price = 25000,
+                    CostType = CostType.Outcome,
+                    Date = DateTime.Now,
+                    UnitId = 6
+                },
+                new MonthlyCost
+                {
+                    Id = 7,
+                    Name = "Výmalba obyvacího pokoje",
+                    Price = 11000,
+                    CostType = CostType.Outcome,
+                    Date = DateTime.Now,
+                    UnitId = 7
+                },
+                new MonthlyCost
+                {
+                    Id = 8,
+                    Name = "Přestavba kuchyně",
+                    Price = 27000,
+                    CostType = CostType.Outcome,
+                    Date = DateTime.Now,
+                    UnitId = 8
+                },
+                new MonthlyCost
+                {
+                    Id = 9,
+                    Name = "Nová varna na perník",
+                    Price = 30000,
+                    CostType = CostType.Outcome,
+                    Date = DateTime.Now,
+                    UnitId = 9
+                },
+                new MonthlyCost
+                {
+                    Id = 10,
+                    Name = "Televizní kanály pro dospělé",
+                    Price = 1000,
+                    CostType = CostType.Outcome,
+                    Date = DateTime.Now,
+                    UnitId = 1
+                },
+                new MonthlyCost
+                {
+                    Id = 11,
+                    Name = "Zápasy s dětskými otroky",
+                    Price = 69000,
+                    CostType = CostType.Income,
+                    Date = DateTime.Now,
+                    UnitId = 2
+                }
+            );
+            #endregion
 
+            #region UnitEquipment
+            builder.Entity<UnitEquipment>().HasData
+            (
+                new UnitEquipment
+                {
+                    Id = 1,
+                    UnitId = 1,
+                    EquipmentId = 1
+                },
+                new UnitEquipment
+                {
+                    Id = 2,
+                    UnitId = 2,
+                    EquipmentId = 2
+                },
+                new UnitEquipment
+                {
+                    Id = 3,
+                    UnitId = 3,
+                    EquipmentId = 3
+                },
+                new UnitEquipment
+                {
+                    Id = 4,
+                    UnitId = 4,
+                    EquipmentId = 4
+                },
+                new UnitEquipment
+                {
+                    Id = 5,
+                    UnitId = 5,
+                    EquipmentId = 5
+                },
+                new UnitEquipment
+                {
+                    Id = 6,
+                    UnitId = 6,
+                    EquipmentId = 6
+                },
+                new UnitEquipment
+                {
+                    Id = 7,
+                    UnitId = 7,
+                    EquipmentId = 7
+                },
+                new UnitEquipment
+                {
+                    Id = 8,
+                    UnitId = 8,
+                    EquipmentId = 8
+                },
+                new UnitEquipment
+                {
+                    Id = 9,
+                    UnitId = 9,
+                    EquipmentId = 9
+                },
+                new UnitEquipment
+                {
+                    Id = 10,
+                    UnitId = 1,
+                    EquipmentId = 5
+                },
+                new UnitEquipment
+                {
+                    Id = 11,
+                    UnitId = 2,
+                    EquipmentId = 7
+                },
+                new UnitEquipment
+                {
+                    Id = 12,
+                    UnitId = 3,
+                    EquipmentId = 4
+                },
+                new UnitEquipment
+                {
+                    Id = 13,
+                    UnitId = 4,
+                    EquipmentId = 8
+                }
+            );
+            #endregion
         }
     }
 }
