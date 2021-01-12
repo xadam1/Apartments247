@@ -84,7 +84,8 @@ namespace WebAppMVC.Areas.Identity.Pages.Account
                 {
                     var applicationUser = new ApplicationUser
                     {
-                        UserName = Input.Username
+                        UserName = Input.Username,
+                        Email = "Unknown"
                     };
 
                     UserManager.SetUserIdByApplicationUser(applicationUser);
