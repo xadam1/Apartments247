@@ -74,7 +74,7 @@ namespace WebAppMVC.Controllers
                                     $"&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}" +
                                     $"&contractLink={contractLink}&state={state}&city={city}&street={street}&number={number}&zip={zip}";
 
-                using (HttpResponseMessage respond = client.GetAsync(Utils.Utils.apiUrl + commandUrl).Result)
+                using (HttpResponseMessage respond = client.GetAsync(Utils.ApiConnectionUrls.API_URL + commandUrl).Result)
                 {
                     string content = respond.Content.ReadAsStringAsync().Result;
                     unitId = JsonConvert.DeserializeObject<int>(content);
@@ -88,7 +88,7 @@ namespace WebAppMVC.Controllers
         public IActionResult DeleteUnit(int userId, int groupId, int unitId)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = client.GetAsync(Utils.Utils.apiUrl + $"DeleteUnit?unitId={unitId}").Result)
+            using (HttpResponseMessage response = client.GetAsync(Utils.ApiConnectionUrls.API_URL + $"DeleteUnit?unitId={unitId}").Result)
             {
                 // Nothing to do
             }

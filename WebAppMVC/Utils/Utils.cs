@@ -7,13 +7,10 @@ namespace WebAppMVC.Utils
 {
     public static class Utils
     {
-        //public const string apiUrl = "https://localhost:44306/api/Sigma/";
-        public const string apiUrl = "http://cassiopeia.serveirc.com:5000/api/Sigma/";
-
         public static int GetFirstUnitGroupIdByUserId(int userId)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = client.GetAsync(Utils.apiUrl + $"GetFirstUnitGroupIdByUserId?userId={userId}").Result)
+            using (HttpResponseMessage response = client.GetAsync(ApiConnectionUrls.API_URL + $"GetFirstUnitGroupIdByUserId?userId={userId}").Result)
             {
                 if (!response.IsSuccessStatusCode)
                 {
@@ -29,7 +26,7 @@ namespace WebAppMVC.Utils
         public static UnitGroupWithSpecificationModel[] GetUnitGroupsByUserId(int userId)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitGroupsByUserId?userId={userId}").Result)
+            using (HttpResponseMessage respond = client.GetAsync(ApiConnectionUrls.API_URL + $"GetUnitGroupsByUserId?userId={userId}").Result)
             {
                 string content = respond.Content.ReadAsStringAsync().Result;
                 UnitGroupWithSpecificationModel[] groups = JsonConvert.DeserializeObject<UnitGroupWithSpecificationModel[]>(content);
@@ -40,7 +37,7 @@ namespace WebAppMVC.Utils
         public static UnitGroupNameModel[] GetUnitGroupNamesByUserId(int userId)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitGroupNamesByUserId?userId={userId}").Result)
+            using (HttpResponseMessage respond = client.GetAsync(ApiConnectionUrls.API_URL + $"GetUnitGroupNamesByUserId?userId={userId}").Result)
             {
                 string content = respond.Content.ReadAsStringAsync().Result;
                 UnitGroupNameModel[] unitGroupNames = JsonConvert.DeserializeObject<UnitGroupNameModel[]>(content);
@@ -51,7 +48,7 @@ namespace WebAppMVC.Utils
         public static UnitWithSpecificationModel[] GetUnitsByUnitGroupId(int groupId)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitsByUnitGroupId?groupId={groupId}").Result)
+            using (HttpResponseMessage respond = client.GetAsync(ApiConnectionUrls.API_URL + $"GetUnitsByUnitGroupId?groupId={groupId}").Result)
             {
                 string content = respond.Content.ReadAsStringAsync().Result;
                 UnitWithSpecificationModel[] units = JsonConvert.DeserializeObject<UnitWithSpecificationModel[]>(content);
@@ -62,7 +59,7 @@ namespace WebAppMVC.Utils
         public static UnitGroupWithSpecificationModel GetUnitGroupById(int groupId)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitGroupById?groupId={groupId}").Result)
+            using (HttpResponseMessage respond = client.GetAsync(ApiConnectionUrls.API_URL + $"GetUnitGroupById?groupId={groupId}").Result)
             {
                 string content = respond.Content.ReadAsStringAsync().Result;
                 UnitGroupWithSpecificationModel group = JsonConvert.DeserializeObject<UnitGroupWithSpecificationModel>(content);
@@ -73,7 +70,7 @@ namespace WebAppMVC.Utils
         public static Color[] GetColors()
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetColors").Result)
+            using (HttpResponseMessage respond = client.GetAsync(ApiConnectionUrls.API_URL + $"GetColors").Result)
             {
                 string content = respond.Content.ReadAsStringAsync().Result;
                 Color[] colors = JsonConvert.DeserializeObject<Color[]>(content);
@@ -84,7 +81,7 @@ namespace WebAppMVC.Utils
         public static UnitWithSpecificationModel GetUnitById(int unitId)
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitById?unitId={unitId}").Result)
+            using (HttpResponseMessage respond = client.GetAsync(ApiConnectionUrls.API_URL + $"GetUnitById?unitId={unitId}").Result)
             {
                 string content = respond.Content.ReadAsStringAsync().Result;
                 UnitWithSpecificationModel unit = JsonConvert.DeserializeObject<UnitWithSpecificationModel>(content);
@@ -95,7 +92,7 @@ namespace WebAppMVC.Utils
         public static UnitTypeModel[] GetUnitTypes()
         {
             using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage respond = client.GetAsync(Utils.apiUrl + $"GetUnitTypes").Result)
+            using (HttpResponseMessage respond = client.GetAsync(ApiConnectionUrls.API_URL + $"GetUnitTypes").Result)
             {
                 string content = respond.Content.ReadAsStringAsync().Result;
                 UnitTypeModel[] unitTypes = JsonConvert.DeserializeObject<UnitTypeModel[]>(content);

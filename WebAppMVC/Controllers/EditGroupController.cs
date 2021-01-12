@@ -46,7 +46,8 @@ namespace WebAppMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveGroup(int userId, int groupId, string name, int colorSelect, string note, string state, string city, string street, string number, string zip)
+        public IActionResult SaveGroup(int userId, int groupId, string name, int colorSelect,
+            string note, string state, string city, string street, string number, string zip)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -60,8 +61,9 @@ namespace WebAppMVC.Controllers
                 };
                 */
 
-                string commandUrl = $"SaveUnitGroup?userId={userId}&groupId={groupId}&name={name}&colorId={colorSelect}&note={note}&state={state}&city={city}&street={street}&number={number}&zip={zip}";
-                using (HttpResponseMessage respond = client.GetAsync(Utils.Utils.apiUrl + commandUrl).Result)
+                string commandUrl = $"SaveUnitGroup?userId={userId}&groupId={groupId}&name={name}&colorId={colorSelect}&note={note}" +
+                                    $"&state={state}&city={city}&street={street}&number={number}&zip={zip}";
+                using (HttpResponseMessage respond = client.GetAsync(Utils.ApiConnectionUrls.API_URL + commandUrl).Result)
                 {
                     string content = respond.Content.ReadAsStringAsync().Result;
                     groupId = JsonConvert.DeserializeObject<int>(content);
@@ -76,7 +78,7 @@ namespace WebAppMVC.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = client.GetAsync(Utils.Utils.apiUrl + $"DeleteGroup?groupId={groupId}").Result)
+                using (HttpResponseMessage response = client.GetAsync(Utils.ApiConnectionUrls.API_URL + $"DeleteGroup?groupId={groupId}").Result)
                 {
                     // Nothing to do
                 }

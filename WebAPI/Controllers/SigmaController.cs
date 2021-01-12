@@ -99,7 +99,8 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("SaveUnitGroup")]
-        public async Task<int> SaveUnitGroupAsync(int userId, int groupId, string name, int colorId, string note, string state, string city, string street, string number, string zip)
+        public async Task<int> SaveUnitGroupAsync(int userId, int groupId, string name, int colorId, string note, string state,
+            string city, string street, string number, string zip)
         {
             UnitGroupDTO group = await _unitGroupFacade.GetUnitGroupByIdAsync<UnitGroupDTO>(groupId);
 
@@ -151,7 +152,8 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("SaveUnit")]
-        public async Task<int> SaveUnitAsync(int groupId, int unitId, string name, int colorId, string note, int unitTypeId, int currentCapacity, int maxCapacity, string contractLink, string state, string city, string street, string number, string zip)
+        public async Task<int> SaveUnitAsync(int groupId, int unitId, string name, int colorId, string note, int unitTypeId,
+            int currentCapacity, int maxCapacity, string contractLink, string state, string city, string street, string number, string zip)
         {
             UnitDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
             if (unit == null)
