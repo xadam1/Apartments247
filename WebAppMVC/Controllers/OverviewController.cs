@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAppMVC.Models;
+using WebAppMVC.Utils;
 
 namespace WebAppMVC.Controllers
 {
@@ -11,7 +13,12 @@ namespace WebAppMVC.Controllers
         [HttpGet]
         public IActionResult Overview()
         {
-            return View();
+            OverviewModel m = new OverviewModel()
+            {
+                UnitGroupCount = Utils.Utils.GetUnitGroupCount(0), // TODO
+                UnitCount = Utils.Utils.GetUnitCount(0), // TODO
+            };
+            return View(m);
         }
     }
 }

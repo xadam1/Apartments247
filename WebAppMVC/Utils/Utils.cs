@@ -2,6 +2,9 @@
 using Newtonsoft.Json;
 using System.Net.Http;
 using WebAPI.Models;
+// To delete
+using DAL;
+using System.Linq;
 
 namespace WebAppMVC.Utils
 {
@@ -98,6 +101,18 @@ namespace WebAppMVC.Utils
                 UnitTypeModel[] unitTypes = JsonConvert.DeserializeObject<UnitTypeModel[]>(content);
                 return unitTypes;
             }
+        }
+
+        public static int GetUnitGroupCount(int userId)
+        {
+            ApartmentsDbContext con = new ApartmentsDbContext();
+            return con.UnitGroups.Where(unitGroup => unitGroup.UserId == userId).Count();
+        }
+
+        public static int GetUnitCount(int userId)
+        {
+            ApartmentsDbContext con = new ApartmentsDbContext();
+            return con.Units.Where(unit => unit.UnitGroup.UserId == userId).Count();
         }
     }
 }

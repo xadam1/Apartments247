@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Models;
 
 namespace WebAppMVC.Models
 {
-    public class OverviewModel
+    public class CostsModel
     {
-        public int UnitGroupCount { get; set; }
-        public int UnitCount { get; set; }
+        MonthlyCost[] monthlyCosts { get; set; }
     }
 }
