@@ -15,6 +15,7 @@ namespace Infrastructure
         IRepository<UnitGroup> UnitGroupRepository { get; }
         IRepository<UnitType> UnitTypeRepository { get; }
         IRepository<User> UserRepository { get; }
+        IRepository<Color> ColorRepository { get; }
 
         // Methods
         Task CommitAsync();
@@ -24,6 +25,7 @@ namespace Infrastructure
         UnitGroupsWithUsersQuery UnitGroupsWithUsersQuery { get; }
         UserQuery UserQuery { get; }
         UsersUnitGroupsWithUnitsQuery UsersUnitGroupsWithUnitsQuery { get; }
+        UnitsWithUnitGroupsQuery UnitsWithUnitGroupsQuery { get; }
 
     }
 }

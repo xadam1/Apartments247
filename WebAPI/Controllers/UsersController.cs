@@ -1,9 +1,11 @@
-﻿using BLL.DTOs;
-using BLL.Facades;
-using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using BLL.DTOs;
+using BLL.Facades;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -52,7 +54,7 @@ namespace WebAPI.Controllers
 
         // PUT api/<UsersController>/5/false
         [HttpPut("{userToBeChangedId}/{newIsAdmin}")]
-        public void Put(int userToBeChangedId, string newUsername, string newPassword, string newEmail, bool newIsAdmin = false)
+        public void Put(int userToBeChangedId, string newUsername, string newPassword, string newEmail, bool newIsAdmin=false)
         {
             var userTask = _userFacade.GetUserAsync<UserNamePasswordEmailAdminDTO>(userToBeChangedId);
             userTask.Wait();
@@ -78,6 +80,8 @@ namespace WebAPI.Controllers
             {
                 user.IsAdmin = newIsAdmin;
             }
+
+            //TODO check valid input
 
             _userFacade.UpdateUserAsync(userToBeChangedId, user).Wait();
         }

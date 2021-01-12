@@ -1,17 +1,48 @@
-﻿using BLL.Services;
+﻿using BLL.DTOs;
+using BLL.Services;
 using Infrastructure;
+using System.Threading.Tasks;
 
 namespace BLL.Facades
 {
     public class UnitGroupFacade : IUnitGroupFacade
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserService _userService;
+        private readonly IUnitGroupService _unitGroupService;
 
-        public UnitGroupFacade(IUnitOfWork unitOfWork, IUserService userService)
+        public UnitGroupFacade(IUnitOfWork unitOfWork, IUnitGroupService unitGroupService)
         {
             _unitOfWork = unitOfWork;
-            _userService = userService;
+            _unitGroupService = unitGroupService;
+        }
+
+        public async Task CreateUnitGroupAsync(UnitGroupDTO unitGroupDTO)
+        {
+            _unitGroupService.CreateUnitGroup(unitGroupDTO);
+
+            await _unitOfWork.CommitAsync();
+        }
+
+        public async Task<T> GetUnitGroupByIdAsync<T>(int id)
+        {
+            return await _unitGroupService.GetUnitGroupByIdAsync<T>(id);
+        }
+
+        public async Task<T[]> GetUnitGroupNamesByUserId<T>(int id)
+        {
+            return await _unitGroupService.GetUnitGroupNamesByUserIdAsync<T>(id);
+        }
+
+        public async Task<T[]> GetUnitGroupsByUserIdAsync<T>(int id)
+        {
+            return await _unitGroupService.GetUnitGroupsByUserIdAsync<T>(id);
+        }
+
+        public async Task UpdateUnitGroupAsync(int id, UnitGroupDTO unitGroupDTO)
+        {
+            await _unitGroupService.UpdateUnitGroupAsync(id, unitGroupDTO);
+
+            await _unitOfWork.CommitAsync();
         }
 
         /*public Task<Dictionary<UnitGroupNameDto, List<UnitNameDto>>> GetAllUsersUnitGroupsWithUnits()

@@ -1,5 +1,10 @@
 ﻿using AutoMapper;
+using BLL.DTOs;
+using DAL.Models;
 using Infrastructure;
+using Infrastructure.Queries;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -14,6 +19,38 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
+        public async Task<T> GetUnitGroupByIdAsync<T>(int id)
+        {
+            var unitGroup = await _unitOfWork.UnitGroupRepository.GetByIdAsync(id);
 
+            return _mapper.Map<T>(unitGroup);
+        }
+
+        public async Task<T[]> GetUnitGroupNamesByUserIdAsync<T>(int id)
+        {
+            var query = _unitOfWork.UnitGroupsWithUsersWithSpecificationsQuery.FilterByUserId(id);
+            var unitGroups = await query.ExecuteAsync();
+            return _mapper.Map<T[]>(unitGroups);
+        }
+
+        public async Task<T[]> GetUnitGroupsByUserIdAsync<T>(int id)
+        {
+            var query = _unitOfWork.UnitGroupsWithUsersQuery.FilterByUserId(id);
+            var unitGroups = await query.ExecuteAsync();
+            return _mapper.Map<T[]>(unitGroups);
+        }
+
+        public void CreateUnitGroup(UnitGroupDTO unitGroupDTO)
+        {
+            _unitOfWork.UnitGroupRepository.Add(_mapper.Map<UnitGroup>(unitGroupDTO));
+        }
+
+        public async Task UpdateUnitGroupAsync(int id, UnitGroupDTO unitGroupDTO)
+        {
+            var unitGroup = await _unitOfWork.UnitGroupRepository.GetByIdAsync(id);
+            unitGroup.Specification = unitGroupDTO.Specification;
+
+            _unitOfWork.UnitGroupRepository.Update(unitGroup);
+        }
     }
 }

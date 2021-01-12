@@ -7,12 +7,10 @@ using WebAPI.Models;
 
 namespace MVC.Models
 {
-    public class EditGroupModel
+    public class ListGroupsModel
     {
         public int UserId { get; set; }
         public int GroupId { get; set; }
-        public bool CreateNew { get; set; }
-        public UnitGroupWithSpecificationModel Group { get; set; }
-        public Color[] Colors { get; set; }
+        public UnitGroupWithSpecificationModel[] Groups { get; set; }
     }
 }
