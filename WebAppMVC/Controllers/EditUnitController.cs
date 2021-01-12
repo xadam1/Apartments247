@@ -14,7 +14,7 @@ namespace WebAppMVC.Controllers
         {
             EditUnitModel m = new EditUnitModel()
             {
-                UserId = UserManager.UserId,
+                UserId = UserInfoManager.UserId,
                 GroupId = groupId,
                 UnitId = unitId,
                 Colors = Utils.Utils.GetColors(),

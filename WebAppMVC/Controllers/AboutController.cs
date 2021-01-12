@@ -11,7 +11,7 @@ namespace WebAppMVC.Controllers
         {
             AboutModel m = new AboutModel()
             {
-                UserId = UserManager.UserId,
+                UserId = UserInfoManager.UserId,
                 GroupId = groupId,
             };
             return View(m);

@@ -16,7 +16,7 @@ namespace WebAppMVC.Controllers
 
             EditGroupModel m = new EditGroupModel()
             {
-                UserId = UserManager.UserId,
+                UserId = UserInfoManager.UserId,
                 GroupId = groupId,
                 CreateNew = createNew,
                 Colors = Utils.Utils.GetColors(),
@@ -27,7 +27,7 @@ namespace WebAppMVC.Controllers
                 m.Group = new UnitGroupWithSpecificationModel()
                 {
                     Id = -1,
-                    UserId = UserManager.UserId,
+                    UserId = UserInfoManager.UserId,
                     Name = "Výzkumné středisko CERN",
                     ColorId = 7,
                     Note = "Hadronový urychlovač částic a další věci",
@@ -62,7 +62,7 @@ namespace WebAppMVC.Controllers
                 };
                 */
 
-                string commandUrl = $"SaveUnitGroup?userId={UserManager.UserId}&groupId={groupId}&name={name}&colorId={colorSelect}&note={note}" +
+                string commandUrl = $"SaveUnitGroup?userId={UserInfoManager.UserId}&groupId={groupId}&name={name}&colorId={colorSelect}&note={note}" +
                                     $"&state={state}&city={city}&street={street}&number={number}&zip={zip}";
                 using (HttpResponseMessage respond = client.GetAsync(Utils.ApiConnectionUrls.API_URL + commandUrl).Result)
                 {
