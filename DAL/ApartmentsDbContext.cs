@@ -11,7 +11,7 @@ namespace DAL
 
         public ApartmentsDbContext()
         {
-            _connectionString = ConnectionStrings.SharedServer;
+            _connectionString = ConnectionStrings.LocalDB;
         }
 
         public DbSet<User> Users { get; set; }
@@ -50,21 +50,55 @@ namespace DAL
                 .HasForeignKey(unit => unit.UnitTypeId);
 
 
-
-            modelBuilder.Entity<Unit>()
+            /*modelBuilder.Entity<Unit>()
                 .HasMany(unit => unit.AvailableEquipment)
                 .WithMany(equipment => equipment.Units)
-                .UsingEntity(j => j.ToTable("UnitEquipment"));
+                .UsingEntity(j => j.ToTable("UnitEquipment"));*/
+            
 
-            /*modelBuilder.Entity<Unit>()
+            modelBuilder.Entity<Unit>()
                 .HasMany(unit => unit.Photos)
                 .WithOne()
                 .HasForeignKey(photo => photo.UnitId);
 
-            modelBuilder.Entity<Unit>()
-                .HasMany(unit => unit.MonthlyCosts)
+
+            /*modelBuilder.Entity<Unit>()
+                .HasMany(unit => unit.UnitEquipments)
                 .WithOne()
-                .HasForeignKey(cost => cost.UnitId);*/
+                .HasForeignKey(unitEquipment => unitEquipment.UnitId);
+
+
+            // Equipment
+            modelBuilder.Entity<Equipment>()
+                .HasMany(equipment => equipment.UnitEquipments)
+                .WithOne()
+                .HasForeignKey(unitEquipment => unitEquipment.UnitId);*/
+
+            // UnitEquipment
+            modelBuilder.Entity<UnitEquipment>()
+                .HasOne(unitEquipment => unitEquipment.Unit)
+                .WithMany(unit => unit.UnitEquipments)
+                .HasForeignKey(unitEquipment => unitEquipment.UnitId);
+
+            modelBuilder.Entity<UnitEquipment>()
+                .HasOne(unitEquipment => unitEquipment.Equipment)
+                .WithMany(equipment => equipment.UnitEquipments)
+                .HasForeignKey(unitEquipment => unitEquipment.EquipmentId);
+
+
+            // Photo
+            modelBuilder.Entity<Photo>()
+                .HasOne(photo => photo.Unit)
+                .WithMany(unit => unit.Photos)
+                .HasForeignKey(photo => photo.UnitId);
+
+
+            // MonthlyCost
+            modelBuilder.Entity<MonthlyCost>()
+                .HasOne(monthlyCost => monthlyCost.Unit)
+                .WithMany(unit => unit.MonthlyCosts)
+                .HasForeignKey(monthlyCost => monthlyCost.UnitId);
+
 
             // UnitGroup
             modelBuilder.Entity<UnitGroup>()

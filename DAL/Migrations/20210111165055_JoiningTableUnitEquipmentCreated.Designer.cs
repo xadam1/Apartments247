@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApartmentsDbContext))]
-    partial class ApartmentsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210111165055_JoiningTableUnitEquipmentCreated")]
+    partial class JoiningTableUnitEquipmentCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -320,36 +322,6 @@ namespace DAL.Migrations
                             Id = 10,
                             Type = "Ptačí budka"
                         });
-                });
-
-            modelBuilder.Entity("DAL.Models.MonthlyCost", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CostType")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(64)")
-                        .HasMaxLength(64);
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UnitId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("MonthlyCost");
                 });
 
             modelBuilder.Entity("DAL.Models.Photo", b =>
@@ -931,15 +903,6 @@ namespace DAL.Migrations
                             Password = "travicka",
                             Username = "Filip"
                         });
-                });
-
-            modelBuilder.Entity("DAL.Models.MonthlyCost", b =>
-                {
-                    b.HasOne("DAL.Models.Unit", "Unit")
-                        .WithMany("MonthlyCosts")
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL.Models.Photo", b =>

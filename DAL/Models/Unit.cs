@@ -19,8 +19,9 @@ namespace DAL.Models
 
         // Collections
         public virtual ICollection<Photo> Photos { get; set; }
-        public virtual ICollection<Equipment> AvailableEquipment { get; set; }
+        public virtual ICollection<UnitEquipment> UnitEquipments { get; set; }
         public virtual ICollection<MonthlyCost> MonthlyCosts { get; set; }
+        //public virtual ICollection<Equipment> AvailableEquipment { get; set; }
 
 #nullable enable
         public string? ContractLink { get; set; }
