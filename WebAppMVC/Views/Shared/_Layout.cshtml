@@ -25,26 +25,15 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Overview" asp-action="Overview">Overview</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ListGroups" asp-action="ListGroups">My Groups</a>
-                        </li>
+                        <partial name="_NavBarPartial.cshtml" />
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ListUnits" asp-action="ListUnits">My Units</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="EditGroup" asp-action="EditGroup">Edit Group</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="EditUnit" asp-action="EditUnit">Edit Unit</a>
-                        </li>
                     </ul>
+
                 </div>
 
                 <span class="my-2 my-sm-0"><partial name="_LoginPartial.cshtml" /></span>
