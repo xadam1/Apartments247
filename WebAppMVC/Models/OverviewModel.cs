@@ -7,7 +7,5 @@ namespace WebAppMVC.Models
 {
     public class OverviewModel
     {
-        public int UnitGroupCount { get; set; }
-        public int UnitCount { get; set; }
     }
 }
