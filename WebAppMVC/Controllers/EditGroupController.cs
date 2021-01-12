@@ -3,19 +3,20 @@ using MVC.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
 using WebAPI.Models;
+using WebAppMVC.Utils;
 
 namespace WebAppMVC.Controllers
 {
     public class EditGroupController : Controller
     {
         [HttpGet]
-        public IActionResult EditGroup(int userId, int groupId, int createNewInt)
+        public IActionResult EditGroup(int groupId, int createNewInt)
         {
             bool createNew = createNewInt > 0;
 
             EditGroupModel m = new EditGroupModel()
             {
-                UserId = userId,
+                UserId = UserManager.UserId,
                 GroupId = groupId,
                 CreateNew = createNew,
                 Colors = Utils.Utils.GetColors(),
@@ -26,7 +27,7 @@ namespace WebAppMVC.Controllers
                 m.Group = new UnitGroupWithSpecificationModel()
                 {
                     Id = -1,
-                    UserId = userId,
+                    UserId = UserManager.UserId,
                     Name = "Výzkumné středisko CERN",
                     ColorId = 7,
                     Note = "Hadronový urychlovač částic a další věci",
@@ -46,7 +47,7 @@ namespace WebAppMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveGroup(int userId, int groupId, string name, int colorSelect,
+        public IActionResult SaveGroup(int groupId, string name, int colorSelect,
             string note, string state, string city, string street, string number, string zip)
         {
             using (HttpClient client = new HttpClient())
@@ -61,7 +62,7 @@ namespace WebAppMVC.Controllers
                 };
                 */
 
-                string commandUrl = $"SaveUnitGroup?userId={userId}&groupId={groupId}&name={name}&colorId={colorSelect}&note={note}" +
+                string commandUrl = $"SaveUnitGroup?userId={UserManager.UserId}&groupId={groupId}&name={name}&colorId={colorSelect}&note={note}" +
                                     $"&state={state}&city={city}&street={street}&number={number}&zip={zip}";
                 using (HttpResponseMessage respond = client.GetAsync(Utils.ApiConnectionUrls.API_URL + commandUrl).Result)
                 {
@@ -70,11 +71,11 @@ namespace WebAppMVC.Controllers
                 }
             }
 
-            return RedirectToAction($"EditGroup", "EditGroup", new { userId = userId, groupId = groupId });
+            return RedirectToAction($"EditGroup", "EditGroup", new { groupId = groupId });
         }
 
         [HttpGet]
-        public IActionResult DeleteGroup(int userId, int groupId)
+        public IActionResult DeleteGroup(int groupId)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -84,9 +85,9 @@ namespace WebAppMVC.Controllers
                 }
             }
 
-            groupId = Utils.Utils.GetFirstUnitGroupIdByUserId(userId);
+            groupId = Utils.Utils.GetFirstUnitGroupIdByUserId();
 
-            return RedirectToAction("ListGroups", "ListGroups", new { userId = userId, groupId = groupId });
+            return RedirectToAction("ListGroups", "ListGroups", new { groupId = groupId });
         }
     }
 }
