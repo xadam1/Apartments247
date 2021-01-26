@@ -11,7 +11,7 @@ namespace DAL
 
         public ApartmentsDbContext()
         {
-            _connectionString = ConnectionStrings.SharedServer;
+            _connectionString = ConnectionStrings.LocalDB;
         }
 
         public DbSet<User> Users { get; set; }
