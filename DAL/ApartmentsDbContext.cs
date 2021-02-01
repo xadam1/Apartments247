@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DAL
 {
-    public partial class ApartmentsDbContext : DbContext
+    public class ApartmentsDbContext : DbContext
     {
         private readonly string _connectionString;
 
