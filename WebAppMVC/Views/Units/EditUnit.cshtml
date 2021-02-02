@@ -23,7 +23,7 @@ else
     <h3>Create New Unit</h3>
 }
 
-<form action="/Units/SaveUnit" method="post">
+<form action="/Units/SaveUnit" method="post" enctype="multipart/form-data">
     <select name="groupId">
         @foreach (var unitGroup in unitGroups)
         {
@@ -88,15 +88,33 @@ else
     <label>MaxCapacity</label><br />
     <input type="text" name="maxCapacity" value="@unit.MaxCapacity" /><br />
 
-    <p>Contract</p>
+    @*@<p>Contract</p>
     <div class="custom-file mb-3">
         <input type="file" class="custom-file-input" id="customFile" name="filename" onchange="DisplayFilename()">
         <label id="customFileLabel" class="custom-file-label" for="customFile">Choose file</label>
+    </div>*@
+
+    <div class="form-group">
+        <input type="file" class="form-control" name="file" /><br />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary col-xs-12">Upload</button>
     </div>
 
     <input type="submit" value="Save" />
 </form>
 
+<form class="col-xs-12" method="post" action="/Units/UploadFile" enctype="multipart/form-data">
+
+    <div class="form-group">
+        <input type="file" class="form-control" name="file" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary col-xs-12">Add</button>
+    </div>
+</form>
 
 <script>
     function OpenContract() {

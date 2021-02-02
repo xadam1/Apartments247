@@ -39,7 +39,8 @@ namespace WebAPI.Extras
                 Note = unit.Specification.Note,
                 UnitTypeId = unit.UnitTypeId,
                 UnitType = unit.UnitType.Type,
-                ContractLink = unit.ContractLink,
+                //ContractLink = unit.ContractLink, // TODO
+                
                 State = unit.Specification.Address.State,
             City = unit.Specification.Address.City,
             Street = unit.Specification.Address.Street,

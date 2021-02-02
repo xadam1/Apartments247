@@ -175,6 +175,8 @@ namespace WebAPI.Controllers
                     Note = note ?? string.Empty,
                 };
 
+                var contract = new Contract(); // TODO
+
                 unit = new UnitDTO()
                 {
                     Specification = spec,
@@ -182,7 +184,8 @@ namespace WebAPI.Controllers
                     UnitTypeId = unitTypeId,
                     CurrentCapacity = currentCapacity,
                     MaxCapacity = maxCapacity,
-                    ContractLink = contractLink ?? string.Empty,
+                    //ContractLink = contractLink ?? string.Empty,
+                    Contract = contract
                 };
 
                 await _unitFacade.CreateUnitAsync(unit);
@@ -203,7 +206,8 @@ namespace WebAPI.Controllers
                 unit.UnitGroupId = groupId;
                 unit.CurrentCapacity = currentCapacity;
                 unit.MaxCapacity = maxCapacity;
-                unit.ContractLink = contractLink ?? string.Empty;
+                //unit.ContractLink = contractLink ?? string.Empty;
+                unit.Contract = new Contract();
 
                 await _unitFacade.UpdateUnitAsync(unitId, unit);
             }

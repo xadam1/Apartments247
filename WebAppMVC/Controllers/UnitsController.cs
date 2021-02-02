@@ -3,9 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using Newtonsoft.Json;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using WebAPI.Models;
 using WebAppMVC.Utils;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
+using DAL.Models;
+using BLL.DTOs;
 
 namespace WebAppMVC.Controllers
 {
@@ -75,11 +85,13 @@ namespace WebAppMVC.Controllers
         [HttpPost]
         public IActionResult SaveUnit(int unitId, int groupId, string name, int selectColor, string note,
             int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
-            string street, string number, string zip)
+            string street, string number, string zip, IFormFile file)
         {
-            using (HttpClient client = new HttpClient())
+            var contract = CreateContract(file);
+            var x = $"{contract.Content}";
+            /*using (HttpClient client = new HttpClient())
             {
-                /*
+                
                 UnitWithSpecificationModel m = new UnitWithSpecificationModel()
                 {
                     Id = unitId,
@@ -93,7 +105,7 @@ namespace WebAppMVC.Controllers
                     MaxCapacity = maxCapacity,
                     ContractLink = contractLink
                 };
-                */
+                
                 string commandUrl = $"SaveUnit?groupId={groupId}&unitId={unitId}&name={name}&colorId={selectColor}&note={note}" +
                                     $"&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}" +
                                     $"&contractLink={contractLink}&state={state}&city={city}&street={street}&number={number}&zip={zip}";
@@ -103,6 +115,63 @@ namespace WebAppMVC.Controllers
                     string content = respond.Content.ReadAsStringAsync().Result;
                     unitId = JsonConvert.DeserializeObject<int>(content);
                 }
+            }*/
+
+            UnitDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
+            if (unit == null)
+            {
+                Address address = new Address()
+                {
+                    State = state ?? string.Empty,
+                    City = city != null ? state : string.Empty,
+                    Street = street != null ? state : string.Empty,
+                    Number = number != null ? state : string.Empty,
+                    Zip = zip != null ? state : string.Empty,
+                };
+
+                Specification spec = new Specification()
+                {
+                    Name = name ?? string.Empty,
+                    ColorId = colorId,
+                    Address = address,
+                    Note = note ?? string.Empty,
+                };
+
+                var contract = new Contract(); // TODO
+
+                unit = new UnitDTO()
+                {
+                    Specification = spec,
+                    UnitGroupId = groupId,
+                    UnitTypeId = unitTypeId,
+                    CurrentCapacity = currentCapacity,
+                    MaxCapacity = maxCapacity,
+                    //ContractLink = contractLink ?? string.Empty,
+                    Contract = contract
+                };
+
+                await _unitFacade.CreateUnitAsync(unit);
+            }
+            else
+            {
+                unit.Specification.Name = name ?? string.Empty;
+                unit.Specification.ColorId = colorId;
+                unit.Specification.Note = note ?? string.Empty;
+
+                unit.Specification.Address.State = state ?? string.Empty;
+                unit.Specification.Address.City = city ?? string.Empty;
+                unit.Specification.Address.Street = street ?? string.Empty;
+                unit.Specification.Address.Number = number ?? string.Empty;
+                unit.Specification.Address.Zip = zip ?? string.Empty;
+
+                unit.UnitTypeId = unitTypeId;
+                unit.UnitGroupId = groupId;
+                unit.CurrentCapacity = currentCapacity;
+                unit.MaxCapacity = maxCapacity;
+                //unit.ContractLink = contractLink ?? string.Empty;
+                unit.Contract = new Contract();
+
+                await _unitFacade.UpdateUnitAsync(unitId, unit);
             }
 
             return RedirectToAction("EditUnit", "Units", new { groupId = groupId, unitId = unitId });
@@ -132,6 +201,63 @@ namespace WebAppMVC.Controllers
             }
 
             return File(fileBytes, "application/pdf");
+        }
+
+        [HttpPost]
+        public IActionResult UploadFile(IFormFile file)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+
+                // Upload the file if less than 2 MB
+                if (memoryStream.Length < 2097152)
+                {
+                    var contract = new Contract()
+                    {
+                        Content = memoryStream.ToArray(),
+                        Name = file.FileName
+                    };
+
+                    //_dbContext.File.Add(file);
+
+                    //await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    ModelState.AddModelError("File", "The file is too large.");
+                }
+            }
+
+            //return Page();
+            return View();
+        }
+
+        private Contract CreateContract(IFormFile file)
+        {
+            var contract = new Contract();
+
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+
+                // Upload the file if less than 2 MB
+                if (memoryStream.Length < 2097152)
+                {
+                    contract.Content = memoryStream.ToArray();
+                    contract.Name = file.FileName;
+
+                    //_dbContext.File.Add(file);
+
+                    //await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    ModelState.AddModelError("File", "The file is too large.");
+                }
+            }
+
+            return contract;
         }
     }
 }
