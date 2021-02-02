@@ -1,4 +1,4 @@
-﻿@model EditUnitModel
+﻿@model WebAppMVC.Models.EditUnitModel
 
 @{
     ViewData["Title"] = "Edit Unit";
@@ -94,18 +94,21 @@ else
             <label id="customFileLabel" class="custom-file-label" for="customFile">Choose file</label>
         </div>*@
 
+    <label>Contract</label><br />
+    <input readonly="readonly" type="text" id="contractName" value="@unit.ContractName" /><br />
+
     <div class="form-group">
-        <input type="file" class="form-control" name="file" /><br />
+        <input type="file" class="form-group" name="file" id="customFile" onchange="DisplayFilename()" />
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-primary col-xs-12">Upload</button>
+        <button onclick="OpenContract()" class="btn btn-primary col-xs-12">Open contract</button>
     </div>
 
     <input type="submit" value="Save" />
 </form>
 
-<form class="col-xs-12" method="post" action="/Units/UploadFile" enctype="multipart/form-data">
+@*@<form class="col-xs-12" method="post" action="/Units/UploadFile" enctype="multipart/form-data">
 
     <div class="form-group">
         <input type="file" class="form-control" name="file" />
@@ -114,17 +117,17 @@ else
     <div class="form-group">
         <button type="submit" class="btn btn-primary col-xs-12">Add</button>
     </div>
-</form>
+</form>*@
 
 <script>
     function OpenContract() {
-        link = document.getElementById("link").value;
-        window.open('/Units/OpenContract?link=' + link, "_blank");
+        @*link = document.getElementById("link").value;*@
+        window.open('/Units/OpenContract?id=@unit.Id', "_blank");
     };
 
     function DisplayFilename() {
         uploadedFile = document.getElementById("customFile").value.split("\\").pop();
-        document.getElementById("customFileLabel").innerHTML = uploadedFile;
+        document.getElementById("contractName").innerHTML = uploadedFile;
     }
 </script>
 

@@ -21,6 +21,6 @@ namespace WebAppMVC.Models
         public UnitWithSpecificationModel Unit { get; set; }
         public Color[] Colors { get; set; }
         public UnitTypeModel[] UnitTypes { get; set; }
-        public IFormFile FormFile { get; set; }
+        //public IFormFile FormFile { get; set; }
     }
 }
