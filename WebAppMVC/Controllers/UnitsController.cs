@@ -1,25 +1,18 @@
 ﻿using BLL.DTOs;
 using BLL.Facades;
 using DAL;
+using DAL.Models;
 using log4net;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WebAPI.Models;
 using WebAppMVC.Models;
 using WebAppMVC.Utils;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
-using DAL.Models;
-using BLL.DTOs;
 
 namespace WebAppMVC.Controllers
 {
@@ -96,7 +89,7 @@ namespace WebAppMVC.Controllers
                     UnitTypeId = 6,
                     CurrentCapacity = 0,
                     MaxCapacity = 2,
-                    ContractLink = "nezadáno",
+                    ContractName = "nezadáno",
                 };
             }
             else
@@ -108,12 +101,10 @@ namespace WebAppMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveUnit(int unitId, int groupId, string name, int selectColor, string note,
+        public async Task<IActionResult> SaveUnit(int unitId, int groupId, string name, int selectColor, string note,
             int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
             string street, string number, string zip, IFormFile file)
         {
-            var contract = CreateContract(file);
-            var x = $"{contract.Content}";
             /*using (HttpClient client = new HttpClient())
             {
                 
@@ -142,6 +133,8 @@ namespace WebAppMVC.Controllers
                 }
             }*/
 
+            var contract = CreateContract(file);
+
             UnitDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
             if (unit == null)
             {
@@ -157,18 +150,16 @@ namespace WebAppMVC.Controllers
                 Specification spec = new Specification()
                 {
                     Name = name ?? string.Empty,
-                    ColorId = colorId,
+                    ColorId = selectColor,
                     Address = address,
                     Note = note ?? string.Empty,
                 };
-
-                var contract = new Contract(); // TODO
 
                 unit = new UnitDTO()
                 {
                     Specification = spec,
                     UnitGroupId = groupId,
-                    UnitTypeId = unitTypeId,
+                    UnitTypeId = selectUnitType,
                     CurrentCapacity = currentCapacity,
                     MaxCapacity = maxCapacity,
                     //ContractLink = contractLink ?? string.Empty,
@@ -180,7 +171,7 @@ namespace WebAppMVC.Controllers
             else
             {
                 unit.Specification.Name = name ?? string.Empty;
-                unit.Specification.ColorId = colorId;
+                unit.Specification.ColorId = selectColor;
                 unit.Specification.Note = note ?? string.Empty;
 
                 unit.Specification.Address.State = state ?? string.Empty;
@@ -189,17 +180,19 @@ namespace WebAppMVC.Controllers
                 unit.Specification.Address.Number = number ?? string.Empty;
                 unit.Specification.Address.Zip = zip ?? string.Empty;
 
-                unit.UnitTypeId = unitTypeId;
+                unit.UnitTypeId = selectUnitType;
                 unit.UnitGroupId = groupId;
                 unit.CurrentCapacity = currentCapacity;
                 unit.MaxCapacity = maxCapacity;
                 //unit.ContractLink = contractLink ?? string.Empty;
-                unit.Contract = new Contract();
+                unit.Contract = contract;
+                unit.Contract.Name = contract.Name;
+                unit.Contract.Content = contract.Content;
 
                 await _unitFacade.UpdateUnitAsync(unitId, unit);
             }
 
-            return RedirectToAction("EditUnit", "Units", new { groupId = groupId, unitId = unitId });
+            return RedirectToAction("MyUnits", "Units", new { groupId = groupId, unitId = unitId });
         }
 
         [HttpGet]
@@ -214,16 +207,19 @@ namespace WebAppMVC.Controllers
             return RedirectToAction("MyUnits", "Units", new { groupId = groupId });
         }
 
-        public FileResult OpenContract(string link)
+        public async Task<FileResult> OpenContract(int id)
         {
-            byte[] fileBytes = { };
+            var unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(id);
+            var fileBytes = unit?.Contract.Content ?? new byte[] { };
+
+            /*var contract = 
             try
             {
                 fileBytes = System.IO.File.ReadAllBytes(link);
             }
             catch (Exception)
             {
-            }
+            }*/
 
             return File(fileBytes, "application/pdf");
         }
@@ -262,6 +258,11 @@ namespace WebAppMVC.Controllers
         {
             var contract = new Contract();
 
+            if (file == null)
+            {
+                return contract;
+            }
+
             using (var memoryStream = new MemoryStream())
             {
                 file.CopyTo(memoryStream);
@@ -271,10 +272,6 @@ namespace WebAppMVC.Controllers
                 {
                     contract.Content = memoryStream.ToArray();
                     contract.Name = file.FileName;
-
-                    //_dbContext.File.Add(file);
-
-                    //await _dbContext.SaveChangesAsync();
                 }
                 else
                 {
@@ -284,5 +281,7 @@ namespace WebAppMVC.Controllers
 
             return contract;
         }
+
+
     }
 }

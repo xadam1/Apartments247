@@ -17,7 +17,8 @@ namespace WebAPI.Models
         public string UnitType { get; set; }
         public int CurrentCapacity { get; set; }
         public int MaxCapacity { get; set; }
-        public string ContractLink { get; set; }
+        public int ContractId { get; set; }
+        public string ContractName { get; set; }
         public string State { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
