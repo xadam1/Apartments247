@@ -1,4 +1,5 @@
-﻿using BLL.DTOs;
+﻿using System.Collections.Generic;
+using BLL.DTOs;
 using BLL.Services;
 using Infrastructure;
 using System.Threading.Tasks;
@@ -28,12 +29,12 @@ namespace BLL.Facades
             return await _unitGroupService.GetUnitGroupByIdAsync<T>(id);
         }
 
-        public async Task<T[]> GetUnitGroupNamesByUserId<T>(int id)
+        public async Task<List<T>> GetUnitGroupNamesByUserId<T>(int id)
         {
             return await _unitGroupService.GetUnitGroupNamesByUserIdAsync<T>(id);
         }
 
-        public async Task<T[]> GetUnitGroupsByUserIdAsync<T>(int id)
+        public async Task<List<T>> GetUnitGroupsByUserIdAsync<T>(int id)
         {
             return await _unitGroupService.GetUnitGroupsByUserIdAsync<T>(id);
         }

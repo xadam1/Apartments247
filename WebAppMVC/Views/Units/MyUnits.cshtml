@@ -1,75 +1,81 @@
-﻿@model MVC.Models.MyUnitsModel
+﻿@using Castle.Core.Logging
+@using Microsoft.Extensions.Logging
+@model BLL.DTOs.UnitsOverviewDTO
 
 @{
     ViewData["Title"] = "Show Units";
-    ViewData["UserId"] = Model.UserId;
-    var userId = Model.UserId;
-    var groupId = Model.GroupId;
-    var groups = Model.Groups;
-    var units = Model.Units;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@if (groups.Length == 0)
+
+
+@if (!Model.Groups.Any())
 {
-<p>You don't have any UnitGroups.</p>
-<p>Let's <a href="/Groups/EditGroup?userId=@userId&groupId=-1&createNew=1">create</a> one.</p>
+    <p>You don't have any UnitGroups.</p>
+    <hr />
+
+    <button class="btn btn-warning" asp-controller="Groups" asp-action="EditGroup">Create New UnitGroup</button>
 }
 else
 {
-@*Výběr pro přepínání mezi skupinami jednotek*@
-<label>Choose UnitGroup</label>
-<select id="dropDownList" onchange="changeGroup()">
-    @foreach (var group in groups)
+    <label>Choose UnitGroup</label>
+    <select id="selectGroupList" class="custom-select custom-select-lg mb-3" onchange="changeGroup()">
+        @foreach (var group in Model.Groups)
         {
-    <option id="@group.Id" value="@group.Id">@group.Name</option>
+            <option id="@group.Id" value="@group.Id">@group.Name</option>
         }
-</select><br />
+    </select>
 
-<script>
-    document.getElementById("@groupId").selected = true;
-</script>
+    <br />
+    <hr />
+    <br />
 
-<script>
-    function changeGroup() {
-        newGroupId = document.getElementById("dropDownList").value;
-        location.href = "/Units/MyUnits?userId=@userId&groupId=" + newGroupId;
-    }
-</script>
+    <script>
+        function changeGroup() {
+            console.log('changeGroup() called');
+            var newGroupId = document.getElementById('selectGroupList').value;
+            location.href = '/Units/MyUnits?unitGroupID=' + newGroupId;
+        }
+    </script>
 
-@if (units.Length == 0)
+    @if (!Model.UnitsInGroup.Any())
     {
-<p>This UnitGroup is empty.</p>
-<p>Let's <a href="/Units/EditUnit?userId=@userId&groupId=@groupId&unitId=-1">create</a> new Unit in this group.</p>
+        <p>This UnitGroup is empty.</p>
+        <hr />
+
+        <button class="btn btn-warning" asp-controller="Units" asp-action="CreateUnit">Create New Unit</button>
     }
     else
     {
-<table>
-    <tr>
-        <th>UnitType</th>
-        <th>Name</th>
-        <th>Color</th>
-        <th>Note</th>
-        <th>CurrentCapacity</th>
-        <th>MaxCapacity</th>
-        <th>ContractLink</th>
-    </tr>
-    <tr>
-        <td>
-            <a href="/Units/EditUnit?userId=@userId&groupId=@groupId&unitId=-1"><button type="button">Create new unit in this group</button></a>
-        </td>
-    </tr>
-    @foreach (var unit in units)
-            {
-    <tr>
-        <td>@unit.UnitType</td>
-        <td>@unit.Name</td>
-        <td>@unit.Color</td>
-        <td>@unit.Note</td>
-        <td>@unit.CurrentCapacity</td>
-        <td>@unit.MaxCapacity</td>
-        <td>@unit.ContractLink</td>
-        <td><a href="/Units/EditUnit?userId=@userId&groupId=@groupId&unitId=@unit.Id"><button type="button">Show details</button></a></td>
-    </tr>
-            }
-</table>
+        @*
+            <table>
+                <tr>
+                    <th>UnitType</th>
+                    <th>Name</th>
+                    <th>Color</th>
+                    <th>Note</th>
+                    <th>CurrentCapacity</th>
+                    <th>MaxCapacity</th>
+                    <th>ContractLink</th>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/Units/EditUnit?userId=@userId&groupId=@groupId&unitId=-1"><button type="button">Create new unit in this group</button></a>
+                    </td>
+                </tr>
+                @foreach (var unit in units)
+                {
+                    <tr>
+                        <td>@unit.UnitType</td>
+                        <td>@unit.Name</td>
+                        <td>@unit.Color</td>
+                        <td>@unit.Note</td>
+                        <td>@unit.CurrentCapacity</td>
+                        <td>@unit.MaxCapacity</td>
+                        <td>@unit.ContractLink</td>
+                        <td><a href="/Units/EditUnit?userId=@userId&groupId=@groupId&unitId=@unit.Id"><button type="button">Show details</button></a></td>
+                    </tr>
+                }
+            </table>
+        *@
     }
 }

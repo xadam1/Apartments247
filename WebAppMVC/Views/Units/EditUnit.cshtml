@@ -1,4 +1,4 @@
-﻿@model MVC.Models.EditUnitModel
+﻿@model EditUnitModel
 
 @{
     ViewData["Title"] = "Edit Unit";
@@ -14,14 +14,22 @@
 
 @if (unitId != -1)
 {
-    <h3>
-        Edit Unit
-    </h3>
+    <h3>Edit Unit</h3>
 }
 else
 {
     <h3>Create New Unit</h3>
 }
+
+<form asp-controller="Units" asp-action="EditUnit">
+    <select class="custom-select custom-select-lg mb-3">
+        @foreach (var unitGroup in unitGroups)
+        {
+            <option id="unitGroup_@unitGroup.Id" value="@unitGroup.Id">@unitGroup.Name</option>
+        }
+    </select>
+
+</form>
 
 <form action="/Units/SaveUnit" method="post">
     <select name="groupId">
@@ -119,5 +127,5 @@ else
                 location.href = "/Units/DeleteUnit?userId=@userId&groupId=@groupId&unitId=@unitId";
             }
         };
-</script>
+    </script>
 }

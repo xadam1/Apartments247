@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
     public interface IUnitTypeService
     {
-        Task<T[]> GetUnitTypesAsync<T>();
+        Task<List<T>> GetUnitTypesAsync<T>();
     }
 }

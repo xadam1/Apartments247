@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MVC.Models;
 using System.Diagnostics;
 using WebAppMVC.Models;
 using WebAppMVC.Utils;

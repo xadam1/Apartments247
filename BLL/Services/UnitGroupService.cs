@@ -26,18 +26,18 @@ namespace BLL.Services
             return _mapper.Map<T>(unitGroup);
         }
 
-        public async Task<T[]> GetUnitGroupNamesByUserIdAsync<T>(int id)
+        public async Task<List<T>> GetUnitGroupNamesByUserIdAsync<T>(int id)
         {
             var query = _unitOfWork.UnitGroupsWithUsersWithSpecificationsQuery.FilterByUserId(id);
             var unitGroups = await query.ExecuteAsync();
-            return _mapper.Map<T[]>(unitGroups);
+            return _mapper.Map<List<T>>(unitGroups);
         }
 
-        public async Task<T[]> GetUnitGroupsByUserIdAsync<T>(int id)
+        public async Task<List<T>> GetUnitGroupsByUserIdAsync<T>(int id)
         {
             var query = _unitOfWork.UnitGroupsWithUsersQuery.FilterByUserId(id);
             var unitGroups = await query.ExecuteAsync();
-            return _mapper.Map<T[]>(unitGroups);
+            return _mapper.Map<List<T>>(unitGroups);
         }
 
         public void CreateUnitGroup(UnitGroupDTO unitGroupDTO)

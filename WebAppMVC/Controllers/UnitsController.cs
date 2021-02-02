@@ -1,35 +1,61 @@
-﻿using DAL;
+﻿using BLL.DTOs;
+using BLL.Facades;
+using DAL;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
-using MVC.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using WebAPI.Models;
+using WebAppMVC.Models;
 using WebAppMVC.Utils;
 
 namespace WebAppMVC.Controllers
 {
     public class UnitsController : Controller
     {
-        [HttpGet]
-        public IActionResult MyUnits()
+        private readonly ILog log = log4net.LogManager.GetLogger(
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        private readonly IUnitGroupFacade _ugFacade;
+        private readonly IUnitFacade _unitFacade;
+
+        public UnitsController(IUnitGroupFacade ugFacade, IUnitFacade unitFacade)
         {
-            var groupId = 0;
-            var groups = Utils.Utils.GetUnitGroupNamesByUserId();
-            if (groups.Length != 0)
+            this._ugFacade = ugFacade;
+            this._unitFacade = unitFacade;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyUnits(int unitGroupID)
+        {
+            log.Info($"Called: MyUnits({unitGroupID})");
+
+            var units = new List<UnitFullDTO>();
+            var currentGroup = new UnitGroupNameDto();
+
+            if (unitGroupID != 0)
             {
-                groupId = groups[0].Id;
+                currentGroup = await _ugFacade.GetUnitGroupByIdAsync<UnitGroupNameDto>(unitGroupID);
+                units = await _unitFacade.GetUnitsByGroupIdAsync<UnitFullDTO>(unitGroupID);
             }
 
-            MyUnitsModel m = new MyUnitsModel()
+            var dto = new UnitsOverviewDTO
             {
                 UserId = UserInfoManager.UserId,
-                GroupId = groupId,
-                Groups = groups,
-                Units = Utils.Utils.GetUnitsByUnitGroupId(groupId),
+                Groups = await _ugFacade.GetUnitGroupsByUserIdAsync<UnitGroupNameDto>(UserInfoManager.UserId),
+                CurrentGroup = currentGroup,
+                UnitsInGroup = units
             };
 
-            return View(m);
+            return View(dto);
+        }
+
+        public IActionResult CreateUnit()
+        {
+            return View();
         }
 
         [HttpGet]

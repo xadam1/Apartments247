@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using BLL.DTOs;
 using DAL.Models;
 using Infrastructure;
@@ -24,11 +25,11 @@ namespace BLL.Services
             return _mapper.Map<T>(unitGroup);
         }
 
-        public async Task<T[]> GetUnitsByGroupIdAsync<T>(int id)
+        public async Task<List<T>> GetUnitsByGroupIdAsync<T>(int id)
         {
             var query = _unitOfWork.UnitsWithUnitGroupsQuery.FilterByUnitGroupId(id);
             var units = await query.ExecuteAsync();
-            return _mapper.Map<T[]>(units);
+            return _mapper.Map<List<T>>(units);
         }
 
         public void CreateUnit(UnitDTO unitDTO)

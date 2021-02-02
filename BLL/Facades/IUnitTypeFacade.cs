@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Facades
 {
     public interface IUnitTypeFacade
     {
-        Task<T[]> GetUnitTypesAsync<T>();
+        Task<List<T>> GetUnitTypesAsync<T>();
     }
 }
