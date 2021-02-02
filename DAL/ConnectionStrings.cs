@@ -1,7 +1,18 @@
-﻿namespace DAL
+﻿using System.Diagnostics;
+
+namespace DAL
 {
     public static class ConnectionStrings
     {
+        static ConnectionStrings()
+        {
+            Debug.WriteLine("******CONNECTIONS******");
+            Debug.WriteLine($"[INFO] DB_CONN_STRING={DB_CONN_STRING}");
+            Debug.WriteLine($"[INFO] API_URL={API_URL}");
+            Debug.WriteLine("******CONNECTIONS******");
+        }
+
+
         // Database
         private static string localDB = @"data source=(localdb)\MSSQLLocalDB; initial catalog=ApartmentsDB; integrated security=SSPI";
         private static string sharedServerDB = @"Data Source=cassiopeia.serveirc.com\SQLEXPRESS,1433; Initial Catalog = ApartmentsDB; Integrated Security = FALSE; User ID = Apartments247; password=Janči-je-naprostý-Somár";
