@@ -1,33 +1,23 @@
 ﻿using BLL.DTOs;
 using BLL.Facades;
 using DAL;
-using log4net;
+using DAL.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WebAPI.Models;
 using WebAppMVC.Models;
 using WebAppMVC.Utils;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
-using DAL.Models;
-using BLL.DTOs;
+
 
 namespace WebAppMVC.Controllers
 {
     public class UnitsController : Controller
     {
-        private readonly ILog log = log4net.LogManager.GetLogger(
-            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
         private readonly IUnitGroupFacade _ugFacade;
         private readonly IUnitFacade _unitFacade;
 
@@ -40,7 +30,7 @@ namespace WebAppMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> MyUnits(int unitGroupID)
         {
-            log.Info($"Called: MyUnits({unitGroupID})");
+            Log.Called(nameof(MyUnits), unitGroupID.ToString());
 
             var units = new List<UnitFullDTO>();
             var currentGroup = new UnitGroupNameDto();
@@ -58,6 +48,8 @@ namespace WebAppMVC.Controllers
                 CurrentGroup = currentGroup,
                 UnitsInGroup = units
             };
+
+            Log.Info($"DTO: id={dto.UserId}, curr_group={currentGroup.Name}, units={units.Count}");
 
             return View(dto);
         }
@@ -112,9 +104,9 @@ namespace WebAppMVC.Controllers
             int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
             string street, string number, string zip, IFormFile file)
         {
-            var contract = CreateContract(file);
+            /*var contract = CreateContract(file);
             var x = $"{contract.Content}";
-            /*using (HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClient())
             {
                 
                 UnitWithSpecificationModel m = new UnitWithSpecificationModel()
@@ -140,7 +132,7 @@ namespace WebAppMVC.Controllers
                     string content = respond.Content.ReadAsStringAsync().Result;
                     unitId = JsonConvert.DeserializeObject<int>(content);
                 }
-            }*/
+            }
 
             UnitDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
             if (unit == null)
@@ -198,7 +190,7 @@ namespace WebAppMVC.Controllers
 
                 await _unitFacade.UpdateUnitAsync(unitId, unit);
             }
-
+            */
             return RedirectToAction("EditUnit", "Units", new { groupId = groupId, unitId = unitId });
         }
 

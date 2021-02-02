@@ -1,5 +1,6 @@
 ﻿@using Castle.Core.Logging
 @using Microsoft.Extensions.Logging
+@using WebAppMVC.Utils
 @model BLL.DTOs.UnitsOverviewDTO
 
 @{
@@ -31,7 +32,7 @@ else
 
     <script>
         function changeGroup() {
-            console.log('changeGroup() called');
+            @{ Log.Called("changeGroup()"); }
             var newGroupId = document.getElementById('selectGroupList').value;
             location.href = '/Units/MyUnits?unitGroupID=' + newGroupId;
         }
@@ -46,6 +47,24 @@ else
     }
     else
     {
+        @foreach (var unit in Model.UnitsInGroup)
+        {
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+                <div class="card-body">
+                    <a href="#" class="card-link">Edit Unit</a>
+                </div>
+            </div>
+        }
+
         @*
             <table>
                 <tr>
