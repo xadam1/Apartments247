@@ -1,6 +1,6 @@
 ﻿@model MVC.Models.EditUnitModel
 
-@{ 
+@{
     ViewData["Title"] = "Edit Unit";
     ViewData["UserId"] = Model.UserId;
     var userId = Model.UserId;
@@ -12,21 +12,22 @@
     var unitGroups = Model.UnitGroups;
 }
 
-    @if (unitId != -1)
-    {
-<h3>
-    Edit Unit</h3>
-    }
-    else
-    {
-       <h3>Create New Unit</h3 >
-    }
+@if (unitId != -1)
+{
+    <h3>
+        Edit Unit
+    </h3>
+}
+else
+{
+    <h3>Create New Unit</h3>
+}
 
-<form action="/Unit/SaveUnit" method="post">
+<form action="/Units/SaveUnit" method="post">
     <select name="groupId">
         @foreach (var unitGroup in unitGroups)
         {
-        <option id="unitGroup_@unitGroup.Id" value="@unitGroup.Id">@unitGroup.Name</option>
+            <option id="unitGroup_@unitGroup.Id" value="@unitGroup.Id">@unitGroup.Name</option>
         }
     </select><br />
 
@@ -87,11 +88,26 @@
     <label>MaxCapacity</label><br />
     <input type="text" name="maxCapacity" value="@unit.MaxCapacity" /><br />
 
+    <label>ContractLink</label><br />
+    <input type="text" id="link" name="contractLink" value="@unit.ContractLink" /><br />
+
+    @if (unit.ContractLink != "")
+    {
+        <button onclick="OpenContract()">Open Contract</button>
+    }
+
     <input type="hidden" name="userId" value="@userId" />
     <input type="hidden" name="unitId" value="@unit.Id" />
 
     <input type="submit" value="Save" />
 </form>
+
+<script>
+    function OpenContract() {
+        link = document.getElementById("link").value;
+        window.open('/Units/OpenContract?link=' + link, "_blank");
+    };
+</script>
 
 @if (unitId != -1)
 {
@@ -103,5 +119,5 @@
                 location.href = "/Units/DeleteUnit?userId=@userId&groupId=@groupId&unitId=@unitId";
             }
         };
-    </script>
+</script>
 }

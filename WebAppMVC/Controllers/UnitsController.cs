@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using WebAPI.Models;
 using WebAppMVC.Utils;
@@ -117,6 +118,20 @@ namespace WebAppMVC.Controllers
             }
 
             return RedirectToAction("MyUnits", "Units", new { groupId = groupId });
+        }
+
+        public FileResult OpenContract(string link)
+        {
+            byte[] fileBytes = { };
+            try
+            {
+                fileBytes = System.IO.File.ReadAllBytes(link);
+            }
+            catch (Exception)
+            {
+            }
+
+            return File(fileBytes, "application/pdf");
         }
     }
 }
