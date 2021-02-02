@@ -6,19 +6,11 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="ListGroups" asp-action="ListGroups">My Groups</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Groups" asp-action="MyGroups">My Groups</a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="ListUnits" asp-action="ListUnits">My Units</a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="EditGroup" asp-action="EditGroup">Edit Group</a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="EditUnit" asp-action="EditUnit">Edit Unit</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Units" asp-action="MyUnits">My Units</a>
     </li>
 }
 

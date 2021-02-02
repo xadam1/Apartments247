@@ -8,8 +8,29 @@ using WebAppMVC.Utils;
 
 namespace WebAppMVC.Controllers
 {
-    public class EditUnitController : Controller
+    public class UnitsController : Controller
     {
+        [HttpGet]
+        public IActionResult MyUnits()
+        {
+            var groupId = 0;
+            var groups = Utils.Utils.GetUnitGroupNamesByUserId();
+            if (groups.Length != 0)
+            {
+                groupId = groups[0].Id;
+            }
+
+            MyUnitsModel m = new MyUnitsModel()
+            {
+                UserId = UserInfoManager.UserId,
+                GroupId = groupId,
+                Groups = groups,
+                Units = Utils.Utils.GetUnitsByUnitGroupId(groupId),
+            };
+
+            return View(m);
+        }
+
         [HttpGet]
         public IActionResult EditUnit(int groupId, int unitId = -1)
         {
@@ -83,7 +104,7 @@ namespace WebAppMVC.Controllers
                 }
             }
 
-            return RedirectToAction("EditUnit", "EditUnit", new { groupId = groupId, unitId = unitId });
+            return RedirectToAction("EditUnit", "Units", new { groupId = groupId, unitId = unitId });
         }
 
         [HttpGet]
@@ -95,7 +116,7 @@ namespace WebAppMVC.Controllers
                 // Nothing to do
             }
 
-            return RedirectToAction("ListUnits", "ListUnits", new { groupId = groupId });
+            return RedirectToAction("MyUnits", "Units", new { groupId = groupId });
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model MVC.Models.ListGroupsModel
+﻿@model MVC.Models.MyGroupsModel
 
 @{
     ViewData["Title"] = "Show Groups";
@@ -18,7 +18,7 @@
         </tr>
         <tr>
             <td>
-                <a href="/EditGroup/EditGroup?userId=@userId&groupId=@groupId&createNewInt=1"><button type="button">Create new group</button></a>
+                <a href="/Groups/EditGroup?userId=@userId&groupId=@groupId&createNewInt=1"><button type="button">Create new group</button></a>
             </td>
         </tr>
         @foreach (var group in groups)
@@ -27,7 +27,7 @@
                 <td>@group.Name</td>
                 <td>@group.Color</td>
                 <td>@group.Note</td>
-                <td><a href="/EditGroup/EditGroup?userId=@userId&groupId=@group.Id"><button type="button">Show details</button></a></td>
+                <td><a href="/Groups/EditGroup?userId=@userId&groupId=@group.Id"><button type="button">Show details</button></a></td>
             </tr>
         }
     </table>
@@ -35,5 +35,5 @@
 else
 {
     <p>You don't have any Unit Groups.</p>
-    <p>Let's <a href="/EditGroup/EditGroup?userId=@userId&groupId=-1">create</a> one.</p>
+    <p>Let's <a href="/Groups/EditGroup?userId=@userId&groupId=-1">create</a> one.</p>
 }

@@ -13,6 +13,7 @@ namespace WebAppMVC.Utils
         {
             var dbContext = new ApartmentsDbContext();
 
+            //TODO Metoda z repa, pokud zustanou dve DB
             var user = dbContext.Users.Where(user => user.Username == applicationUser.UserName).FirstOrDefault();
             if (user == null)   // does not exist yet
             {

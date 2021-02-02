@@ -22,7 +22,7 @@
        <h3>Create New Unit</h3 >
     }
 
-<form action="/EditUnit/SaveUnit" method="post">
+<form action="/Unit/SaveUnit" method="post">
     <select name="groupId">
         @foreach (var unitGroup in unitGroups)
         {
@@ -100,7 +100,7 @@
         function confirmDeleteUnit() {
             result = confirm("Are you sure?");
             if (result) {
-                location.href = "/EditUnit/DeleteUnit?userId=@userId&groupId=@groupId&unitId=@unitId";
+                location.href = "/Units/DeleteUnit?userId=@userId&groupId=@groupId&unitId=@unitId";
             }
         };
     </script>

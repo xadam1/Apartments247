@@ -13,6 +13,6 @@
         private static string localApiConsole = @"http://localhost:5000/api/Api/";       // Console
         private static string sharedApi = @"http://cassiopeia.serveirc.com:5000/api/Api/";
 
-        public static string API_URL { get; } = localApiConsole;
+        public static string API_URL { get; } = localApiVS;
     }
 }

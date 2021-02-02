@@ -1,4 +1,4 @@
-﻿@model MVC.Models.ListUnitsModel
+﻿@model MVC.Models.MyUnitsModel
 
 @{
     ViewData["Title"] = "Show Units";
@@ -11,7 +11,7 @@
 @if (groups.Length == 0)
 {
 <p>You don't have any UnitGroups.</p>
-<p>Let's <a href="/EditGroup/EditGroup?userId=@userId&groupId=-1&createNew=1">create</a> one.</p>
+<p>Let's <a href="/Groups/EditGroup?userId=@userId&groupId=-1&createNew=1">create</a> one.</p>
 }
 else
 {
@@ -31,14 +31,14 @@ else
 <script>
     function changeGroup() {
         newGroupId = document.getElementById("dropDownList").value;
-        location.href = "/ListUnits/ListUnits?userId=@userId&groupId=" + newGroupId;
+        location.href = "/Units/MyUnits?userId=@userId&groupId=" + newGroupId;
     }
 </script>
 
 @if (units.Length == 0)
     {
 <p>This UnitGroup is empty.</p>
-<p>Let's <a href="/EditUnit/EditUnit?userId=@userId&groupId=@groupId&unitId=-1">create</a> new Unit in this group.</p>
+<p>Let's <a href="/Units/EditUnit?userId=@userId&groupId=@groupId&unitId=-1">create</a> new Unit in this group.</p>
     }
     else
     {
@@ -54,7 +54,7 @@ else
     </tr>
     <tr>
         <td>
-            <a href="/EditUnit/EditUnit?userId=@userId&groupId=@groupId&unitId=-1"><button type="button">Create new unit in this group</button></a>
+            <a href="/Units/EditUnit?userId=@userId&groupId=@groupId&unitId=-1"><button type="button">Create new unit in this group</button></a>
         </td>
     </tr>
     @foreach (var unit in units)
@@ -67,7 +67,7 @@ else
         <td>@unit.CurrentCapacity</td>
         <td>@unit.MaxCapacity</td>
         <td>@unit.ContractLink</td>
-        <td><a href="/EditUnit/EditUnit?userId=@userId&groupId=@groupId&unitId=@unit.Id"><button type="button">Show details</button></a></td>
+        <td><a href="/Units/EditUnit?userId=@userId&groupId=@groupId&unitId=@unit.Id"><button type="button">Show details</button></a></td>
     </tr>
             }
 </table>

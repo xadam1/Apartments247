@@ -8,8 +8,20 @@ using WebAppMVC.Utils;
 
 namespace WebAppMVC.Controllers
 {
-    public class EditGroupController : Controller
+    public class GroupsController : Controller
     {
+        [HttpGet]
+        public IActionResult MyGroups(int groupId)
+        {
+            MyGroupsModel m = new MyGroupsModel()
+            {
+                UserId = UserInfoManager.UserId,
+                GroupId = groupId,
+                Groups = Utils.Utils.GetUnitGroupsByUserId(),
+            };
+            return View(m);
+        }
+
         [HttpGet]
         public IActionResult EditGroup(int groupId, int createNewInt)
         {
@@ -72,7 +84,7 @@ namespace WebAppMVC.Controllers
                 }
             }
 
-            return RedirectToAction($"EditGroup", "EditGroup", new { groupId = groupId });
+            return RedirectToAction("MyGroups", "Groups", new { groupId = groupId });
         }
 
         [HttpGet]
@@ -88,7 +100,7 @@ namespace WebAppMVC.Controllers
 
             groupId = Utils.Utils.GetFirstUnitGroupIdByUserId();
 
-            return RedirectToAction("ListGroups", "ListGroups", new { groupId = groupId });
+            return RedirectToAction("MyGroups", "Groups", new { groupId = groupId });
         }
     }
 }

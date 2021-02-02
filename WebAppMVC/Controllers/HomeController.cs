@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MVC.Models;
 using System.Diagnostics;
 using WebAppMVC.Models;
+using WebAppMVC.Utils;
 
 namespace WebAppMVC.Controllers
 {
@@ -16,7 +18,13 @@ namespace WebAppMVC.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction("About", "About");
+            return RedirectToAction("About", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult About()
+        {
+            return View();
         }
 
         public IActionResult Privacy()

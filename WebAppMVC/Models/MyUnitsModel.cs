@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using DAL.Models;
 using WebAPI.Models;
 
 namespace MVC.Models
 {
-    public class ListGroupsModel
+    public class MyUnitsModel
     {
         public int UserId { get; set; }
         public int GroupId { get; set; }
-        public UnitGroupWithSpecificationModel[] Groups { get; set; }
+        public UnitGroupNameModel[] Groups { get; set; }
+        public UnitWithSpecificationModel[] Units { get; set; }
     }
 }
