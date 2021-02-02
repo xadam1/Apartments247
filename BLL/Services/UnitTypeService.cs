@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,11 +18,11 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<T[]> GetUnitTypesAsync<T>()
+        public async Task<List<T>> GetUnitTypesAsync<T>()
         {
             var unitTypes = (await _unitOfWork.UnitTypeRepository.GetAllAsync()).ToArray();
 
-            return _mapper.Map<T[]>(unitTypes);
+            return _mapper.Map<List<T>>(unitTypes);
         }
     }
 }

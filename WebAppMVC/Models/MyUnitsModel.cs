@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DAL.Models;
-using WebAPI.Models;
+﻿using WebAPI.Models;
 
-namespace MVC.Models
+namespace WebAppMVC.Models
 {
     public class MyUnitsModel
     {

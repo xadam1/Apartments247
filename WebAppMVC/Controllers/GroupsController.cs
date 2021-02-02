@@ -1,9 +1,9 @@
 ﻿using DAL;
 using Microsoft.AspNetCore.Mvc;
-using MVC.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
 using WebAPI.Models;
+using WebAppMVC.Models;
 using WebAppMVC.Utils;
 
 namespace WebAppMVC.Controllers

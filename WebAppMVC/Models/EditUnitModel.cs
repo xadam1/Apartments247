@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebAPI.Models;
 
-namespace MVC.Models
+namespace WebAppMVC.Models
 {
     public class EditUnitModel
     {

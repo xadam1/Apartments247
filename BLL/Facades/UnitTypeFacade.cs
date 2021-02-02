@@ -1,4 +1,5 @@
-﻿using BLL.Services;
+﻿using System.Collections.Generic;
+using BLL.Services;
 using Infrastructure;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace BLL.Facades
             _unitTypeService = unitTypeService;
         }
 
-        public async Task<T[]> GetUnitTypesAsync<T>()
+        public async Task<List<T>> GetUnitTypesAsync<T>()
         {
             return await _unitTypeService.GetUnitTypesAsync<T>();
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BLL.DTOs;
 using BLL.Facades;
 using DAL;
@@ -31,7 +32,7 @@ namespace WebAPI.Controllers
         [Route("GetUnitGroupsByUserId")]
         public async Task<UnitGroupWithSpecificationModel[]> GetUnitGroupsByUserIdAsync(int userId)
         {
-            UnitGroupDTO[] groups = await _unitGroupFacade.GetUnitGroupsByUserIdAsync<UnitGroupDTO>(userId);
+            List<UnitGroupDTO> groups = await _unitGroupFacade.GetUnitGroupsByUserIdAsync<UnitGroupDTO>(userId);
             return groups.Select(Utils.Convert).ToArray();
         }
 
@@ -82,7 +83,7 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("GetColors")]
-        public async Task<ColorDTO[]> GetColors()
+        public async Task<List<ColorDTO>> GetColors()
         {
             return await _colorFacade.GetColorsAsync<ColorDTO>();
         }

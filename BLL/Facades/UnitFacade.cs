@@ -1,4 +1,5 @@
-﻿using BLL.DTOs;
+﻿using System.Collections.Generic;
+using BLL.DTOs;
 using BLL.Services;
 using Infrastructure;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace BLL.Facades
             return await _unitService.GetUnitByIdAsync<T>(id);
         }
 
-        public async Task<T[]> GetUnitsByGroupIdAsync<T>(int id)
+        public async Task<List<T>> GetUnitsByGroupIdAsync<T>(int id)
         {
             return await _unitService.GetUnitsByGroupIdAsync<T>(id);
         }

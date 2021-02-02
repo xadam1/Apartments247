@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using BLL.DTOs;
 using Infrastructure;
 using System.Linq;
@@ -18,11 +19,11 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<T[]> GetColorsAsync<T>()
+        public async Task<List<T>> GetColorsAsync<T>()
         {
             var colors = (await _unitOfWork.ColorRepository.GetAllAsync()).ToArray();
 
-            return _mapper.Map<T[]>(colors);
+            return _mapper.Map<List<T>>(colors);
         }
     }
 }

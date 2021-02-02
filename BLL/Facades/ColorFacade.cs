@@ -1,4 +1,5 @@
-﻿using BLL.Services;
+﻿using System.Collections.Generic;
+using BLL.Services;
 using Infrastructure;
 using System.Threading.Tasks;
 
@@ -15,9 +16,8 @@ namespace BLL.Facades
             _colorService = colorService;
         }
 
-        public async Task<T[]> GetColorsAsync<T>()
+        public async Task<List<T>> GetColorsAsync<T>()
         {
-
             return await _colorService.GetColorsAsync<T>();
         }
     }

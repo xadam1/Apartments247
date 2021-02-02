@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
     public interface IColorService
     {
-        Task<T[]> GetColorsAsync<T>();
+        Task<List<T>> GetColorsAsync<T>();
     }
 }
