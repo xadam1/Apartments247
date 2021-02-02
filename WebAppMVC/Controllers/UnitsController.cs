@@ -3,11 +3,7 @@ using BLL.Facades;
 using DAL;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
-using DAL.Models;
-using log4net;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -107,34 +103,6 @@ namespace WebAppMVC.Controllers
             int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
             string street, string number, string zip, IFormFile file)
         {
-            /*using (HttpClient client = new HttpClient())
-            {
-                
-                UnitWithSpecificationModel m = new UnitWithSpecificationModel()
-                {
-                    Id = unitId,
-                    UnitGroupId = groupId,
-                    Name = name,
-                    ColorId = selectColor,
-                    AddressId = -1, // TODO!!!!
-                    Note = note,
-                    UnitTypeId = selectUnitType,
-                    CurrentCapacity = currentCapacity,
-                    MaxCapacity = maxCapacity,
-                    ContractLink = contractLink
-                };
-                
-                string commandUrl = $"SaveUnit?groupId={groupId}&unitId={unitId}&name={name}&colorId={selectColor}&note={note}" +
-                                    $"&unitTypeId={selectUnitType}&currentCapacity={currentCapacity}&maxCapacity={maxCapacity}" +
-                                    $"&contractLink={contractLink}&state={state}&city={city}&street={street}&number={number}&zip={zip}";
-
-                using (HttpResponseMessage respond = client.GetAsync(ConnectionStrings.API_URL + commandUrl).Result)
-                {
-                    string content = respond.Content.ReadAsStringAsync().Result;
-                    unitId = JsonConvert.DeserializeObject<int>(content);
-                }
-            }*/
-
             var contract = CreateContract(file);
 
             UnitDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
@@ -226,36 +194,6 @@ namespace WebAppMVC.Controllers
             return File(fileBytes, "application/pdf");
         }
 
-        [HttpPost]
-        public IActionResult UploadFile(IFormFile file)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                file.CopyTo(memoryStream);
-
-                // Upload the file if less than 2 MB
-                if (memoryStream.Length < 2097152)
-                {
-                    var contract = new Contract()
-                    {
-                        Content = memoryStream.ToArray(),
-                        Name = file.FileName
-                    };
-
-                    //_dbContext.File.Add(file);
-
-                    //await _dbContext.SaveChangesAsync();
-                }
-                else
-                {
-                    ModelState.AddModelError("File", "The file is too large.");
-                }
-            }
-
-            //return Page();
-            return View();
-        }
-
         private Contract CreateContract(IFormFile file)
         {
             var contract = new Contract();
@@ -283,7 +221,5 @@ namespace WebAppMVC.Controllers
 
             return contract;
         }
-
-
     }
 }

@@ -7,6 +7,6 @@ namespace BLL.DTOs
         public int Id { get; set; }
         public Specification Specification { get; set; }
 
-        public string Name => Specification.Name;
+        public string Name => Specification?.Name;
     }
 }
