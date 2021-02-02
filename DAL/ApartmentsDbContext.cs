@@ -49,30 +49,11 @@ namespace DAL
                 .WithMany(unitType => unitType.Units)
                 .HasForeignKey(unit => unit.UnitTypeId);
 
-
-            /*modelBuilder.Entity<Unit>()
-                .HasMany(unit => unit.AvailableEquipment)
-                .WithMany(equipment => equipment.Units)
-                .UsingEntity(j => j.ToTable("UnitEquipment"));*/
-
-
             modelBuilder.Entity<Unit>()
                 .HasMany(unit => unit.Photos)
                 .WithOne()
                 .HasForeignKey(photo => photo.UnitId);
 
-
-            /*modelBuilder.Entity<Unit>()
-                .HasMany(unit => unit.UnitEquipments)
-                .WithOne()
-                .HasForeignKey(unitEquipment => unitEquipment.UnitId);
-
-
-            // Equipment
-            modelBuilder.Entity<Equipment>()
-                .HasMany(equipment => equipment.UnitEquipments)
-                .WithOne()
-                .HasForeignKey(unitEquipment => unitEquipment.UnitId);*/
 
             // UnitEquipment
             modelBuilder.Entity<UnitEquipment>()

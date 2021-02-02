@@ -43,7 +43,7 @@ namespace BLL.Services
             unit.UnitGroupId = unitDTO.UnitGroupId;
             unit.CurrentCapacity = unitDTO.CurrentCapacity;
             unit.MaxCapacity = unitDTO.MaxCapacity;
-            unit.ContractLink = unitDTO.ContractLink;
+            unit.Contract = unitDTO.Contract;
 
             _unitOfWork.UnitRepository.Update(unit);
         }

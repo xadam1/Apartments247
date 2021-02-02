@@ -460,7 +460,7 @@ namespace DAL.Extras
                     MaxCapacity = 4,
                     UnitTypeId = 1,
                     SpecificationId = 8,
-                    ContractLink = null,
+                    ContractId = 1,
                     UnitGroupId = 1
                 },
                 new Unit()
@@ -470,7 +470,7 @@ namespace DAL.Extras
                     MaxCapacity = 6,
                     UnitTypeId = 7,
                     SpecificationId = 1,
-                    ContractLink = null,
+                    ContractId = 1,
                     UnitGroupId = 2
                 },
                 new Unit()
@@ -480,7 +480,7 @@ namespace DAL.Extras
                     MaxCapacity = 3,
                     UnitTypeId = 6,
                     SpecificationId = 1,
-                    ContractLink = null,
+                    ContractId = 1,
                     UnitGroupId = 3
                 },
                 new Unit()
@@ -490,7 +490,7 @@ namespace DAL.Extras
                     MaxCapacity = 5,
                     UnitTypeId = 5,
                     SpecificationId = 1,
-                    ContractLink = null,
+                    ContractId = 1,
                     UnitGroupId = 4
                 },
                 new Unit()
@@ -500,7 +500,7 @@ namespace DAL.Extras
                     MaxCapacity = 7,
                     UnitTypeId = 4,
                     SpecificationId = 1,
-                    ContractLink = null,
+                    ContractId = 1,
                     UnitGroupId = 1
                 },
                 new Unit()
@@ -510,7 +510,7 @@ namespace DAL.Extras
                     MaxCapacity = 13,
                     UnitTypeId = 3,
                     SpecificationId = 1,
-                    ContractLink = null,
+                    ContractId = 1,
                     UnitGroupId = 2
                 },
                 new Unit()
@@ -520,7 +520,7 @@ namespace DAL.Extras
                     MaxCapacity = 1,
                     UnitTypeId = 2,
                     SpecificationId = 1,
-                    ContractLink = null,
+                    ContractId = 1,
                     UnitGroupId = 3
                 },
                 new Unit()
@@ -530,7 +530,7 @@ namespace DAL.Extras
                     MaxCapacity = 2,
                     UnitTypeId = 1,
                     SpecificationId = 1,
-                    ContractLink = null,
+                    ContractId = 1,
                     UnitGroupId = 4
                 },
                 new Unit()
@@ -540,7 +540,7 @@ namespace DAL.Extras
                     MaxCapacity = 5,
                     UnitTypeId = 8,
                     SpecificationId = 1,
-                    ContractLink = null,
+                    ContractId = 1,
                     UnitGroupId = 1
                 }
             );
@@ -821,6 +821,18 @@ namespace DAL.Extras
                 }
             );
             #endregion
+
+            #region Contract
+            builder.Entity<Contract>().HasData
+            (
+                new Contract
+                {
+                    Id = 1,
+                    Name = "test.pdf",
+                    Content = null
+                }
+            );
+#endregion
         }
     }
 }

@@ -88,22 +88,26 @@ else
     <label>MaxCapacity</label><br />
     <input type="text" name="maxCapacity" value="@unit.MaxCapacity" /><br />
 
-    <label>ContractLink</label><br />
-    <input type="text" id="link" name="contractLink" value="@unit.ContractLink" /><br />
-
-    <button onclick="OpenContract()">Open Contract</button>
-
-    <input type="hidden" name="userId" value="@userId" />
-    <input type="hidden" name="unitId" value="@unit.Id" />
+    <p>Contract</p>
+    <div class="custom-file mb-3">
+        <input type="file" class="custom-file-input" id="customFile" name="filename" onchange="DisplayFilename()">
+        <label id="customFileLabel" class="custom-file-label" for="customFile">Choose file</label>
+    </div>
 
     <input type="submit" value="Save" />
 </form>
+
 
 <script>
     function OpenContract() {
         link = document.getElementById("link").value;
         window.open('/Units/OpenContract?link=' + link, "_blank");
     };
+
+    function DisplayFilename() {
+        uploadedFile = document.getElementById("customFile").value.split("\\").pop();
+        document.getElementById("customFileLabel").innerHTML = uploadedFile;
+    }
 </script>
 
 @if (unitId != -1)
@@ -116,5 +120,5 @@ else
                 location.href = "/Units/DeleteUnit?userId=@userId&groupId=@groupId&unitId=@unitId";
             }
         };
-</script>
+    </script>
 }
