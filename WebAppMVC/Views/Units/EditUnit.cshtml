@@ -91,10 +91,7 @@ else
     <label>ContractLink</label><br />
     <input type="text" id="link" name="contractLink" value="@unit.ContractLink" /><br />
 
-    @if (unit.ContractLink != "")
-    {
-        <button onclick="OpenContract()">Open Contract</button>
-    }
+    <button onclick="OpenContract()">Open Contract</button>
 
     <input type="hidden" name="userId" value="@userId" />
     <input type="hidden" name="unitId" value="@unit.Id" />
