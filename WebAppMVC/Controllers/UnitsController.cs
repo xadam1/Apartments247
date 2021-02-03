@@ -29,7 +29,7 @@ namespace WebAppMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> MyUnits(int unitGroupID)
         {
-            Log.Called(nameof(MyUnits), unitGroupID.ToString());
+            Log.Called(nameof(MyUnits), $"groupID={unitGroupID}");
 
             var units = new List<UnitFullDTO>();
             var currentGroup = new UnitGroupNameDto();
@@ -48,19 +48,22 @@ namespace WebAppMVC.Controllers
                 UnitsInGroup = units
             };
 
-            Log.Info($"DTO: id={dto.UserId}, curr_group={currentGroup.Name}, units={units.Count}");
+            Log.Info($"DTO: UID={dto.UserId}, curr_group={currentGroup.Name}, units={units.Count}");
 
             return View(dto);
         }
 
         public IActionResult CreateUnit()
         {
+            Log.Called(nameof(CreateUnit));
             return View();
         }
 
         [HttpGet]
         public IActionResult EditUnit(int groupId, int unitId = -1)
         {
+            Log.Called(nameof(EditUnit), $"groupID={groupId}, unitID={unitId}");
+
             EditUnitModel m = new EditUnitModel()
             {
                 UserId = UserInfoManager.UserId,
