@@ -45,7 +45,7 @@ else
         <p>This UnitGroup is empty.</p>
         <hr />
 
-        <button class="btn btn-warning" asp-controller="Units" asp-action="CreateUnit">Create New Unit</button>
+        <a class="btn btn-warning" asp-controller="Units" asp-action="EditUnit" asp-route-groupId="@Model.CurrentGroup.Id">Create New Unit</a>
     }
     else
     {
