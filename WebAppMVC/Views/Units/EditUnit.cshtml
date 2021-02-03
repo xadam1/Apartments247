@@ -101,9 +101,15 @@ else
         <input type="file" class="form-group" name="file" id="customFile" onchange="DisplayFilename()" />
     </div>
 
-    <div class="form-group">
-        <button onclick="OpenContract()" class="btn btn-primary col-xs-12">Open contract</button>
-    </div>
+    @if (unit.ContractId > 0)
+    {
+        <div class="form-group">
+            <button type="button" onclick="OpenContract()" class="btn btn-primary col-xs-12">Open contract</button>
+        </div>
+    }
+
+    <input type="hidden" name="userId" value="@userId" />
+    <input type="hidden" name="unitId" value="@unit.Id" />
 
     <input type="submit" value="Save" />
 </form>

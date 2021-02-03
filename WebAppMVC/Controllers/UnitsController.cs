@@ -103,9 +103,9 @@ namespace WebAppMVC.Controllers
             int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
             string street, string number, string zip, IFormFile file)
         {
-            var contract = CreateContract(file);
-
             UnitDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
+            var contract = GetContract(file, unit);
+
             if (unit == null)
             {
                 Address address = new Address()
@@ -194,13 +194,13 @@ namespace WebAppMVC.Controllers
             return File(fileBytes, "application/pdf");
         }
 
-        private Contract CreateContract(IFormFile file)
+        private Contract GetContract(IFormFile file, UnitDTO unit)
         {
             var contract = new Contract();
 
             if (file == null)
             {
-                return contract;
+                return unit?.Contract ?? contract;
             }
 
             using (var memoryStream = new MemoryStream())
