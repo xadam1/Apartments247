@@ -22,7 +22,9 @@ else
     <select id="selectGroupList" class="custom-select custom-select-lg mb-3" onchange="changeGroup()">
         @foreach (var group in Model.Groups)
         {
-            <option id="@group.Id" value="@group.Id">@group.Name</option>
+            var selectedOption = @group.Id == Model.CurrentGroup.Id;
+
+            <option selected="@selectedOption" id="@group.Id" value="@group.Id">@group.Name</option>
         }
     </select>
 
@@ -47,54 +49,27 @@ else
     }
     else
     {
-        @foreach (var unit in Model.UnitsInGroup)
-        {
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Edit Unit</a>
-                </div>
-            </div>
-        }
-
-        @*
-            <table>
-                <tr>
-                    <th>UnitType</th>
-                    <th>Name</th>
-                    <th>Color</th>
-                    <th>Note</th>
-                    <th>CurrentCapacity</th>
-                    <th>MaxCapacity</th>
-                    <th>ContractLink</th>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="/Units/EditUnit?userId=@userId&groupId=@groupId&unitId=-1"><button type="button">Create new unit in this group</button></a>
-                    </td>
-                </tr>
-                @foreach (var unit in units)
+        <div class="container">
+            <div class="row">
+                @foreach (var unit in Model.UnitsInGroup)
                 {
-                    <tr>
-                        <td>@unit.UnitType</td>
-                        <td>@unit.Name</td>
-                        <td>@unit.Color</td>
-                        <td>@unit.Note</td>
-                        <td>@unit.CurrentCapacity</td>
-                        <td>@unit.MaxCapacity</td>
-                        <td>@unit.ContractLink</td>
-                        <td><a href="/Units/EditUnit?userId=@userId&groupId=@groupId&unitId=@unit.Id"><button type="button">Show details</button></a></td>
-                    </tr>
+                    <div class="col-sm-4 py-2">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h3 class="card-title">@unit.Specification.Name</h3>
+                                <p class="card-text text-muted">@unit.TypeStr</p>
+                                <ul class="list-group list-group-flush" style="margin-bottom: 22px;">
+                                    <li class="list-group-item">Capacity @unit.CurrentCapacity / @unit.MaxCapacity</li>
+                                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                </ul>
+                                <a asp-action="EditUnit" asp-route-groupId="@Model.CurrentGroup.Id" asp-route-unitId="@unit.Id"
+                                   class="btn btn-outline-dark" style="position: relative; bottom: 0px; width: 100%">Edit Unit</a>
+                            </div>
+                        </div>
+                    </div>
                 }
-            </table>
-        *@
+            </div>
+        </div>
     }
 }
