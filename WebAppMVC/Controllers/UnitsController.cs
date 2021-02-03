@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WebAPI.Models;
@@ -33,17 +34,27 @@ namespace WebAppMVC.Controllers
 
             var units = new List<UnitFullDTO>();
             var currentGroup = new UnitGroupNameDto();
-
+            var groups = await _ugFacade.GetUnitGroupsByUserIdAsync<UnitGroupNameDto>(UserInfoManager.UserId);
+            
             if (unitGroupID != 0)
             {
                 currentGroup = await _ugFacade.GetUnitGroupByIdAsync<UnitGroupNameDto>(unitGroupID);
                 units = await _unitFacade.GetUnitsByGroupIdAsync<UnitFullDTO>(unitGroupID);
             }
+            else
+            {
+                // User did not select UG, but has some
+                if (groups.Any())
+                {
+                    currentGroup = groups.First();
+                    units = await _unitFacade.GetUnitsByGroupIdAsync<UnitFullDTO>(currentGroup.Id);
+                }
+            }
 
             var dto = new UnitsOverviewDTO
             {
                 UserId = UserInfoManager.UserId,
-                Groups = await _ugFacade.GetUnitGroupsByUserIdAsync<UnitGroupNameDto>(UserInfoManager.UserId),
+                Groups = groups,
                 CurrentGroup = currentGroup,
                 UnitsInGroup = units
             };

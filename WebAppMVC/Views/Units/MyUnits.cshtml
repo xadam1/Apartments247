@@ -14,7 +14,10 @@
     <p>You don't have any UnitGroups.</p>
     <hr />
 
-    <button class="btn btn-warning" asp-controller="Groups" asp-action="EditGroup">Create New UnitGroup</button>
+    <a class="btn btn-warning" asp-controller="Groups" asp-action="EditGroup"
+       asp-route-createNewInt="1" >
+        Create New UnitGroup
+    </a>
 }
 else
 {
