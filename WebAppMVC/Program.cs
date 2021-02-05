@@ -1,18 +1,12 @@
 using Autofac.Extensions.DependencyInjection;
-using log4net;
-using log4net.Config;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using System;
 using System.IO;
-using System.Reflection;
 
 namespace WebAppMVC
 {
     public class Program
     {
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         public static void Main(string[] args)
         {
             //CreateHostBuilder(args).Build().Run();
@@ -22,6 +16,7 @@ namespace WebAppMVC
                     .ConfigureWebHostDefaults(webHostBuilder =>
                     {
                         webHostBuilder
+                            .ConfigureServices(services => services.AddAutofac())
                             .UseContentRoot(Directory.GetCurrentDirectory())
                             .UseIISIntegration()
                             .UseUrls("http://0.0.0.0:4000")
