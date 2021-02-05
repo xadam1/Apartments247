@@ -1,6 +1,4 @@
-﻿@using Castle.Core.Logging
-@using Microsoft.Extensions.Logging
-@using WebAppMVC.Utils
+﻿@using WebAppMVC.Utils
 @model BLL.DTOs.UnitsOverviewDTO
 
 @{
@@ -38,7 +36,7 @@ else
     <script>
         function changeGroup() {
             @{ Log.Called("changeGroup()"); }
-            var newGroupId = document.getElementById('selectGroupList').value;
+            let newGroupId = document.getElementById('selectGroupList').value;
             location.href = '/Units/MyUnits?unitGroupID=' + newGroupId;
         }
     </script>
@@ -67,7 +65,7 @@ else
                                     <li class="list-group-item">Vestibulum at eros</li>
                                 </ul>
                                 <a asp-action="EditUnit" asp-route-groupId="@Model.CurrentGroup.Id" asp-route-unitId="@unit.Id"
-                                   class="btn btn-outline-dark" style="position: relative; bottom: 0px; width: 100%">Edit Unit</a>
+                                   class="btn btn-outline-dark" style="position: relative; bottom: 0; width: 100%">Edit Unit</a>
                             </div>
                         </div>
                     </div>

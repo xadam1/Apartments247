@@ -16,11 +16,6 @@ namespace WebAppMVC
         public static void Main(string[] args)
         {
             //CreateHostBuilder(args).Build().Run();
-            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
-
-            Console.WriteLine("CYKA BLYAT!");
-            log.Info("LOG4NET Initialized...");
 
             var host = Host.CreateDefaultBuilder(args)
                     .UseServiceProviderFactory(new AutofacServiceProviderFactory())

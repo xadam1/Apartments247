@@ -15,8 +15,8 @@ namespace WebAppMVC.Areas.Identity
             builder.ConfigureServices((context, services) =>
             {
                 services.AddDbContext<AuthDbContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("AuthDbContextConnection")));
+                    options.UseSqlite(
+                        context.Configuration.GetConnectionString("SqlLiteAuthDbConnection")));
 
                 services.AddDefaultIdentity<ApplicationUser>(options =>
                     {
