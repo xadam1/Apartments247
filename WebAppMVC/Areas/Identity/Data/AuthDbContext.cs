@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using WebAppMVC.Areas.Identity.Data;
@@ -25,13 +20,13 @@ namespace WebAppMVC.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
     }
-    
+
     public class AuthDbFactory : IDesignTimeDbContextFactory<AuthDbContext>
     {
         public AuthDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<AuthDbContext>();
-            optionsBuilder.UseSqlite("Filename=./A247AuthDB.sqlite");
+            optionsBuilder.UseSqlite("Filename=../Database/A247AuthDB.sqlite");
 
             return new AuthDbContext(optionsBuilder.Options);
         }
