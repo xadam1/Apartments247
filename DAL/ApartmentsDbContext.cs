@@ -30,7 +30,7 @@ namespace DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=./ApartmentsDB.sqlite")
+            optionsBuilder.UseSqlite(@"Data Source=../Database/ApartmentsDB.sqlite")
             .UseLazyLoadingProxies();
         }
 
