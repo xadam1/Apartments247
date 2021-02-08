@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WebMVC.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Groups" asp-action="MyGroups">My Groups</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Units" asp-action="MyUnits">My Units</a>
+    </li>
+}
+
