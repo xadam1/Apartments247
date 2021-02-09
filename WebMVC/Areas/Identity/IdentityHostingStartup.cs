@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,12 +12,23 @@ namespace WebMVC.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
+            builder.ConfigureServices((context, services) =>
+            {
                 services.AddDbContext<A247AuthContext>(options =>
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("A247AuthContextConnection")));
 
-                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<ApplicationUser>(options =>
+                    {
+                        options.SignIn.RequireConfirmedAccount = false;
+
+                        options.Password.RequireLowercase = false;
+                        options.Password.RequireUppercase = false;
+                        options.Password.RequireDigit = false;
+                        options.Password.RequireNonAlphanumeric = false;
+
+                        options.User.RequireUniqueEmail = true;
+                    })
                     .AddEntityFrameworkStores<A247AuthContext>();
             });
         }

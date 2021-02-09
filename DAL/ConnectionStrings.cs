@@ -25,5 +25,6 @@ namespace DAL
         private static string sharedApi = @"http://cassiopeia.serveirc.com:5000/api/Api/";
 
         public static string API_URL { get; } = localApiConsole;
+        //somar
     }
 }
