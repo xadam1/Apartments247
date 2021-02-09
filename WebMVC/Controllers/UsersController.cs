@@ -1,14 +1,14 @@
-﻿using BLL.DTOs;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using BLL.DTOs;
 using BLL.Facades;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
-namespace WebAppMVC.Controllers
+namespace WebMVC.Controllers
 {
     public class UsersController : Controller
     {

@@ -6,7 +6,7 @@ using WebAPI.Models;
 using WebMVC.Models;
 using WebMVC.Utils;
 
-namespace WebAppMVC.Controllers
+namespace WebMVC.Controllers
 {
     public class GroupsController : Controller
     {
@@ -17,7 +17,7 @@ namespace WebAppMVC.Controllers
             {
                 UserId = UserInfoManager.UserId,
                 GroupId = groupId,
-                Groups = Utils.GetUnitGroupsByUserId(),
+                Groups = Utils.Utils.GetUnitGroupsByUserId(),
             };
             return View(m);
         }
@@ -32,7 +32,7 @@ namespace WebAppMVC.Controllers
                 UserId = UserInfoManager.UserId,
                 GroupId = groupId,
                 CreateNew = createNew,
-                Colors = Utils.GetColors(),
+                Colors = Utils.Utils.GetColors(),
             };
 
             if (createNew || groupId == -1)
@@ -53,7 +53,7 @@ namespace WebAppMVC.Controllers
             }
             else
             {
-                m.Group = Utils.GetUnitGroupById(groupId);
+                m.Group = Utils.Utils.GetUnitGroupById(groupId);
             }
 
             return View(m);
@@ -98,7 +98,7 @@ namespace WebAppMVC.Controllers
                 }
             }
 
-            groupId = Utils.GetFirstUnitGroupIdByUserId();
+            groupId = Utils.Utils.GetFirstUnitGroupIdByUserId();
 
             return RedirectToAction("MyGroups", "Groups", new { groupId = groupId });
         }

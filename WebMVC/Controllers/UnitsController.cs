@@ -1,20 +1,19 @@
-﻿using BLL.DTOs;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using BLL.DTOs;
 using BLL.Facades;
 using DAL;
 using DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using WebAPI.Models;
 using WebMVC.Models;
 using WebMVC.Utils;
 
-
-namespace WebAppMVC.Controllers
+namespace WebMVC.Controllers
 {
     public class UnitsController : Controller
     {
@@ -80,9 +79,9 @@ namespace WebAppMVC.Controllers
                 UserId = UserInfoManager.UserId,
                 GroupId = groupId,
                 UnitId = unitId,
-                Colors = Utils.GetColors(),
-                UnitTypes = Utils.GetUnitTypes(),
-                UnitGroups = Utils.GetUnitGroupNamesByUserId(),
+                Colors = Utils.Utils.GetColors(),
+                UnitTypes = Utils.Utils.GetUnitTypes(),
+                UnitGroups = Utils.Utils.GetUnitGroupNamesByUserId(),
             };
 
             if (unitId == -1)
@@ -106,7 +105,7 @@ namespace WebAppMVC.Controllers
             }
             else
             {
-                m.Unit = Utils.GetUnitById(unitId);
+                m.Unit = Utils.Utils.GetUnitById(unitId);
             }
 
             return View(m);
