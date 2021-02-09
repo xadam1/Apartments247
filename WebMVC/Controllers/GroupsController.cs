@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
 using WebAPI.Models;
-using WebAppMVC.Models;
-using WebAppMVC.Utils;
+using WebMVC.Models;
+using WebMVC.Utils;
 
 namespace WebAppMVC.Controllers
 {
@@ -17,7 +17,7 @@ namespace WebAppMVC.Controllers
             {
                 UserId = UserInfoManager.UserId,
                 GroupId = groupId,
-                Groups = Utils.Utils.GetUnitGroupsByUserId(),
+                Groups = Utils.GetUnitGroupsByUserId(),
             };
             return View(m);
         }
@@ -32,7 +32,7 @@ namespace WebAppMVC.Controllers
                 UserId = UserInfoManager.UserId,
                 GroupId = groupId,
                 CreateNew = createNew,
-                Colors = Utils.Utils.GetColors(),
+                Colors = Utils.GetColors(),
             };
 
             if (createNew || groupId == -1)
@@ -53,7 +53,7 @@ namespace WebAppMVC.Controllers
             }
             else
             {
-                m.Group = Utils.Utils.GetUnitGroupById(groupId);
+                m.Group = Utils.GetUnitGroupById(groupId);
             }
 
             return View(m);
@@ -98,7 +98,7 @@ namespace WebAppMVC.Controllers
                 }
             }
 
-            groupId = Utils.Utils.GetFirstUnitGroupIdByUserId();
+            groupId = Utils.GetFirstUnitGroupIdByUserId();
 
             return RedirectToAction("MyGroups", "Groups", new { groupId = groupId });
         }

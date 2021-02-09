@@ -10,8 +10,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WebAPI.Models;
-using WebAppMVC.Models;
-using WebAppMVC.Utils;
+using WebMVC.Models;
+using WebMVC.Utils;
 
 
 namespace WebAppMVC.Controllers
@@ -35,7 +35,7 @@ namespace WebAppMVC.Controllers
             var units = new List<UnitFullDTO>();
             var currentGroup = new UnitGroupNameDto();
             var groups = await _ugFacade.GetUnitGroupsByUserIdAsync<UnitGroupNameDto>(UserInfoManager.UserId);
-            
+
             if (unitGroupID != 0)
             {
                 currentGroup = await _ugFacade.GetUnitGroupByIdAsync<UnitGroupNameDto>(unitGroupID);
@@ -80,9 +80,9 @@ namespace WebAppMVC.Controllers
                 UserId = UserInfoManager.UserId,
                 GroupId = groupId,
                 UnitId = unitId,
-                Colors = Utils.Utils.GetColors(),
-                UnitTypes = Utils.Utils.GetUnitTypes(),
-                UnitGroups = Utils.Utils.GetUnitGroupNamesByUserId(),
+                Colors = Utils.GetColors(),
+                UnitTypes = Utils.GetUnitTypes(),
+                UnitGroups = Utils.GetUnitGroupNamesByUserId(),
             };
 
             if (unitId == -1)
@@ -106,7 +106,7 @@ namespace WebAppMVC.Controllers
             }
             else
             {
-                m.Unit = Utils.Utils.GetUnitById(unitId);
+                m.Unit = Utils.GetUnitById(unitId);
             }
 
             return View(m);

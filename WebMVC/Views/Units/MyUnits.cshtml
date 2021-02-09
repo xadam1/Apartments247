@@ -1,0 +1,78 @@
+﻿@using Castle.Core.Logging
+@using Microsoft.Extensions.Logging
+@using WebMVC.Utils
+@model BLL.DTOs.UnitsOverviewDTO
+
+@{
+    ViewData["Title"] = "Show Units";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (!Model.Groups.Any())
+{
+    <p>You don't have any UnitGroups.</p>
+    <hr />
+
+    <a class="btn btn-warning" asp-controller="Groups" asp-action="EditGroup"
+       asp-route-createNewInt="1">
+        Create New UnitGroup
+    </a>
+}
+else
+{
+    <label>Choose UnitGroup</label>
+    <select id="selectGroupList" class="custom-select custom-select-lg mb-3" onchange="changeGroup()">
+        @foreach (var group in Model.Groups)
+        {
+            var selectedOption = @group.Id == Model.CurrentGroup.Id;
+
+            <option selected="@selectedOption" id="@group.Id" value="@group.Id">@group.Name</option>
+        }
+    </select>
+
+    <br />
+    <hr />
+    <br />
+
+    <script>
+        function changeGroup() {
+            @{ Log.Called("changeGroup()"); }
+            var newGroupId = document.getElementById('selectGroupList').value;
+            location.href = '/Units/MyUnits?unitGroupID=' + newGroupId;
+        }
+    </script>
+
+    @if (!Model.UnitsInGroup.Any())
+    {
+        <p>This UnitGroup is empty.</p>
+        <hr />
+
+        <a class="btn btn-warning" asp-controller="Units" asp-action="EditUnit" asp-route-groupId="@Model.CurrentGroup.Id">Create New Unit</a>
+    }
+    else
+    {
+        <div class="container">
+            <div class="row">
+                @foreach (var unit in Model.UnitsInGroup)
+                {
+                    <div class="col-sm-4 py-2">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h3 class="card-title">@unit.Specification.Name</h3>
+                                <p class="card-text text-muted">@unit.TypeStr</p>
+                                <ul class="list-group list-group-flush" style="margin-bottom: 22px;">
+                                    <li class="list-group-item">Capacity @unit.CurrentCapacity / @unit.MaxCapacity</li>
+                                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                </ul>
+                                <a asp-action="EditUnit" asp-route-groupId="@Model.CurrentGroup.Id" asp-route-unitId="@unit.Id"
+                                   class="btn btn-outline-dark" style="position: relative; bottom: 0px; width: 100%">Edit Unit</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}

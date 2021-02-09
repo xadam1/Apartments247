@@ -1,0 +1,175 @@
+﻿@model WebMVC.Models.EditUnitModel
+
+@{
+    ViewData["Title"] = "Edit Unit";
+    ViewData["UserId"] = Model.UserId;
+    var userId = Model.UserId;
+    var groupId = Model.GroupId;
+    var unitId = Model.UnitId;
+    var unit = Model.Unit;
+    var colors = Model.Colors;
+    var unitTypes = Model.UnitTypes;
+    var unitGroups = Model.UnitGroups;
+}
+
+@if (unitId != -1)
+{
+    <h3>
+        Edit Unit
+    </h3>
+}
+else
+{
+    <h3>Create New Unit</h3>
+}
+
+<form action="/Units/SaveUnit" method="post" enctype="multipart/form-data">
+    <select name="groupId">
+        @foreach (var unitGroup in unitGroups)
+        {
+            <option id="unitGroup_@unitGroup.Id" value="@unitGroup.Id">@unitGroup.Name</option>
+        }
+    </select><br />
+
+    <script>
+        document.getElementById("unitGroup_@groupId").selected = true;
+    </script>
+
+    <label>Name</label>
+    <br />
+    <input type="text" name="name" value="@unit.Name" />
+    <br />
+
+    <label>Color</label>
+    <br />
+    <select id="selectColor" name="selectColor">
+        @foreach (var color in colors)
+        {
+            <option id="color_@color.Id" value="@color.Id">@color.Name</option>
+        }
+    </select>
+    <br />
+
+    <script>
+        document.getElementById("color_@unit.ColorId").selected = true;
+    </script>
+
+
+
+    <label>State</label>
+    <br />
+    <input type="text" name="state" value="@unit.State" />
+    <br />
+
+    <label>City</label>
+    <br />
+    <input type="text" name="city" value="@unit.City" />
+    <br />
+
+    <label>Street</label>
+    <br />
+    <input type="text" name="street" value="@unit.Street" />
+    <br />
+
+    <label>Number</label>
+    <br />
+    <input type="text" name="number" value="@unit.Number" />
+    <br />
+
+    <label>Zip</label>
+    <br />
+    <input type="text" name="zip" value="@unit.Zip" />
+    <br />
+
+    <label>Note</label>
+    <br />
+    <input type="text" name="note" value="@unit.Note">
+    <br />
+
+    <label>UnitType</label>
+    <br />
+    <select name="selectUnitType">
+        @foreach (var unitType in unitTypes)
+        {
+            <option id="unitType_@unitType.Id" value="@unitType.Id">@unitType.Type</option>
+        }
+    </select>
+    <br />
+
+    <script>
+        document.getElementById("unitType_@unit.UnitTypeId").selected = true;
+    </script>
+
+    <label>CurrentCapacity</label>
+    <br />
+    <input type="text" name="currentCapacity" value="@unit.CurrentCapacity" />
+    <br />
+
+    <label>MaxCapacity</label>
+    <br />
+    <input type="text" name="maxCapacity" value="@unit.MaxCapacity" />
+    <br />
+
+    @*@<p>Contract</p>
+        <div class="custom-file mb-3">
+            <input type="file" class="custom-file-input" id="customFile" name="filename" onchange="DisplayFilename()">
+            <label id="customFileLabel" class="custom-file-label" for="customFile">Choose file</label>
+        </div>*@
+
+    <label>Contract</label>
+    <br />
+    <input readonly="readonly" type="text" id="contractName" value="@unit.ContractName" />
+    <br />
+
+    <div class="form-group">
+        <input type="file" class="form-group" name="file" id="customFile" onchange="DisplayFilename()" />
+    </div>
+
+    @if (unit.ContractId > 0)
+    {
+        <div class="form-group">
+            <button type="button" onclick="OpenContract()" class="btn btn-primary col-xs-12">Open contract</button>
+        </div>
+    }
+
+    <input type="hidden" name="userId" value="@userId" />
+    <input type="hidden" name="unitId" value="@unit.Id" />
+
+    <input type="submit" value="Save" />
+</form>
+
+    @*@<form class="col-xs-12" method="post" action="/Units/UploadFile" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <input type="file" class="form-control" name="file" />
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary col-xs-12">Add</button>
+            </div>
+        </form>*@
+
+    <script>
+    function OpenContract() {
+        @*link = document.getElementById("link").value;*@
+        window.open('/Units/OpenContract?id=@unit.Id', "_blank");
+    };
+
+    function DisplayFilename() {
+        uploadedFile = document.getElementById("customFile").value.split("\\").pop();
+        document.getElementById("contractName").innerHTML = uploadedFile;
+    }
+    </script>
+
+    @if (unitId != -1)
+    {
+        <button type="button" onclick="confirmDeleteUnit()">Delete unit</button>
+        <script>
+        function confirmDeleteUnit() {
+            result = confirm("Are you sure?");
+            if (result) {
+                location.href = "/Units/DeleteUnit?userId=@userId&groupId=@groupId&unitId=@unitId";
+            }
+        };
+        </script>
+    }
