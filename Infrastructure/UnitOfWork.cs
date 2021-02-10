@@ -18,6 +18,7 @@ namespace Infrastructure
         public IRepository<UnitType> UnitTypeRepository { get; }
         public IRepository<User> UserRepository { get; }
         public IRepository<Color> ColorRepository { get; }
+        public IRepository<MonthlyCost> MonthlyCostRepository { get; }
 
 
         // Queries
@@ -26,6 +27,7 @@ namespace Infrastructure
         public UserQuery UserQuery { get; }
         public UsersUnitGroupsWithUnitsQuery UsersUnitGroupsWithUnitsQuery { get; }
         public UnitsWithUnitGroupsQuery UnitsWithUnitGroupsQuery { get; }
+        public MonthlyCostsQuery MonthlyCostsQuery { get; }
 
 
         // Constructor
@@ -42,12 +44,14 @@ namespace Infrastructure
             UnitTypeRepository = new Repository<UnitType>(_dbContext);
             UserRepository = new Repository<User>(_dbContext);
             ColorRepository = new Repository<Color>(_dbContext);
+            MonthlyCostRepository = new Repository<MonthlyCost>(_dbContext);
 
             UnitGroupsWithUsersWithSpecificationsQuery = new UnitGroupsWithUsersWithSpecificationsQuery(_dbContext);
             UnitGroupsWithUsersQuery = new UnitGroupsWithUsersQuery(_dbContext);
             UserQuery = new UserQuery(_dbContext);
             UsersUnitGroupsWithUnitsQuery = new UsersUnitGroupsWithUnitsQuery(_dbContext);
             UnitsWithUnitGroupsQuery = new UnitsWithUnitGroupsQuery(_dbContext);
+            MonthlyCostsQuery = new MonthlyCostsQuery(_dbContext);
         }
 
 

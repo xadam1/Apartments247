@@ -19,11 +19,13 @@ namespace WebMVC.Controllers
     {
         private readonly IUnitGroupFacade _ugFacade;
         private readonly IUnitFacade _unitFacade;
+        private readonly IMonthlyCostFacade _monthlyCostFacade;
 
-        public UnitsController(IUnitGroupFacade ugFacade, IUnitFacade unitFacade)
+        public UnitsController(IUnitGroupFacade ugFacade, IUnitFacade unitFacade, IMonthlyCostFacade monthlyCostFacade)
         {
             this._ugFacade = ugFacade;
             this._unitFacade = unitFacade;
+            this._monthlyCostFacade = monthlyCostFacade;
         }
 
         [HttpGet]

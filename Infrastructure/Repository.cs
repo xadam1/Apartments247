@@ -23,7 +23,6 @@ namespace Infrastructure
         public void Add(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
-            _context.SaveChanges();
         }
 
         public async Task<TEntity> GetByIdAsync(int id)
