@@ -7,11 +7,8 @@ namespace DAL
 {
     public class ApartmentsDbContext : DbContext
     {
-        private readonly string _connectionString;
-
         public ApartmentsDbContext()
         {
-            _connectionString = ConnectionStrings.DB_CONN_STRING;
         }
 
         public DbSet<User> Users { get; set; }
@@ -30,7 +27,7 @@ namespace DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source=../Apartments247.db")
+            optionsBuilder.UseSqlite(ConnectionStrings.DB_CONN_STRING)
             .UseLazyLoadingProxies();
         }
 

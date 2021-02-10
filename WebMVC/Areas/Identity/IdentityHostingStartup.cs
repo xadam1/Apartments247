@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebMVC.Areas.Identity.Data;
 using WebMVC.Data;
@@ -15,8 +14,7 @@ namespace WebMVC.Areas.Identity
             builder.ConfigureServices((context, services) =>
             {
                 services.AddDbContext<A247AuthContext>(options =>
-                    options.UseSqlite(
-                        context.Configuration.GetConnectionString("A247AuthContextConnection")));
+                    options.UseSqlite(DAL.ConnectionStrings.DB_CONN_STRING));
 
                 services.AddDefaultIdentity<ApplicationUser>(options =>
                     {
