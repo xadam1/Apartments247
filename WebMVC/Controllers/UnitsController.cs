@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -192,19 +193,23 @@ namespace WebMVC.Controllers
             return RedirectToAction("MyUnits", "Units", new { groupId = groupId });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> MonthlyCosts(int unitId)
+        {
+            // TODO filter by date
+            var fromDate = DateTime.MinValue;
+            var toDate = DateTime.MaxValue;
+
+            var monthlyCosts = await _monthlyCostFacade.GetMonthlyCostsByUnitIdAsync<MonthlyCostDTO>(unitId, fromDate, toDate);
+
+            return View(monthlyCosts);
+        }
+
         public async Task<FileResult> OpenContract(int id)
         {
             var unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(id);
-            var fileBytes = unit?.Contract.Content ?? new byte[] { };
 
-            /*var contract = 
-            try
-            {
-                fileBytes = System.IO.File.ReadAllBytes(link);
-            }
-            catch (Exception)
-            {
-            }*/
+            var fileBytes = unit?.Contract.Content ?? new byte[] { };
 
             return File(fileBytes, "application/pdf");
         }

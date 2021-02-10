@@ -1,5 +1,6 @@
 ﻿using BLL.Services;
 using Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,9 +17,9 @@ namespace BLL.Facades
             _monthlyCostService = monthlyCostService;
         }
 
-        public async Task<List<T>> GetMonthlyCostsByUnitIdAsync<T>(int id)
+        public async Task<List<T>> GetMonthlyCostsByUnitIdAsync<T>(int id, DateTime fromDate, DateTime toDate)
         {
-            return await _monthlyCostService.GetMonthlyCostsByUnitIdAsync<T>(id);
+            return await _monthlyCostService.GetMonthlyCostsByUnitIdAsync<T>(id, fromDate, toDate);
         }
     }
 }
