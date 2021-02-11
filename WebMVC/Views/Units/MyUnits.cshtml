@@ -1,6 +1,4 @@
-﻿@using Castle.Core.Logging
-@using Microsoft.Extensions.Logging
-@using WebMVC.Utils
+﻿@using WebMVC.Utils
 @model BLL.DTOs.UnitsOverviewDTO
 
 @{
@@ -12,7 +10,7 @@
 @if (!Model.Groups.Any())
 {
     <p>You don't have any UnitGroups.</p>
-    <hr />
+    <hr/>
 
     <a class="btn btn-warning" asp-controller="Groups" asp-action="EditGroup"
        asp-route-createNewInt="1">
@@ -25,15 +23,15 @@ else
     <select id="selectGroupList" class="custom-select custom-select-lg mb-3" onchange="changeGroup()">
         @foreach (var group in Model.Groups)
         {
-            var selectedOption = @group.Id == Model.CurrentGroup.Id;
+            var selectedOption = group.Id == Model.CurrentGroup.Id;
 
             <option selected="@selectedOption" id="@group.Id" value="@group.Id">@group.Name</option>
         }
     </select>
 
-    <br />
-    <hr />
-    <br />
+    <br/>
+    <hr/>
+    <br/>
 
     <script>
         function changeGroup() {
@@ -46,7 +44,7 @@ else
     @if (!Model.UnitsInGroup.Any())
     {
         <p>This UnitGroup is empty.</p>
-        <hr />
+        <hr/>
 
         <a class="btn btn-warning" asp-controller="Units" asp-action="EditUnit" asp-route-groupId="@Model.CurrentGroup.Id">Create New Unit</a>
     }
@@ -56,18 +54,22 @@ else
             <div class="row">
                 @foreach (var unit in Model.UnitsInGroup)
                 {
+                    var capacityColor = unit.CurrentCapacity > unit.MaxCapacity ? "danger" : "success";
+                    
                     <div class="col-sm-4 py-2">
-                        <div class="card h-100">
+                        <div class="card h-100 border-@capacityColor">
                             <div class="card-body">
                                 <h3 class="card-title">@unit.Specification.Name</h3>
                                 <p class="card-text text-muted">@unit.TypeStr</p>
                                 <ul class="list-group list-group-flush" style="margin-bottom: 22px;">
-                                    <li class="list-group-item">Capacity @unit.CurrentCapacity / @unit.MaxCapacity</li>
+                                    <li class="list-group-item text-@capacityColor">Capacity @unit.CurrentCapacity / @unit.MaxCapacity</li>
                                     <li class="list-group-item">Dapibus ac facilisis in</li>
                                     <li class="list-group-item">Vestibulum at eros</li>
                                 </ul>
                                 <a asp-action="EditUnit" asp-route-groupId="@Model.CurrentGroup.Id" asp-route-unitId="@unit.Id"
-                                   class="btn btn-outline-dark" style="position: relative; bottom: 0px; width: 100%">Edit Unit</a>
+                                   class="btn btn-outline-dark" style="position: relative; bottom: 0px; width: 100%">
+                                    Edit Unit
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,47 @@
+@model List<BLL.DTOs.MonthlyCostDTO> 
+
+@{
+    ViewData["Title"] = "Monthly Costs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3></h3>
+
+<div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+    @foreach (var cost in Model)
+    {
+        
+    }
+  
+    <a href="#" class="list-group-item list-group-item-action list-group-item-primary">This is a primary list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">This is a secondary list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-success">This is a success list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-danger">This is a danger list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-warning">This is a warning list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-info">This is a info list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-light">This is a light list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-dark">This is a dark list group item</a>
+</div>
+
+<div class="container">
+<div class="row">
+    <div class='col-sm-6'>
+        <div class="form-group">
+            <div class='input-group date' id='datetimepicker3'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+         $(function () {
+             $('#datetimepicker3').datetimepicker({
+                 format: 'LT'
+             });
+         });
+      </script>
+</div>
+</div>
