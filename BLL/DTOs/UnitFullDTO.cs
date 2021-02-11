@@ -21,5 +21,7 @@ namespace BLL.DTOs
         public virtual Specification Specification { get; set; }
 
         public string? Note => Specification.Note;
+
+        public int MonthlyIncome { get; set; }
     }
 }

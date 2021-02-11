@@ -20,9 +20,9 @@ namespace WebMVC.Controllers
     {
         private readonly IUnitGroupFacade _ugFacade;
         private readonly IUnitFacade _unitFacade;
-        private readonly IMonthlyCostFacade _monthlyCostFacade;
+        private readonly ICostFacade _monthlyCostFacade;
 
-        public UnitsController(IUnitGroupFacade ugFacade, IUnitFacade unitFacade, IMonthlyCostFacade monthlyCostFacade)
+        public UnitsController(IUnitGroupFacade ugFacade, IUnitFacade unitFacade, ICostFacade monthlyCostFacade)
         {
             this._ugFacade = ugFacade;
             this._unitFacade = unitFacade;
@@ -194,15 +194,15 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> MonthlyCosts(int unitId)
+        public async Task<IActionResult> Costs(int unitId)
         {
             // TODO filter by date
             var fromDate = DateTime.MinValue;
             var toDate = DateTime.MaxValue;
 
-            var monthlyCosts = await _monthlyCostFacade.GetMonthlyCostsByUnitIdAsync<MonthlyCostDTO>(unitId, fromDate, toDate);
+            var costs = await _monthlyCostFacade.GetCostsByUnitIdAsync<CostDTO>(unitId, fromDate, toDate);
 
-            return View(monthlyCosts);
+            return View(costs);
         }
 
         public async Task<FileResult> OpenContract(int id)

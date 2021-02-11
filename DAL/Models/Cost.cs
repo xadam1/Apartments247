@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models
 {
-    public class MonthlyCost : BaseEntity
+    public class Cost : BaseEntity
     {
         [MaxLength(64)]
         public string Name { get; set; }

@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class MonthlyCostService : IMonthlyCostService
+    public class CostService : ICostService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public MonthlyCostService(IUnitOfWork unitOfWork, IMapper mapper)
+        public CostService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<List<T>> GetMonthlyCostsByUnitIdAsync<T>(int id, DateTime fromDate, DateTime toDate)
+        public async Task<List<T>> GetCostsByUnitIdAsync<T>(int id, DateTime fromDate, DateTime toDate)
         {
-            var query = _unitOfWork.MonthlyCostsQuery
+            var query = _unitOfWork.CostQuery
                 .FilterByUnitId(id)
                 .FilterByDate(fromDate, toDate);
 

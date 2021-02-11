@@ -28,6 +28,7 @@ namespace DAL.Extras
             #endregion
 
             #region Address
+            /*
             builder.Entity<Address>().HasData
             (
                 new Address()
@@ -148,6 +149,8 @@ namespace DAL.Extras
                     Zip = "44 55"
                 }
             );
+            */
+
             #endregion
 
             #region Equipment
@@ -207,6 +210,7 @@ namespace DAL.Extras
             #endregion
 
             #region Specification
+            /*
             builder.Entity<Specification>().HasData
             (
                 new Specification()
@@ -314,9 +318,11 @@ namespace DAL.Extras
                     AddressId = 13
                 }
             );
+            */
             #endregion
 
             #region User
+            /*
             builder.Entity<User>().HasData
             (
                 new User()
@@ -368,9 +374,11 @@ namespace DAL.Extras
                     Email = "filip@gmail.com"
                 }
             );
+            */
             #endregion
 
             #region UnitGroups
+            /*
             builder.Entity<UnitGroup>().HasData
             (
                 // Tomčiho majetek
@@ -402,6 +410,7 @@ namespace DAL.Extras
                     UserId = 4
                 }
             );
+            */
             #endregion
 
             #region UnitType
@@ -451,6 +460,7 @@ namespace DAL.Extras
             #endregion
 
             #region Units
+            /*
             builder.Entity<Unit>().HasData
             (
                 new Unit()
@@ -544,9 +554,11 @@ namespace DAL.Extras
                     UnitGroupId = 1
                 }
             );
+            */
             #endregion
 
             #region Photo
+            /*
             builder.Entity<Photo>().HasData
             (
                 new Photo()
@@ -631,12 +643,14 @@ namespace DAL.Extras
                     UnitId = 9
                 }
             );
+            */
             #endregion
 
-            #region MonthlyCost
-            builder.Entity<MonthlyCost>().HasData
+            #region Cost
+            /*
+            builder.Entity<Cost>().HasData
             (
-                new MonthlyCost
+                new Cost
                 {
                     Id = 1,
                     Name = "Nájem",
@@ -645,7 +659,7 @@ namespace DAL.Extras
                     Date = DateTime.Now,
                     UnitId = 1
                 },
-                new MonthlyCost
+                new Cost
                 {
                     Id = 2,
                     Name = "Podnájem",
@@ -654,7 +668,7 @@ namespace DAL.Extras
                     Date = DateTime.Now,
                     UnitId = 2
                 },
-                new MonthlyCost
+                new Cost
                 {
                     Id = 3,
                     Name = "Cena za vodu",
@@ -663,7 +677,7 @@ namespace DAL.Extras
                     Date = DateTime.Now,
                     UnitId = 3
                 },
-                new MonthlyCost
+                new Cost
                 {
                     Id = 4,
                     Name = "Cena za elektřinu",
@@ -672,7 +686,7 @@ namespace DAL.Extras
                     Date = DateTime.Now,
                     UnitId = 4
                 },
-                new MonthlyCost
+                new Cost
                 {
                     Id = 5,
                     Name = "Oprava pračky",
@@ -681,7 +695,7 @@ namespace DAL.Extras
                     Date = DateTime.Now,
                     UnitId = 5
                 },
-                new MonthlyCost
+                new Cost
                 {
                     Id = 6,
                     Name = "Nová televize",
@@ -690,7 +704,7 @@ namespace DAL.Extras
                     Date = DateTime.Now,
                     UnitId = 6
                 },
-                new MonthlyCost
+                new Cost
                 {
                     Id = 7,
                     Name = "Výmalba obyvacího pokoje",
@@ -699,7 +713,7 @@ namespace DAL.Extras
                     Date = DateTime.Now,
                     UnitId = 7
                 },
-                new MonthlyCost
+                new Cost
                 {
                     Id = 8,
                     Name = "Přestavba kuchyně",
@@ -708,7 +722,7 @@ namespace DAL.Extras
                     Date = DateTime.Now,
                     UnitId = 8
                 },
-                new MonthlyCost
+                new Cost
                 {
                     Id = 9,
                     Name = "Nová varna na perník",
@@ -717,7 +731,7 @@ namespace DAL.Extras
                     Date = DateTime.Now,
                     UnitId = 9
                 },
-                new MonthlyCost
+                new Cost
                 {
                     Id = 10,
                     Name = "Televizní kanály pro dospělé",
@@ -726,7 +740,7 @@ namespace DAL.Extras
                     Date = DateTime.Now,
                     UnitId = 1
                 },
-                new MonthlyCost
+                new Cost
                 {
                     Id = 11,
                     Name = "Zápasy s dětskými otroky",
@@ -736,9 +750,11 @@ namespace DAL.Extras
                     UnitId = 2
                 }
             );
+            */
             #endregion
 
             #region UnitEquipment
+            /*
             builder.Entity<UnitEquipment>().HasData
             (
                 new UnitEquipment
@@ -820,9 +836,11 @@ namespace DAL.Extras
                     EquipmentId = 8
                 }
             );
+            */
             #endregion
 
             #region Contract
+            /*
             builder.Entity<Contract>().HasData
             (
                 new Contract
@@ -832,6 +850,7 @@ namespace DAL.Extras
                     Content = null
                 }
             );
+            */
             #endregion
         }
     }

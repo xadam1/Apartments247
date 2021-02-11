@@ -16,7 +16,7 @@ namespace Infrastructure
         IRepository<UnitType> UnitTypeRepository { get; }
         IRepository<User> UserRepository { get; }
         IRepository<Color> ColorRepository { get; }
-        IRepository<MonthlyCost> MonthlyCostRepository { get; }
+        IRepository<Cost> CostRepository { get; }
 
         // Methods
         Task CommitAsync();
@@ -27,6 +27,6 @@ namespace Infrastructure
         UserQuery UserQuery { get; }
         UsersUnitGroupsWithUnitsQuery UsersUnitGroupsWithUnitsQuery { get; }
         UnitsWithUnitGroupsQuery UnitsWithUnitGroupsQuery { get; }
-        MonthlyCostsQuery MonthlyCostsQuery { get; }
+        CostQuery CostQuery { get; }
     }
 }

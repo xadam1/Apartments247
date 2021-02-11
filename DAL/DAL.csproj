@@ -5,17 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20210111163605_JoiningTableUnitEquipmentCreated.cs" />
-    <Compile Remove="Migrations\20210111163605_JoiningTableUnitEquipmentCreated.Designer.cs" />
-    <Compile Remove="Migrations\20210111164659_JoiningTableUnitEquipmentCreated.cs" />
-    <Compile Remove="Migrations\20210111164659_JoiningTableUnitEquipmentCreated.Designer.cs" />
-    <Compile Remove="Migrations\20210202135821_ContractTableCreated.cs" />
-    <Compile Remove="Migrations\20210202135821_ContractTableCreated.Designer.cs" />
-    <Compile Remove="Migrations\20210202140827_ContractTableCreated.cs" />
-    <Compile Remove="Migrations\20210202140827_ContractTableCreated.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />

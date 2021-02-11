@@ -4,7 +4,7 @@ using System;
 
 namespace BLL.DTOs
 {
-    public class MonthlyCostDTO
+    public class CostDTO
     {
         public int Id { get; set; }
 

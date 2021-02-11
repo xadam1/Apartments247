@@ -11,7 +11,19 @@ namespace DAL
         {
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+
+        public DbSet<Color> Colors { get; set; }
+
+        public DbSet<Contract> Contracts { get; set; }
+
+        public DbSet<Cost> Costs { get; set; }
+
+        public DbSet<Equipment> Equipments { get; set; }
+
+        public DbSet<Photo> Photos { get; set; }
+
+        public DbSet<Specification> Specifications { get; set; }
 
         public DbSet<Unit> Units { get; set; }
 
@@ -19,11 +31,7 @@ namespace DAL
 
         public DbSet<UnitType> UnitTypes { get; set; }
 
-        public DbSet<Specification> Specifications { get; set; }
-
-        public DbSet<Equipment> Equipment { get; set; }
-
-        public DbSet<Color> Colors { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -51,6 +59,11 @@ namespace DAL
                 .WithOne()
                 .HasForeignKey(photo => photo.UnitId);
 
+            modelBuilder.Entity<Unit>()
+                .HasOne(u => u.UnitGroup)
+                .WithMany(ug => ug.Units)
+                .HasForeignKey(u => u.UnitGroupId);
+
 
             // UnitEquipment
             modelBuilder.Entity<UnitEquipment>()
@@ -71,10 +84,10 @@ namespace DAL
                 .HasForeignKey(photo => photo.UnitId);
 
 
-            // MonthlyCost
-            modelBuilder.Entity<MonthlyCost>()
+            // Cost
+            modelBuilder.Entity<Cost>()
                 .HasOne(monthlyCost => monthlyCost.Unit)
-                .WithMany(unit => unit.MonthlyCosts)
+                .WithMany(unit => unit.Costs)
                 .HasForeignKey(monthlyCost => monthlyCost.UnitId);
 
 
@@ -94,12 +107,6 @@ namespace DAL
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
-
-            modelBuilder.Entity<Unit>()
-                .HasOne(u => u.UnitGroup)
-                .WithMany(ug => ug.Units)
-                .HasForeignKey(u => u.UnitGroupId);
 
             modelBuilder.Seed();
         }

@@ -17,12 +17,14 @@ namespace DAL.Models
         public int UnitGroupId { get; set; }
         public virtual UnitGroup UnitGroup { get; set; }
 
+        public int MonthlyIncome { get; set; }
+
         public int ContractId { get; set; }
         public virtual Contract Contract { get; set; }
 
         // Collections
         public virtual ICollection<Photo> Photos { get; set; }
         public virtual ICollection<UnitEquipment> UnitEquipments { get; set; }
-        public virtual ICollection<MonthlyCost> MonthlyCosts { get; set; }
+        public virtual ICollection<Cost> Costs { get; set; }
     }
 }
