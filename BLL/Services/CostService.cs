@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DAL.Models;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,11 @@ namespace BLL.Services
 
             var monthlyCosts = await query.ExecuteAsync();
             return _mapper.Map<List<T>>(monthlyCosts);
+        }
+
+        public void CreateCost<T>(T costDTO)
+        {
+            _unitOfWork.CostRepository.Add(_mapper.Map<Cost>(costDTO));
         }
     }
 }

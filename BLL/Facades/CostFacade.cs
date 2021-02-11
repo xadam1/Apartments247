@@ -17,6 +17,13 @@ namespace BLL.Facades
             _costService = costService;
         }
 
+        public async Task CreateCostAsync<T>(T costDTO)
+        {
+            _costService.CreateCost<T>(costDTO);
+
+            await _unitOfWork.CommitAsync();
+        }
+
         public async Task<List<T>> GetCostsByUnitIdAsync<T>(int id, DateTime fromDate, DateTime toDate)
         {
             return await _costService.GetCostsByUnitIdAsync<T>(id, fromDate, toDate);
