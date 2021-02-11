@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System.Threading.Tasks;
+using BLL.Facades;
+using BLL.DTOs;
 using WebAPI.Models;
 using WebMVC.Models;
 using WebMVC.Utils;
@@ -10,16 +13,27 @@ namespace WebMVC.Controllers
 {
     public class GroupsController : Controller
     {
-        [HttpGet]
-        public IActionResult MyGroups(int groupId)
+        private IUnitGroupFacade _unitGroupFacade;
+        
+        public GroupsController(IUnitGroupFacade unitGroupFacade)
         {
-            MyGroupsModel m = new MyGroupsModel()
+            this._unitGroupFacade = unitGroupFacade;
+        }
+        
+        
+        [HttpGet]
+        public async Task<IActionResult> MyGroups(int groupId)
+        {
+            Log.Called(nameof(MyGroups), $"GID [{groupId}]");
+
+            GroupsOverviewDTO groups = new GroupsOverviewDTO()
             {
                 UserId = UserInfoManager.UserId,
-                GroupId = groupId,
-                Groups = Utils.Utils.GetUnitGroupsByUserId(),
+                UnitGroups = 
+                    await _unitGroupFacade.GetUnitGroupsByUserIdAsync<UnitGroupNameUnitsDTO>(UserInfoManager.UserId)
             };
-            return View(m);
+            
+            return View(groups);
         }
 
         [HttpGet]

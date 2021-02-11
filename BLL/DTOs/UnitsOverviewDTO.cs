@@ -6,9 +6,9 @@ namespace BLL.DTOs
     {
         public int UserId { get; set; }
 
-        public IEnumerable<UnitGroupNameDto> Groups { get; set; }
+        public IEnumerable<UnitGroupNameDTO> Groups { get; set; }
 
-        public UnitGroupNameDto CurrentGroup { get; set; }
+        public UnitGroupNameDTO CurrentGroup { get; set; }
 
         public IEnumerable<UnitFullDTO> UnitsInGroup { get; set; }
     }

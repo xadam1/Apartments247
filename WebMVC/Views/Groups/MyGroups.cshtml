@@ -1,39 +1,55 @@
-﻿@model WebMVC.Models.MyGroupsModel
+﻿@model BLL.DTOs.GroupsOverviewDTO
 
 @{
     ViewData["Title"] = "Show Groups";
     ViewData["UserId"] = Model.UserId;
-    var userId = Model.UserId;
-    var groupId = Model.GroupId;
-    var groups = Model.Groups;
 }
 
-@if (groups.Length > 0)
+<style type="text/css">
+    .table th, .table td {
+        text-align: center;
+    }
+</style>
+
+
+@if (!Model.UnitGroups.Any())
 {
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Color</th>
-            <th>Note</th>
-        </tr>
-        <tr>
-            <td>
-                <a href="/Groups/EditGroup?userId=@userId&groupId=@groupId&createNewInt=1"><button type="button">Create new group</button></a>
-            </td>
-        </tr>
-        @foreach (var group in groups)
-        {
-            <tr>
-                <td>@group.Name</td>
-                <td>@group.Color</td>
-                <td>@group.Note</td>
-                <td><a href="/Groups/EditGroup?userId=@userId&groupId=@group.Id"><button type="button">Show details</button></a></td>
-            </tr>
-        }
-    </table>
+    <p>You don't have any UnitGroups.</p>
+    <hr/>
+
+    <a class="btn btn-warning" asp-controller="Groups" asp-action="EditGroup"
+       asp-route-createNewInt="1">
+        Create New UnitGroup
+    </a>
 }
 else
 {
-    <p>You don't have any Unit Groups.</p>
-    <p>Let's <a href="/Groups/EditGroup?userId=@userId&groupId=-1">create</a> one.</p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Units in Group</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var unitGroup in Model.UnitGroups)
+        {
+            <tr>
+                <th scope="row">@unitGroup.Id</th>
+                <td>@unitGroup.Name</td>
+                <td>@unitGroup.Units.Count()</td>
+                <td>
+                    <a class="btn btn-warning" asp-controller="Groups" asp-action="EditGroup"
+                       asp-route-groupId="@unitGroup.Id">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+        }
+        
+        </tbody>
+    </table>
 }
