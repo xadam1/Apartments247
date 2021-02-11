@@ -54,7 +54,7 @@ else
             <div class="row">
                 @foreach (var unit in Model.UnitsInGroup)
                 {
-                    var capacityColor = unit.CurrentCapacity > unit.MaxCapacity ? "danger" : "success";
+                    var capacityColor = unit.CurrentCapacity >= unit.MaxCapacity ? "danger" : "success";
                     
                     <div class="col-sm-4 py-2">
                         <div class="card h-100 border-@capacityColor">
@@ -62,8 +62,8 @@ else
                                 <h3 class="card-title">@unit.Specification.Name</h3>
                                 <p class="card-text text-muted">@unit.TypeStr</p>
                                 <ul class="list-group list-group-flush" style="margin-bottom: 22px;">
-                                    <li class="list-group-item text-@capacityColor">Capacity @unit.CurrentCapacity / @unit.MaxCapacity</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item text-@capacityColor">Capacity: @unit.CurrentCapacity/@unit.MaxCapacity</li>
+                                    <li class="list-group-item">Monthly Income: @unit.MonthlyIncome,-</li>
                                     <li class="list-group-item">Vestibulum at eros</li>
                                 </ul>
                                 <a asp-action="EditUnit" asp-route-groupId="@Model.CurrentGroup.Id" asp-route-unitId="@unit.Id"

@@ -22,6 +22,8 @@ namespace BLL.DTOs
 
         public string? Note => Specification.Note;
 
+        public Contract Contract { get; set; }
+
         public int MonthlyIncome { get; set; }
     }
 }

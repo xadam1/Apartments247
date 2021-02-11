@@ -18,15 +18,20 @@ namespace WebMVC.Controllers
 {
     public class UnitsController : Controller
     {
+        private readonly IColorFacade _colorFacade;
+        private readonly ICostFacade _monthlyCostFacade;
         private readonly IUnitGroupFacade _ugFacade;
         private readonly IUnitFacade _unitFacade;
-        private readonly ICostFacade _monthlyCostFacade;
+        private readonly IUnitTypeFacade _unitTypeFacade;
 
-        public UnitsController(IUnitGroupFacade ugFacade, IUnitFacade unitFacade, ICostFacade monthlyCostFacade)
+        public UnitsController(IUnitGroupFacade ugFacade, IUnitFacade unitFacade,
+            ICostFacade monthlyCostFacade, IColorFacade colorFacade, IUnitTypeFacade unitTypeFacade)
         {
-            this._ugFacade = ugFacade;
-            this._unitFacade = unitFacade;
-            this._monthlyCostFacade = monthlyCostFacade;
+            _ugFacade = ugFacade;
+            _unitFacade = unitFacade;
+            _monthlyCostFacade = monthlyCostFacade;
+            _colorFacade = colorFacade;
+            _unitTypeFacade = unitTypeFacade;
         }
 
         [HttpGet]
@@ -66,30 +71,39 @@ namespace WebMVC.Controllers
             return View(dto);
         }
 
-        public IActionResult CreateUnit()
+        public async Task<IActionResult> CreateUnit(int groupId)
         {
             Log.Called(nameof(CreateUnit));
-            return View();
+
+            var dto = new CreateUnitDTO
+            {
+                Colors = await _colorFacade.GetColorsAsync<ColorDTO>(),
+                UnitGroups = await _ugFacade.GetUnitGroupNamesByUserId<UnitGroupNameDTO>(UserInfoManager.UserId),
+                UnitTypes = await _unitTypeFacade.GetUnitTypesAsync<UnitTypeDTO>(),
+                Unit = new UnitFullDTO()
+            };
+
+            return View(dto);
         }
+
 
         [HttpGet]
         public IActionResult EditUnit(int groupId, int unitId = -1)
         {
             Log.Called(nameof(EditUnit), $"groupID={groupId}, unitID={unitId}");
 
-            EditUnitModel m = new EditUnitModel()
+            var m = new EditUnitModel
             {
                 UserId = UserInfoManager.UserId,
                 GroupId = groupId,
                 UnitId = unitId,
                 Colors = Utils.Utils.GetColors(),
                 UnitTypes = Utils.Utils.GetUnitTypes(),
-                UnitGroups = Utils.Utils.GetUnitGroupNamesByUserId(),
+                UnitGroups = Utils.Utils.GetUnitGroupNamesByUserId()
             };
 
             if (unitId == -1)
-            {
-                m.Unit = new UnitWithSpecificationModel()
+                m.Unit = new UnitWithSpecificationModel
                 {
                     Id = -1,
                     Name = "Domeček lásky",
@@ -103,13 +117,10 @@ namespace WebMVC.Controllers
                     UnitTypeId = 6,
                     CurrentCapacity = 0,
                     MaxCapacity = 2,
-                    ContractName = "nezadáno",
+                    ContractName = "nezadáno"
                 };
-            }
             else
-            {
                 m.Unit = Utils.Utils.GetUnitById(unitId);
-            }
 
             return View(m);
         }
@@ -119,29 +130,29 @@ namespace WebMVC.Controllers
             int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
             string street, string number, string zip, IFormFile file)
         {
-            UnitDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
+            var unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
             var contract = GetContract(file, unit);
 
             if (unit == null)
             {
-                Address address = new Address()
+                var address = new Address
                 {
                     State = state ?? string.Empty,
                     City = city != null ? state : string.Empty,
                     Street = street != null ? state : string.Empty,
                     Number = number != null ? state : string.Empty,
-                    Zip = zip != null ? state : string.Empty,
+                    Zip = zip != null ? state : string.Empty
                 };
 
-                Specification spec = new Specification()
+                var spec = new Specification
                 {
                     Name = name ?? string.Empty,
                     ColorId = selectColor,
                     Address = address,
-                    Note = note ?? string.Empty,
+                    Note = note ?? string.Empty
                 };
 
-                unit = new UnitDTO()
+                unit = new UnitDTO
                 {
                     Specification = spec,
                     UnitGroupId = groupId,
@@ -178,19 +189,19 @@ namespace WebMVC.Controllers
                 await _unitFacade.UpdateUnitAsync(unitId, unit);
             }
 
-            return RedirectToAction("MyUnits", "Units", new { groupId = groupId, unitId = unitId });
+            return RedirectToAction("MyUnits", "Units", new {groupId, unitId});
         }
 
         [HttpGet]
         public IActionResult DeleteUnit(int groupId, int unitId)
         {
-            using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = client.GetAsync(ConnectionStrings.API_URL + $"DeleteUnit?unitId={unitId}").Result)
+            using (var client = new HttpClient())
+            using (var response = client.GetAsync(ConnectionStrings.API_URL + $"DeleteUnit?unitId={unitId}").Result)
             {
                 // Nothing to do
             }
 
-            return RedirectToAction("MyUnits", "Units", new { groupId = groupId });
+            return RedirectToAction("MyUnits", "Units", new {groupId});
         }
 
         [HttpGet]
@@ -218,10 +229,7 @@ namespace WebMVC.Controllers
         {
             var contract = new Contract();
 
-            if (file == null)
-            {
-                return unit?.Contract ?? contract;
-            }
+            if (file == null) return unit?.Contract ?? contract;
 
             using (var memoryStream = new MemoryStream())
             {

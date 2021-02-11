@@ -1,11 +1,122 @@
-﻿@model BLL.DTOs.UnitFullDTO
+﻿@model BLL.DTOs.CreateUnitDTO
 
 @{
     ViewData["Title"] = "Create Unit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form asp-controller="Units" asp-action="">
-   
+<h3>Create New Unit</h3>
 
+<form asp-controller="Units" asp-action="SaveUnit">
+    <div class="form-group">
+        <label for="ugSelect">In which unit group does this unit belong?</label>
+        <select id="ugSelect" name="groupId" class="custom-select custom-select-lg mb-3">
+            @foreach (var unitGroup in Model.UnitGroups)
+            {
+                <option id="unitGroup_@unitGroup.Id" value="@unitGroup.Id">@unitGroup.Name</option>
+            }
+        </select>
+    </div>
+
+    <hr/>
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" type="text" name="name" class="form-control"
+               placeholder="Byt č.7">
+    </div>
+
+    <div class="form-group">
+        <label for="uTypeSelect">What type of unit is this?</label>
+        <select id="uTypeSelect" name="unitTypeId" class="custom-select custom-select-lg mb-3">
+            @foreach (var unitType in Model.UnitTypes)
+            {
+                <option id="unitType_@unitType.Id" value="@unitType.Id">@unitType.Type</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="currentCapacity">Current Capacity</label>
+            <input type="number" class="form-control" id="currentCapacity" name="currentCapacity" min="0">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="currentCapacity">Maximal Capacity</label>
+            <input type="number" class="form-control" id="maxCapacity" name="maxCapacity" min="0">
+        </div>
+        
+        <div class="form-group offset-2 col-md-3">
+            <label for="selectColor">Color of Unit</label>
+            <select id="selectColor" name="colorId" class="custom-select custom-select-sm mb-3">
+                @foreach (var color in Model.Colors)
+                {
+                    <option id="color_@color.Id" value="@color.Id">@color.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    
+    <hr/>
+
+    <label>Address</label>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="street">Street</label>
+            <input id="street" type="text" name="street" class="form-control"
+                   placeholder="Boženy Němcové">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="streetNumber">Street Number</label>
+            <input id="streetNumber" type="text" name="streetNumber" class="form-control"
+                   placeholder="564/220a">
+        </div>
+        
+        <div class="offset-2">
+            <label>Contract</label>
+            <input readonly="readonly" type="text" id="contractName" hidden value="@Model.Unit?.Contract?.Name" />
+        
+            <div class="form-group">
+                <input type="file" class="form-group" name="file" id="contractFile" onchange="DisplayFilename()" />
+            </div>
+        
+            @if (Model?.Unit?.Contract?.Id > 0)
+            {
+                <div class="form-group">
+                    <button type="button" onclick="OpenContract()" class="btn btn-primary col-xs-12">Open contract</button>
+                </div>
+            }
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="city">City</label>
+            <input id="city" type="text" name="city" class="form-control"
+                   placeholder="Brno">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="zip">ZIP Code</label>
+            <input id="zip" type="text" name="zip" class="form-control"
+                   placeholder="635 01">
+        </div>
+
+        <div class="row offset-2 col-md-3 align-items-end" style="padding-bottom: 16px;">
+            <button class="btn btn-outline-success" style="width: 100%" type="submit">Create</button>
+        </div>
+    </div>
+    
 </form>
+
+
+<script>
+function OpenContract() {
+        @*link = document.getElementById("link").value;*@
+        window.open('/Units/OpenContract?id=@Model.Unit.Id', "_blank");
+    };
+
+function DisplayFilename() {
+uploadedFile = document.getElementById("contractFile").value.split("\\").pop();
+document.getElementById("contractFile").innerHTML = uploadedFile;
+}
+</script>
