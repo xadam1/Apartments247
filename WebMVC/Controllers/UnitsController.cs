@@ -35,12 +35,12 @@ namespace WebMVC.Controllers
             Log.Called(nameof(MyUnits), $"groupID={unitGroupID}");
 
             var units = new List<UnitFullDTO>();
-            var currentGroup = new UnitGroupNameDto();
-            var groups = await _ugFacade.GetUnitGroupsByUserIdAsync<UnitGroupNameDto>(UserInfoManager.UserId);
+            var currentGroup = new UnitGroupNameDTO();
+            var groups = await _ugFacade.GetUnitGroupsByUserIdAsync<UnitGroupNameDTO>(UserInfoManager.UserId);
 
             if (unitGroupID != 0)
             {
-                currentGroup = await _ugFacade.GetUnitGroupByIdAsync<UnitGroupNameDto>(unitGroupID);
+                currentGroup = await _ugFacade.GetUnitGroupByIdAsync<UnitGroupNameDTO>(unitGroupID);
                 units = await _unitFacade.GetUnitsByGroupIdAsync<UnitFullDTO>(unitGroupID);
             }
             else
