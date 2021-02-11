@@ -30,7 +30,10 @@ else
             <th scope="col">ID</th>
             <th scope="col">Name</th>
             <th scope="col">Units in Group</th>
-            <th scope="col"></th>
+            <th scope="col">
+                <a class="btn btn-outline-success text-dark" asp-controller="Groups" asp-action="EditGroup"
+                   asp-route-createNewInt="1">Create New UnitGroup</a>
+            </th>
         </tr>
         </thead>
         <tbody>
