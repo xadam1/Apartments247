@@ -22,8 +22,13 @@ namespace WebMVC.Controllers
 
         public IActionResult Index()
         {
-            if (UserInfoManager.UserId == Constants.NO_ID) 
-                UserInfoManager.SetUserIdByUsername(User.Identity.Name);
+            if (UserInfoManager.UserId == Constants.NO_ID)  // not logged in
+            {
+                if (User.Identity.Name != null) // autologin
+                {
+                    UserInfoManager.SetUserIdByUsername(User.Identity.Name);
+                }
+            }
 
             return RedirectToAction("About", "Home");
         }

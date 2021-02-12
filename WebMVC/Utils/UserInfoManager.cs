@@ -37,7 +37,7 @@ namespace WebMVC.Utils
         {
             using (var dbContext = new ApartmentsDbContext())
             {
-                var user = dbContext.Users.First(usr => usr.Username == username);
+                var user = dbContext.Users.FirstOrDefault(usr => usr.Username == username);
                 UserId = user.Id;
             }
         }
