@@ -1,13 +1,14 @@
-﻿using DAL;
+﻿using System.Linq;
+using DAL;
+using DAL.Extras;
 using DAL.Models;
-using System.Linq;
 using WebMVC.Areas.Identity.Data;
 
 namespace WebMVC.Utils
 {
     public static class UserInfoManager
     {
-        public static int UserId { get; private set; }
+        public static int UserId { get; private set; } = Constants.NO_ID;
 
         public static void SetUserIdByApplicationUser(ApplicationUser applicationUser)
         {
@@ -15,7 +16,7 @@ namespace WebMVC.Utils
 
             //TODO Metoda z repa, pokud zustanou dve DB
             var user = dbContext.Users.FirstOrDefault(usr => usr.Username == applicationUser.UserName);
-            if (user == null)   // does not exist yet
+            if (user == null) // does not exist yet
             {
                 user = new User
                 {
@@ -30,6 +31,15 @@ namespace WebMVC.Utils
             }
 
             UserId = user.Id;
+        }
+
+        public static void SetUserIdByUsername(string username)
+        {
+            using (var dbContext = new ApartmentsDbContext())
+            {
+                var user = dbContext.Users.First(usr => usr.Username == username);
+                UserId = user.Id;
+            }
         }
     }
 }

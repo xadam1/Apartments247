@@ -13,7 +13,7 @@ namespace WebMVC.Controllers
 {
     public class GroupsController : Controller
     {
-        private IUnitGroupFacade _unitGroupFacade;
+        private readonly IUnitGroupFacade _unitGroupFacade;
         
         public GroupsController(IUnitGroupFacade unitGroupFacade)
         {
@@ -36,6 +36,14 @@ namespace WebMVC.Controllers
             return View(groups);
         }
 
+        [HttpGet]
+        public IActionResult CreateGroup()
+        {
+            Log.Called(nameof(CreateGroup), UserInfoManager.UserId.ToString());
+            
+            return null;
+        }
+        
         [HttpGet]
         public IActionResult EditGroup(int groupId, int createNewInt)
         {

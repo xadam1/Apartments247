@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -23,7 +22,8 @@ namespace WebMVC.Controllers
         private readonly IUnitFacade _unitFacade;
         private readonly IUnitTypeFacade _unitTypeFacade;
 
-        public UnitsController(IUnitGroupFacade ugFacade, IUnitFacade unitFacade, IColorFacade colorFacade, IUnitTypeFacade unitTypeFacade)
+        public UnitsController(IUnitGroupFacade ugFacade, IUnitFacade unitFacade,
+            IColorFacade colorFacade, IUnitTypeFacade unitTypeFacade)
         {
             _ugFacade = ugFacade;
             _unitFacade = unitFacade;
@@ -68,10 +68,10 @@ namespace WebMVC.Controllers
             return View(dto);
         }
 
+        [HttpGet]
         public async Task<IActionResult> CreateUnit(int groupId)
         {
             Log.Called(nameof(CreateUnit));
-
 
             var dto = new CreateUnitDTO
             {
@@ -123,7 +123,6 @@ namespace WebMVC.Controllers
 
             return RedirectToAction("MyUnits", "Units", new {groupId});
         }
-
 
         [HttpGet]
         public IActionResult EditUnit(int groupId, int unitId = -1)
