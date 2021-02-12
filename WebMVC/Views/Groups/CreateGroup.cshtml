@@ -1,0 +1,78 @@
+@model BLL.DTOs.CreateGroupDTO
+
+@{
+    ViewData["Title"] = "Create Group";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Create New UnitGroup</h3>
+
+
+<form asp-controller="Groups" asp-action="CreateGroup">
+    <div class="form-row">
+        <div class="form-group col-md-7">
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" class="form-control"
+                   placeholder="Byty - Jiráskova ul.">
+        </div>
+
+        <div class="form-group offset-2 col-md-3">
+            <label for="selectColor">Color of Unit</label>
+            <select id="selectColor" name="colorId" class="custom-select custom-select mb-3">
+                @foreach (var color in Model.Colors)
+                {
+                    <option id="color_@color.Id" value="@color.Id">@color.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <hr/>
+    <label class="offset-3">Address</label>
+    <div class="form-row justify-content-center align-items-center">
+        <div class="form-group col-md-5">
+            <label for="street">Street</label>
+            <input id="street" type="text" name="street" class="form-control"
+                   placeholder="Jiráskova ulice">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="streetNumber">Street Number</label>
+            <input id="streetNumber" type="text" name="streetNumber" class="form-control"
+                   placeholder="420/11b">
+        </div>
+    </div>
+
+    <div class="form-row justify-content-center align-items-center">
+        <div class="form-group col-md-5">
+            <label for="city">City</label>
+            <input id="city" type="text" name="city" class="form-control"
+                   placeholder="Brno">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="zip">ZIP Code</label>
+            <input id="zip" type="text" name="zip" class="form-control"
+                   placeholder="626 08">
+        </div>
+    </div>
+
+    <div class="form-row justify-content-center align-items-center">
+        <div class="form-group col-md-8">
+            <label for="state">State</label>
+            <input id="state" type="text" name="state" class="form-control"
+                   placeholder="Česká Republika">
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="form-row justify-content-center align-items-center">
+        <div class="form-group col-md-5">
+            <label for="textArea">Note</label>
+            <textarea class="form-control" id="textArea" rows="3" name="noteText"></textarea>
+        </div>
+        
+        <div class="form-group offset-1">
+            <button class="btn btn-outline-warning" type="submit">Create Group</button>
+        </div>
+    </div>
+</form>

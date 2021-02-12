@@ -17,8 +17,7 @@
     <p>You don't have any UnitGroups.</p>
     <hr/>
 
-    <a class="btn btn-warning" asp-controller="Groups" asp-action="EditGroup"
-       asp-route-createNewInt="1">
+    <a class="btn btn-warning" asp-controller="Groups" asp-action="CreateGroup">
         Create New UnitGroup
     </a>
 }
@@ -31,8 +30,9 @@ else
             <th scope="col">Name</th>
             <th scope="col">Units in Group</th>
             <th scope="col">
-                <a class="btn btn-outline-success text-dark" asp-controller="Groups" asp-action="EditGroup"
-                   asp-route-createNewInt="1">Create New UnitGroup</a>
+                <a class="btn btn-outline-success text-dark" asp-controller="Groups" asp-action="CreateGroup">
+                    Create New UnitGroup
+                </a>
             </th>
         </tr>
         </thead>
@@ -52,7 +52,7 @@ else
                 </td>
             </tr>
         }
-        
+
         </tbody>
     </table>
 }

@@ -12,11 +12,12 @@
     <p>You don't have any UnitGroups.</p>
     <hr/>
 
-    <a class="btn btn-warning" asp-controller="Groups" asp-action="EditGroup"
-       asp-route-createNewInt="1">
-        Create New UnitGroup
+    <a class="btn btn-warning" asp-controller="Units" asp-action="CreateUnit"
+       asp-route-groupId="@Model.CurrentGroup.Id">
+        Create New Unit
     </a>
 }
+
 else
 {
     <label>Choose UnitGroup</label>
