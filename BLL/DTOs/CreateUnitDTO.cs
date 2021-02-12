@@ -6,6 +6,8 @@ namespace BLL.DTOs
     {
         public UnitFullDTO Unit { get; set; }
 
+        public UnitGroupNameDTO SelectedUnitGroup { get; set; }
+        
         public IEnumerable<UnitGroupNameDTO> UnitGroups { get; set; }
 
         public IEnumerable<UnitTypeDTO> UnitTypes { get; set; }

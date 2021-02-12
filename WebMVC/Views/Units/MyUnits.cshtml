@@ -20,18 +20,23 @@
 else
 {
     <label>Choose UnitGroup</label>
-    <select id="selectGroupList" class="custom-select custom-select-lg mb-3" onchange="changeGroup()">
-        @foreach (var group in Model.Groups)
-        {
-            var selectedOption = group.Id == Model.CurrentGroup.Id;
+    <div class="row">
+        <select id="selectGroupList" class="custom-select custom-select-lg col-md-8" onchange="changeGroup()">
+            @foreach (var group in Model.Groups)
+            {
+                var selectedOption = group.Id == Model.CurrentGroup.Id;
 
-            <option selected="@selectedOption" id="@group.Id" value="@group.Id">@group.Name</option>
-        }
-    </select>
+                <option selected="@selectedOption" id="@group.Id" value="@group.Id">@group.Name</option>
+            }
+        </select>
 
-    <br/>
+        <a class="btn btn-warning offset-2 col-md-2" asp-controller="Units" asp-action="CreateUnit"
+           asp-route-groupId="@Model.CurrentGroup.Id" style="margin-bottom: 8px; margin-top: 8px;">
+            Create New Unit
+        </a>
+    </div>
+
     <hr/>
-    <br/>
 
     <script>
         function changeGroup() {
@@ -55,7 +60,7 @@ else
                 @foreach (var unit in Model.UnitsInGroup)
                 {
                     var capacityColor = unit.CurrentCapacity >= unit.MaxCapacity ? "danger" : "success";
-                    
+
                     <div class="col-sm-4 py-2">
                         <div class="card h-100 border-@capacityColor">
                             <div class="card-body">

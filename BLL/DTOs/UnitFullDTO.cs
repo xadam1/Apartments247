@@ -5,7 +5,7 @@ namespace BLL.DTOs
     public class UnitFullDTO
     {
         public int Id { get; set; }
-
+        
         public int MaxCapacity { get; set; }
 
         public int CurrentCapacity { get; set; }

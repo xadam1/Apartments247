@@ -75,11 +75,13 @@ namespace WebMVC.Controllers
         {
             Log.Called(nameof(CreateUnit));
 
+
             var dto = new CreateUnitDTO
             {
                 Colors = await _colorFacade.GetColorsAsync<ColorDTO>(),
                 UnitGroups = await _ugFacade.GetUnitGroupNamesByUserId<UnitGroupNameDTO>(UserInfoManager.UserId),
                 UnitTypes = await _unitTypeFacade.GetUnitTypesAsync<UnitTypeDTO>(),
+                SelectedUnitGroup = await _ugFacade.GetUnitGroupByIdAsync<UnitGroupNameDTO>(groupId),
                 Unit = new UnitFullDTO()
             };
 

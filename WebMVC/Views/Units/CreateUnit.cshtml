@@ -13,11 +13,14 @@
         <select id="ugSelect" name="groupId" class="custom-select custom-select-lg mb-3">
             @foreach (var unitGroup in Model.UnitGroups)
             {
-                <option id="unitGroup_@unitGroup.Id" value="@unitGroup.Id">@unitGroup.Name</option>
+                var selectedOption = unitGroup.Id == Model?.SelectedUnitGroup.Id;
+                
+                <option selected="@selectedOption" id="unitGroup_@unitGroup.Id" 
+                        value="@unitGroup.Id">@unitGroup.Name</option>
             }
         </select>
     </div>
-
+    
     <hr/>
 
     <div class="form-group">
