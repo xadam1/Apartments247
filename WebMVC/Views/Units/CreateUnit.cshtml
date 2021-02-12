@@ -13,7 +13,7 @@
         <select id="ugSelect" name="groupId" class="custom-select custom-select-lg mb-3">
             @foreach (var unitGroup in Model.UnitGroups)
             {
-                var selectedOption = unitGroup.Id == Model?.SelectedUnitGroup.Id;
+                var selectedOption = unitGroup.Id == Model.SelectedUnitGroup?.Id;
                 
                 <option selected="@selectedOption" id="unitGroup_@unitGroup.Id" 
                         value="@unitGroup.Id">@unitGroup.Name</option>
@@ -23,22 +23,29 @@
     
     <hr/>
 
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input id="name" type="text" name="name" class="form-control"
-               placeholder="Byt č.7">
-    </div>
+    <div class="form-row">
+        <div class="form-group col-md-7">
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" class="form-control"
+                   placeholder="Byt č.7">
+        </div>
 
-    <div class="form-group">
-        <label for="uTypeSelect">What type of unit is this?</label>
-        <select id="uTypeSelect" name="unitTypeId" class="custom-select custom-select-lg mb-3">
-            @foreach (var unitType in Model.UnitTypes)
-            {
-                <option id="unitType_@unitType.Id" value="@unitType.Id">@unitType.Type</option>
-            }
-        </select>
+        <div class="form-group col-md-5">
+            <label for="uTypeSelect">What type of unit is this?</label>
+            <select id="uTypeSelect" name="unitTypeId" class="custom-select custom-select mb-3">
+                @foreach (var unitType in Model.UnitTypes)
+                {
+                    <option id="unitType_@unitType.Id" value="@unitType.Id">@unitType.Type</option>
+                }
+            </select>
+        </div>
     </div>
-
+    
+    <div class="form-group">
+        <label for="textArea">Note</label>
+        <textarea class="form-control" id="textArea" rows="3" name="noteText"></textarea>
+    </div>
+    
     <div class="form-row">
         <div class="form-group col-md-3">
             <label for="currentCapacity">Current Capacity</label>
@@ -49,9 +56,9 @@
             <input type="number" class="form-control" id="maxCapacity" name="maxCapacity" min="0">
         </div>
         
-        <div class="form-group offset-2 col-md-3">
+        <div class="form-group offset-2 col-md-4">
             <label for="selectColor">Color of Unit</label>
-            <select id="selectColor" name="colorId" class="custom-select custom-select-sm mb-3">
+            <select id="selectColor" name="colorId" class="custom-select custom-select mb-3">
                 @foreach (var color in Model.Colors)
                 {
                     <option id="color_@color.Id" value="@color.Id">@color.Name</option>
@@ -61,7 +68,7 @@
     </div>
     
     <hr/>
-
+    
     <label>Address</label>
     <div class="form-row">
         <div class="form-group col-md-3">
@@ -104,7 +111,7 @@
                    placeholder="635 01">
         </div>
 
-        <div class="row offset-2 col-md-3 align-items-end" style="padding-bottom: 16px;">
+        <div class="row offset-2 col-md-4 align-items-end" style="padding-bottom: 16px;">
             <button class="btn btn-outline-success" style="width: 100%" type="submit">Create</button>
         </div>
     </div>
