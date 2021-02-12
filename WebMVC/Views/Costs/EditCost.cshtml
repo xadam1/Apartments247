@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditCost">
+        <form asp-action="EditCostInternal">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Name</label>
@@ -32,6 +32,7 @@
                 <span asp-validation-for="@Model.CostDTO.Date" class="text-danger"></span>
             </div>
             <input type="hidden" name="unitId" asp-for="@Model.CostDTO.UnitId" />
+            <input type="hidden" name="costId" asp-for="@Model.CostDTO.Id" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

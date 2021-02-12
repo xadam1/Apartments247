@@ -39,14 +39,7 @@ namespace WebMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCost(int unitId, string name, int price, CostType costType, DateTime date)
         {
-            var costDTO = new CostDTO
-            {
-                UnitId = unitId,
-                Name = name,
-                Price = price,
-                CostType = costType,
-                Date = date,
-            };
+            var costDTO = GetCostDTO(unitId, name, price, costType, date);
 
             await _costFacade.CreateCostAsync(costDTO);
 
@@ -65,6 +58,43 @@ namespace WebMVC.Controllers
             return View(costWithCostTypesDTO);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EditCostInternal(int costId, int unitId, string name, int price, CostType costType, DateTime date)
+        {
+            var costDTO = GetCostDTO(unitId, name, price, costType, date, costId);
+
+            await _costFacade.UpdateCostAsync(costId, costDTO);
+
+            return RedirectToAction(nameof(ShowCosts), new { unitId });
+        }
+
+        [HttpGet]
+        public IActionResult EditCost(int costId, int unitId, string name, int price, CostType costType, DateTime date)
+        {
+            var costWithCostTypesDTO = new CostWithCostTypesDTO
+            {
+                CostDTO = GetCostDTO(unitId, name, price, costType, date, costId),
+                CostTypes = GetCostTypes()
+            };
+
+            return View(costWithCostTypesDTO);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCost(int costId, int unitId)
+        {
+            // TODO delete
+            return RedirectToAction(nameof(ShowCosts), new { unitId });
+        }
+
+        [HttpGet]
+        public IActionResult DeleteCost(int costId, int unitId, string name, int price, CostType costType, DateTime date)
+        {
+            var costDTO = GetCostDTO(unitId, name, price, costType, date, costId);
+
+            return View(costDTO);
+        }
+        
         private List<SelectListItem> GetCostTypes()
         {
             var costTypes = new List<SelectListItem>();
@@ -82,59 +112,17 @@ namespace WebMVC.Controllers
             return costTypes;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> EditCost(int unitId, string name, int price, CostType costType, DateTime date)
+        private CostDTO GetCostDTO(int unitId, string name, int price, CostType costType, DateTime date, int costId=-1)
         {
-            /*var costDTO = new CostDTO();
-
-            await _costFacade.UpdateCostAsync(id, costDTO);*/
-
-            return RedirectToAction(nameof(ShowCosts), new { unitId });
-        }
-
-        [HttpGet]
-        public IActionResult EditCost(int costId)
-        {
-            // get cost
-            var cost = new CostDTO
-            {
-                UnitId = 3,
-                Price = 9,
-                CostType = DAL.Extras.CostType.Income,
-                Date = DateTime.Now,
-                Name = "caluj somar",
-            };
-
-            var costWithCostTypesDTO = new CostWithCostTypesDTO
-            {
-                CostDTO = cost,
-                CostTypes = GetCostTypes()
-            };
-
-            return View(costWithCostTypesDTO);
-        }
-
-        [HttpPost]
-        public IActionResult DeleteCost(int costId, int unitId)
-        {
-            // TODO delete
-            return RedirectToAction(nameof(ShowCosts), new { unitId });
-        }
-
-        [HttpGet]
-        public IActionResult DeleteCost(int costId, int unitId, string name, int price, CostType costType, DateTime date)
-        {
-            var costDTO = new CostDTO
+            return new CostDTO
             {
                 Id = costId,
-                Name = name,
+                UnitId = unitId,
                 Price = price,
                 CostType = costType,
                 Date = date,
-                UnitId = unitId
+                Name = name,
             };
-
-            return View(costDTO);
         }
     }
 }
