@@ -88,6 +88,45 @@ namespace WebMVC.Controllers
             return View(dto);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateUnit(int groupId, string name, int unitTypeId, string noteText,
+            int currentCapacity, int maxCapacity, int colorId, string street, string streetNumber,
+            string city, string zip, string state, IFormFile contractFile)
+        {
+            var address = new Address
+            {
+                State = state ?? string.Empty,
+                City = city ?? string.Empty,
+                Street = street ?? string.Empty,
+                Number = streetNumber ?? string.Empty,
+                Zip = zip ?? string.Empty
+            };
+
+            var spec = new Specification
+            {
+                Name = name ?? string.Empty,
+                Note = noteText ?? string.Empty,
+                ColorId = colorId,
+                Address = address
+            };
+
+            var unit = new UnitDTO
+            {
+                Specification = spec,
+                UnitGroupId = groupId,
+                UnitTypeId = unitTypeId,
+                CurrentCapacity = currentCapacity,
+                MaxCapacity = maxCapacity
+            };
+
+            var contract = GetContract(contractFile, unit);
+            unit.Contract = contract;
+
+            await _unitFacade.CreateUnitAsync(unit);
+
+            return RedirectToAction("MyUnits", "Units", new {groupId});
+        }
+
 
         [HttpGet]
         public IActionResult EditUnit(int groupId, int unitId = -1)

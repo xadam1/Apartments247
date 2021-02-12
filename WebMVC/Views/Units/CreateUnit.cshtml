@@ -7,7 +7,7 @@
 
 <h3>Create New Unit</h3>
 
-<form asp-controller="Units" asp-action="SaveUnit">
+<form asp-controller="Units" asp-action="CreateUnit">
     <div class="form-group">
         <label for="ugSelect">In which unit group does this unit belong?</label>
         <select id="ugSelect" name="groupId" class="custom-select custom-select-lg mb-3">
@@ -87,7 +87,7 @@
             <input readonly="readonly" type="text" id="contractName" hidden value="@Model.Unit?.Contract?.Name" />
         
             <div class="form-group">
-                <input type="file" class="form-group" name="file" id="contractFile" onchange="DisplayFilename()" />
+                <input type="file" class="form-group" name="contractFile" id="contractFile" onchange="DisplayFilename()" />
             </div>
         
             @if (Model?.Unit?.Contract?.Id > 0)
