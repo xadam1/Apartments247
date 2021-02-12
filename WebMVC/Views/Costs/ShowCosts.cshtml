@@ -51,9 +51,9 @@
             </td>
             <td>
                 <a asp-action="EditCost" asp-route-costId="@cost.Id" asp-route-unitId="@cost.UnitId" asp-route-name="@cost.Name" asp-route-price="@cost.Price" 
-                   asp-route-costType="@cost.CostType" asp-route-date="@cost.Date">Edit</a> |
+                   asp-route-costType="@cost.CostType" asp-route-date="@cost.Date.ToString("yyyy-MM-dd")">Edit</a> |
                 <a asp-action="DeleteCost" asp-route-costId="@cost.Id" asp-route-unitId="@cost.UnitId" asp-route-name="@cost.Name" asp-route-price="@cost.Price" 
-                   asp-route-costType="@cost.CostType" asp-route-date="@cost.Date">Delete</a>
+                   asp-route-costType="@cost.CostType" asp-route-date="@cost.Date.ToString("yyyy-MM-dd")">Delete</a>
             </td>
         </tr>
 }
