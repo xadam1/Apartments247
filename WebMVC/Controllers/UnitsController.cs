@@ -19,17 +19,14 @@ namespace WebMVC.Controllers
     public class UnitsController : Controller
     {
         private readonly IColorFacade _colorFacade;
-        private readonly ICostFacade _monthlyCostFacade;
         private readonly IUnitGroupFacade _ugFacade;
         private readonly IUnitFacade _unitFacade;
         private readonly IUnitTypeFacade _unitTypeFacade;
 
-        public UnitsController(IUnitGroupFacade ugFacade, IUnitFacade unitFacade,
-            ICostFacade monthlyCostFacade, IColorFacade colorFacade, IUnitTypeFacade unitTypeFacade)
+        public UnitsController(IUnitGroupFacade ugFacade, IUnitFacade unitFacade, IColorFacade colorFacade, IUnitTypeFacade unitTypeFacade)
         {
             _ugFacade = ugFacade;
             _unitFacade = unitFacade;
-            _monthlyCostFacade = monthlyCostFacade;
             _colorFacade = colorFacade;
             _unitTypeFacade = unitTypeFacade;
         }
@@ -243,18 +240,6 @@ namespace WebMVC.Controllers
             }
 
             return RedirectToAction("MyUnits", "Units", new {groupId});
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Costs(int unitId)
-        {
-            // TODO filter by date
-            var fromDate = DateTime.MinValue;
-            var toDate = DateTime.MaxValue;
-
-            var costs = await _monthlyCostFacade.GetCostsByUnitIdAsync<CostDTO>(unitId, fromDate, toDate);
-
-            return View(costs);
         }
 
         public async Task<FileResult> OpenContract(int id)
