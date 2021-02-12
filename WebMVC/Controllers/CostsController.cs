@@ -81,9 +81,10 @@ namespace WebMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteCost(int costId, int unitId)
+        public async Task<IActionResult> DeleteCost(int costId, int unitId)
         {
-            // TODO delete
+            await _costFacade.DeleteCostAsync(costId);
+
             return RedirectToAction(nameof(ShowCosts), new { unitId });
         }
 

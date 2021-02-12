@@ -12,5 +12,7 @@ namespace BLL.Services
         void CreateCost<T>(T costDTO);
 
         Task UpdateCostAsync(int id, CostDTO costDTO);
+
+        void DeleteCost(int id);
     }
 }

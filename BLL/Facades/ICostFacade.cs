@@ -12,5 +12,7 @@ namespace BLL.Facades
         Task CreateCostAsync<T>(T costDTO);
 
         Task UpdateCostAsync(int id, CostDTO costDTO);
+
+        Task DeleteCostAsync(int id);
     }
 }

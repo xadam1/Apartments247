@@ -45,5 +45,14 @@ namespace BLL.Services
 
             _unitOfWork.CostRepository.Update(cost);
         }
+
+        public void DeleteCost(int id)
+        {
+            var costTask = _unitOfWork.CostRepository.GetByIdAsync(id);
+            costTask.Wait();
+
+            var cost = costTask.Result;
+            _unitOfWork.CostRepository.Delete(cost);
+        }
     }
 }
