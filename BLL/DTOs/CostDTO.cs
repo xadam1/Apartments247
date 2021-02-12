@@ -1,6 +1,7 @@
 ﻿using DAL.Extras;
 using DAL.Models;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BLL.DTOs
 {
@@ -14,6 +15,8 @@ namespace BLL.DTOs
 
         public CostType CostType { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime Date { get; set; }
 
         public int UnitId { get; set; }

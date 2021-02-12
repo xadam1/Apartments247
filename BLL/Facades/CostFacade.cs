@@ -1,4 +1,5 @@
-﻿using BLL.Services;
+﻿using BLL.DTOs;
+using BLL.Services;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,13 @@ namespace BLL.Facades
         public async Task<List<T>> GetCostsByUnitIdAsync<T>(int id, DateTime fromDate, DateTime toDate)
         {
             return await _costService.GetCostsByUnitIdAsync<T>(id, fromDate, toDate);
+        }
+
+        public async Task UpdateCostAsync(int id, CostDTO costDTO)
+        {
+            await _costService.UpdateCostAsync(id, costDTO);
+
+            await _unitOfWork.CommitAsync();
         }
     }
 }

@@ -1,0 +1,44 @@
+﻿@model BLL.DTOs.CostWithCostTypesDTO
+
+@{
+    ViewData["Title"] = "CreateCost";
+}
+
+<h1>Create Cost</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateCost">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <input asp-for="@Model.CostDTO.Name" name="name" class="form-control" />
+                <span asp-validation-for="@Model.CostDTO.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Price</label>
+                <input asp-for="@Model.CostDTO.Price" name="price" class="form-control" />
+                <span asp-validation-for="@Model.CostDTO.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Cost Type</label>
+                <select asp-for="@Model.CostDTO.CostType" name="costType" class="form-control" asp-items="@Model.CostTypes"></select>
+                <span asp-validation-for="@Model.CostDTO.CostType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Date</label>
+                <input asp-for="@Model.CostDTO.Date" name="date" class="form-control" />
+                <span asp-validation-for="@Model.CostDTO.Date" class="text-danger"></span>
+            </div>
+            <input type="hidden" name="unitId" asp-for="@Model.CostDTO.UnitId" />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

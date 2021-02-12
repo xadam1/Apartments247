@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.DTOs;
 using DAL.Models;
 using Infrastructure;
 using System;
@@ -31,6 +32,18 @@ namespace BLL.Services
         public void CreateCost<T>(T costDTO)
         {
             _unitOfWork.CostRepository.Add(_mapper.Map<Cost>(costDTO));
+        }
+
+        public async Task UpdateCostAsync(int id, CostDTO costDTO)
+        {
+            var cost = await _unitOfWork.CostRepository.GetByIdAsync(id);
+            cost.CostType = costDTO.CostType;
+            cost.Date = costDTO.Date;
+            cost.Name = costDTO.Name;
+            cost.Price = costDTO.Price;
+            cost.UnitId = costDTO.UnitId;
+
+            _unitOfWork.CostRepository.Update(cost);
         }
     }
 }
