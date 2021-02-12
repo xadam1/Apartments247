@@ -1,4 +1,4 @@
-@model BLL.DTOs.CostsWithUnitIdDTO
+﻿@model BLL.DTOs.CostsWithUnitIdDTO
 
 @{
     ViewData["Title"] = "Show Costs";
@@ -10,16 +10,24 @@
     <thead>
         <tr>
             <th>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Name" asp-route-isAscending="true">↓</a>
                 Name
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Name" asp-route-isAscending="false">↑</a>
             </th>
             <th>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Price" asp-route-isAscending="true">↓</a>
                 Price
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Price" asp-route-isAscending="false">↑</a>
             </th>
             <th>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Type" asp-route-isAscending="true">↓</a>
                 Cost Type
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Type" asp-route-isAscending="false">↑</a>
             </th>
             <th>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Date" asp-route-isAscending="true">↓</a>
                 Date
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Date" asp-route-isAscending="false">↑</a>
             </th>
             <th>
                 <a asp-action="CreateCost" asp-route-unitId="@Model.UnitId">Create New</a>

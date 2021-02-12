@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using WebMVC.Utils;
 
 namespace WebMVC.Controllers
 {
@@ -19,7 +21,7 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowCosts(int unitId)
+        public async Task<IActionResult> ShowCosts(int unitId, CostSort sortBy = CostSort.Date, bool isAscending = true)
         {
             // TODO filter by date
             var fromDate = DateTime.MinValue;
@@ -27,13 +29,40 @@ namespace WebMVC.Controllers
 
             var costs = await _costFacade.GetCostsByUnitIdAsync<CostDTO>(unitId, fromDate, toDate);
 
+            SortCosts(ref costs, sortBy, isAscending);
+
             var costWithUnitId = new CostsWithUnitIdDTO
             {
                 CostsDTO = costs,
                 UnitId = unitId
             };
-
+            
             return View(costWithUnitId);
+        }
+
+        private void SortCosts(ref List<CostDTO> costs, CostSort sortBy = CostSort.Date, bool isAscending = true)
+        {
+            Func<CostDTO, object> sort;
+
+            switch (sortBy)
+            {
+                case CostSort.Date:
+                    sort = cost => cost.Date;
+                    break;
+                case CostSort.Name:
+                    sort = cost => cost.Name;
+                    break;
+                case CostSort.Price:
+                    sort = cost => cost.Price;
+                    break;
+                case CostSort.Type:
+                    sort = cost => cost.CostType;
+                    break;
+                default:
+                    return;
+            }
+            
+            costs = (isAscending ? costs.OrderBy(sort) : costs.OrderByDescending(sort)).ToList();
         }
 
         [HttpPost]
@@ -113,7 +142,7 @@ namespace WebMVC.Controllers
             return costTypes;
         }
 
-        private CostDTO GetCostDTO(int unitId, string name, int price, CostType costType, DateTime date, int costId=-1)
+        private CostDTO GetCostDTO(int unitId, string name, int price, CostType costType, DateTime date, int costId=0)
         {
             return new CostDTO
             {
