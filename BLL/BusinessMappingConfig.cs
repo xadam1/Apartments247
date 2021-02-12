@@ -13,6 +13,7 @@ namespace BLL
 
             config.CreateMap<Equipment, EquipmentTypeDTO>().ReverseMap();
             config.CreateMap<Equipment, EquipmentUnitAvailableEquipmentDTO>().ReverseMap();
+            config.CreateMap<Equipment, EquipmentDTO>().ReverseMap();
 
             config.CreateMap<Specification, SpecificationFullDetailDTO>().ReverseMap();
             config.CreateMap<Specification, SpecificationNameColorDTO>().ReverseMap();
