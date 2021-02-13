@@ -52,7 +52,7 @@ namespace WebMVC.Controllers
             SortCosts(ref costs, sortBy, isAscending);
 
             // TODO customizable size
-            var pageSize = 2;
+            var pageSize = 10;
 
             var costWithUnitId = new CostsWithUnitIdDTO
             {
