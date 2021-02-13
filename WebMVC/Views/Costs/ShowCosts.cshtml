@@ -1,4 +1,6 @@
 ﻿@model BLL.DTOs.CostsWithUnitIdDTO
+@using X.PagedList.Mvc.Core;
+<link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewData["Title"] = "Show Costs";
@@ -35,27 +37,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var cost in Model.CostsDTO) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => cost.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => cost.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => cost.CostType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => cost.Date)
-            </td>
-            <td>
-                <a asp-action="EditCost" asp-route-costId="@cost.Id" asp-route-unitId="@cost.UnitId" asp-route-name="@cost.Name" asp-route-price="@cost.Price" 
-                   asp-route-costType="@cost.CostType" asp-route-date="@cost.Date.ToString("yyyy-MM-dd")">Edit</a> |
-                <a asp-action="DeleteCost" asp-route-costId="@cost.Id" asp-route-unitId="@cost.UnitId" asp-route-name="@cost.Name" asp-route-price="@cost.Price" 
-                   asp-route-costType="@cost.CostType" asp-route-date="@cost.Date.ToString("yyyy-MM-dd")">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var cost in Model.CostsDTO)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => cost.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => cost.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => cost.CostType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => cost.Date)
+                </td>
+                <td>
+                    <a asp-action="EditCost" asp-route-costId="@cost.Id" asp-route-unitId="@cost.UnitId" asp-route-name="@cost.Name" asp-route-price="@cost.Price"
+                       asp-route-costType="@cost.CostType" asp-route-date="@cost.Date.ToString("yyyy-MM-dd")">Edit</a> |
+                    <a asp-action="DeleteCost" asp-route-costId="@cost.Id" asp-route-unitId="@cost.UnitId" asp-route-name="@cost.Name" asp-route-price="@cost.Price"
+                       asp-route-costType="@cost.CostType" asp-route-date="@cost.Date.ToString("yyyy-MM-dd")">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<br />
+Page @(Model.CostsDTO.PageCount < Model.CostsDTO.PageNumber ? 0 : Model.CostsDTO.PageNumber) of @Model.CostsDTO.PageCount
+
+@Html.PagedListPager(Model.CostsDTO, pageNumber => Url.Action("ShowCosts",
+    new { unitId = Model.UnitId, sortBy = ViewBag.SortBy, isAscending = ViewBag.IsAscending, pageNumber }))

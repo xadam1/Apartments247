@@ -3,6 +3,7 @@ using BLL.Facades;
 using DAL.Extras;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using X.PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,15 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowCosts(int unitId, CostSort sortBy = CostSort.Date, bool isAscending = true)
+        public async Task<IActionResult> ShowCosts(int unitId, CostSort sortBy = CostSort.Date, bool isAscending = true, int pageNumber = 1)
         {
             if (!await CanUserVisitPage(unitId))
             {
                 return RedirectToAction("AccessError", "Home");
             }
+
+            ViewBag.SortBy = sortBy;
+            ViewBag.IsAscending = isAscending;
 
             // TODO filter by date - "Showing costs from x to y
             var fromDate = DateTime.MinValue;
@@ -38,9 +42,12 @@ namespace WebMVC.Controllers
 
             SortCosts(ref costs, sortBy, isAscending);
 
+            // TODO customizable size
+            var pageSize = 10;
+
             var costWithUnitId = new CostsWithUnitIdDTO
             {
-                CostsDTO = costs,
+                CostsDTO = costs.ToPagedList(pageNumber, pageSize),
                 UnitId = unitId
             };
             
