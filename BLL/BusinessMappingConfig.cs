@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
-using DAL.Models;
+using DAL.Entities;
 
 namespace BLL
 {

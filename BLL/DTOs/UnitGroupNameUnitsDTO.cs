@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using DAL.Models;
+using DAL.Entities;
 
 namespace BLL.DTOs
 {

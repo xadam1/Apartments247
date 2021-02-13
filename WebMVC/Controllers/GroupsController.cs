@@ -1,11 +1,11 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
-using BLL.DTOs;
+﻿using BLL.DTOs;
 using BLL.Facades;
 using DAL;
-using DAL.Models;
+using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
 using WebAPI.Models;
 using WebMVC.Models;
 using WebMVC.Utils;
@@ -143,7 +143,7 @@ namespace WebMVC.Controllers
                 }
             }
 
-            return RedirectToAction("MyGroups", "Groups", new {groupId});
+            return RedirectToAction("MyGroups", "Groups", new { groupId });
         }
 
         [HttpGet]
@@ -160,7 +160,7 @@ namespace WebMVC.Controllers
 
             groupId = Utils.Utils.GetFirstUnitGroupIdByUserId();
 
-            return RedirectToAction("MyGroups", "Groups", new {groupId});
+            return RedirectToAction("MyGroups", "Groups", new { groupId });
         }
     }
 }

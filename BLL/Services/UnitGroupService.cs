@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
-using DAL.Models;
 using Infrastructure;
 using Infrastructure.Queries;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DAL.Entities;
 
 namespace BLL.Services
 {

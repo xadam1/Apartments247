@@ -1,5 +1,5 @@
-﻿using DAL.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using DAL.Entities;
 
 namespace BLL.DTOs
 {

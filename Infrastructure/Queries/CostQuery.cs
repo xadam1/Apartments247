@@ -1,7 +1,7 @@
 ﻿using DAL;
-using DAL.Models;
 using System;
 using System.Linq;
+using DAL.Entities;
 
 namespace Infrastructure.Queries
 {

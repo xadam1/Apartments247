@@ -1,5 +1,5 @@
 ﻿using DAL;
-using DAL.Models;
+using DAL.Entities;
 
 namespace Infrastructure.Queries
 {

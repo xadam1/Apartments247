@@ -1,4 +1,4 @@
-﻿using DAL.Models;
+﻿using DAL.Entities;
 using WebAPI.Models;
 
 namespace WebMVC.Models

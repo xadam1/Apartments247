@@ -1,9 +1,9 @@
 ﻿using DAL;
-using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Entities;
 
 namespace Infrastructure.Queries
 {

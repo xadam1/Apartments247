@@ -1,7 +1,7 @@
 ﻿using DAL.Extras;
-using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using DAL.Entities;
 
 namespace DAL
 {

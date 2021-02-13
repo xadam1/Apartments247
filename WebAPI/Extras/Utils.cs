@@ -1,5 +1,4 @@
 ﻿using BLL.DTOs;
-using DAL.Models;
 using WebAPI.Models;
 
 namespace WebAPI.Extras

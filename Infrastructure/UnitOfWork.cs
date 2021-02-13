@@ -1,7 +1,7 @@
 ﻿using DAL;
-using DAL.Models;
 using Infrastructure.Queries;
 using System.Threading.Tasks;
+using DAL.Entities;
 
 namespace Infrastructure
 {

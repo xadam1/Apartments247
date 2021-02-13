@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using BLL.DTOs;
-using DAL.Models;
 using Infrastructure;
 using System.Threading.Tasks;
+using DAL.Entities;
 
 namespace BLL.Services
 {

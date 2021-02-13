@@ -1,7 +1,7 @@
 ﻿using DAL.Extras;
-using DAL.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
+using DAL.Entities;
 
 namespace BLL.DTOs
 {

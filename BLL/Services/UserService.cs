@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
-using DAL.Models;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using DAL.Entities;
 
 namespace BLL.Services
 {

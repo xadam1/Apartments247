@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using BLL.DTOs;
+using BLL.Facades;
+using DAL;
+using DAL.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BLL.DTOs;
-using BLL.Facades;
-using DAL;
-using DAL.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 using WebMVC.Models;
 using WebMVC.Utils;
@@ -121,7 +121,14 @@ namespace WebMVC.Controllers
 
             await _unitFacade.CreateUnitAsync(unit);
 
-            return RedirectToAction("MyUnits", "Units", new {groupId});
+            return RedirectToAction("MyUnits", "Units", new { groupId });
+        }
+
+
+        [HttpGet]
+        public IActionResult ShowDetails()
+        {
+            return View();
         }
 
         [HttpGet]
@@ -226,7 +233,7 @@ namespace WebMVC.Controllers
                 await _unitFacade.UpdateUnitAsync(unitId, unit);
             }
 
-            return RedirectToAction("MyUnits", "Units", new {groupId, unitId});
+            return RedirectToAction("MyUnits", "Units", new { groupId, unitId });
         }
 
         [HttpGet]
@@ -238,7 +245,7 @@ namespace WebMVC.Controllers
                 // Nothing to do
             }
 
-            return RedirectToAction("MyUnits", "Units", new {groupId});
+            return RedirectToAction("MyUnits", "Units", new { groupId });
         }
 
         public async Task<FileResult> OpenContract(int id)

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DAL.Models
+namespace DAL.Entities
 {
     public class Unit : BaseEntity
     {

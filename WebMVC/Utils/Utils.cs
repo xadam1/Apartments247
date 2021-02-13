@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using DAL;
-using DAL.Models;
+using DAL.Entities;
 using Newtonsoft.Json;
 using WebAPI.Models;
 

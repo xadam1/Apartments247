@@ -1,8 +1,8 @@
-﻿using DAL.Extras;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using DAL.Extras;
 
-namespace DAL.Models
+namespace DAL.Entities
 {
     public class Cost : BaseEntity
     {

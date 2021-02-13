@@ -1,6 +1,4 @@
-﻿using DAL.Models;
-
-namespace WebAPI.Models
+﻿namespace WebAPI.Models
 {
     public class UnitGroupWithSpecificationModel
     {

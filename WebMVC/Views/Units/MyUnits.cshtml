@@ -10,11 +10,10 @@
 @if (!Model.Groups.Any())
 {
     <p>You don't have any UnitGroups.</p>
-    <hr/>
+    <hr />
 
-    <a class="btn btn-warning" asp-controller="Units" asp-action="CreateUnit"
-       asp-route-groupId="@Model.CurrentGroup.Id">
-        Create New Unit
+    <a class="btn btn-warning" asp-controller="Groups" asp-action="CreateGroup">
+        Create New UnitGroup
     </a>
 }
 
@@ -37,7 +36,7 @@ else
         </a>
     </div>
 
-    <hr/>
+    <hr />
 
     <script>
         function changeGroup() {
@@ -50,7 +49,7 @@ else
     @if (!Model.UnitsInGroup.Any())
     {
         <p>This UnitGroup is empty.</p>
-        <hr/>
+        <hr />
 
         <a class="btn btn-warning" asp-controller="Units" asp-action="EditUnit" asp-route-groupId="@Model.CurrentGroup.Id">Create New Unit</a>
     }

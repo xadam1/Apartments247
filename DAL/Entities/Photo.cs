@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DAL.Models
+namespace DAL.Entities
 {
     public class Photo : BaseEntity
     {

@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using BLL.DTOs;
 using BLL.Facades;
 using DAL;
-using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Entities;
 using WebAPI.Extras;
 using WebAPI.Models;
 

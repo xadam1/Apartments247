@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using DAL;
+using DAL.Entities;
 using DAL.Extras;
-using DAL.Models;
 using WebMVC.Areas.Identity.Data;
 
 namespace WebMVC.Utils
