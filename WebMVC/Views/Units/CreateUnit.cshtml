@@ -14,26 +14,28 @@
             @foreach (var unitGroup in Model.UnitGroups)
             {
                 var selectedOption = unitGroup.Id == Model.SelectedUnitGroup?.Id;
-                
-                <option selected="@selectedOption" id="unitGroup_@unitGroup.Id" 
-                        value="@unitGroup.Id">@unitGroup.Name</option>
-            }
+
+                <option selected="@selectedOption" id="unitGroup_@unitGroup.Id"
+                        value="@unitGroup.Id">
+                    @unitGroup.Name
+                    </option>
+                }
         </select>
     </div>
-    
-    <hr/>
+
+    <hr />
 
     <div class="form-row">
         <div class="form-group col-md-7">
-            <label for="name" class="control-label">Name</label>
-            <input asp-for="@Model.Unit.Specification.Name" id="name" type="text" name="name" class="form-control"
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" class="form-control"
                    placeholder="Byt č.7">
             <span asp-validation-for="@Model.Unit.Specification.Name" class="text-danger"></span>
         </div>
 
         <div class="form-group col-md-5">
-            <label for="uTypeSelect" class="control-label">What type of unit is this?</label>
-            <select asp-for="@Model.Unit.UnitType" id="uTypeSelect" name="unitTypeId" class="custom-select custom-select mb-3">
+            <label for="uTypeSelect">What type of unit is this?</label>
+            <select id="uTypeSelect" name="unitTypeId" class="custom-select custom-select mb-3">
                 @foreach (var unitType in Model.UnitTypes)
                 {
                     <option id="unitType_@unitType.Id" value="@unitType.Id">@unitType.Type</option>
@@ -41,12 +43,12 @@
             </select>
         </div>
     </div>
-    
+
     <div class="form-group">
         <label for="textArea">Note</label>
         <textarea class="form-control" id="textArea" rows="3" name="noteText"></textarea>
     </div>
-    
+
     <div class="form-row">
         <div class="form-group col-md-3">
             <label for="currentCapacity">Current Capacity</label>
@@ -56,7 +58,7 @@
             <label for="currentCapacity">Maximal Capacity</label>
             <input type="number" class="form-control" id="maxCapacity" name="maxCapacity" min="0">
         </div>
-        
+
         <div class="form-group offset-2 col-md-4">
             <label for="selectColor">Color of Unit</label>
             <select id="selectColor" name="colorId" class="custom-select custom-select mb-3">
@@ -67,9 +69,9 @@
             </select>
         </div>
     </div>
-    
-    <hr/>
-    
+
+    <hr />
+
     <label>Address</label>
     <div class="form-row">
         <div class="form-group col-md-3">
@@ -82,15 +84,15 @@
             <input id="streetNumber" type="text" name="streetNumber" class="form-control"
                    placeholder="564/220a">
         </div>
-        
+
         <div class="offset-2">
             <label>Contract</label>
             <input readonly="readonly" type="text" id="contractName" hidden value="@Model.Unit?.Contract?.Name" />
-        
+
             <div class="form-group">
                 <input type="file" class="form-group" name="contractFile" id="contractFile" onchange="DisplayFilename()" />
             </div>
-        
+
             @if (Model?.Unit?.Contract?.Id > 0)
             {
                 <div class="form-group">
@@ -99,7 +101,7 @@
             }
         </div>
     </div>
-    
+
     <div class="form-row">
         <div class="form-group col-md-3">
             <label for="city">City</label>
@@ -116,7 +118,7 @@
             <button class="btn btn-outline-success" style="width: 100%" type="submit">Create</button>
         </div>
     </div>
-    
+
 </form>
 
 
