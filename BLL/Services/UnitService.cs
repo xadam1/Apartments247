@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using BLL.DTOs;
-using Infrastructure;
-using System.Threading.Tasks;
 using DAL.Entities;
+using Infrastructure;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
@@ -45,6 +45,7 @@ namespace BLL.Services
             unit.CurrentCapacity = unitDTO.CurrentCapacity;
             unit.MaxCapacity = unitDTO.MaxCapacity;
             unit.Contract = unitDTO.Contract;
+            unit.MonthlyIncome = unitDTO.MonthlyIncome;
 
             _unitOfWork.UnitRepository.Update(unit);
         }

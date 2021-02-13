@@ -40,13 +40,15 @@ namespace WebAPI.Extras
                 UnitType = unit.UnitType.Type,
                 ContractName = unit.Contract.Name,
                 ContractId = unit.ContractId,
-                
+
                 State = unit.Specification.Address.State,
-            City = unit.Specification.Address.City,
-            Street = unit.Specification.Address.Street,
-            Number = unit.Specification.Address.Number,
-            Zip = unit.Specification.Address.Zip,
-        };
+                City = unit.Specification.Address.City,
+                Street = unit.Specification.Address.Street,
+                Number = unit.Specification.Address.Number,
+                Zip = unit.Specification.Address.Zip,
+
+                MonthlyIncome = unit.MonthlyIncome
+            };
         }
 
         public static UnitTypeModel Convert(UnitTypeDTO unitType)

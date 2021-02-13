@@ -169,9 +169,11 @@ namespace WebMVC.Controllers
                     CurrentCapacity = 0,
                     MaxCapacity = 2,
                     ContractName = "nezadáno"
+
                 };
             else
                 m.Unit = Utils.Utils.GetUnitById(unitId);
+                
 
             return View(m);
         }
@@ -179,7 +181,7 @@ namespace WebMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveUnit(int unitId, int groupId, string name, int selectColor, string note,
             int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
-            string street, string number, string zip, IFormFile file)
+            string street, string number, string zip, int monthlyCosts, IFormFile file)
         {
             var unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
             var contract = GetContract(file, unit);
@@ -211,7 +213,8 @@ namespace WebMVC.Controllers
                     CurrentCapacity = currentCapacity,
                     MaxCapacity = maxCapacity,
                     //ContractLink = contractLink ?? string.Empty,
-                    Contract = contract
+                    Contract = contract,
+                    MonthlyIncome = monthlyCosts
                 };
 
                 await _unitFacade.CreateUnitAsync(unit);
@@ -236,6 +239,7 @@ namespace WebMVC.Controllers
                 unit.Contract = contract;
                 unit.Contract.Name = contract.Name;
                 unit.Contract.Content = contract.Content;
+                unit.MonthlyIncome = monthlyCosts;
 
                 await _unitFacade.UpdateUnitAsync(unitId, unit);
             }
