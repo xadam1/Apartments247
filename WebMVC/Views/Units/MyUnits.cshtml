@@ -48,10 +48,7 @@ else
 
     @if (!Model.UnitsInGroup.Any())
     {
-        <p>This UnitGroup is empty.</p>
-        <hr />
-
-        <a class="btn btn-warning" asp-controller="Units" asp-action="EditUnit" asp-route-groupId="@Model.CurrentGroup.Id">Create New Unit</a>
+        <p>This UnitGroup is empty :'(</p>
     }
     else
     {
@@ -71,9 +68,9 @@ else
                                     <li class="list-group-item">Monthly Income: @unit.MonthlyIncome,-</li>
                                     <li class="list-group-item">Vestibulum at eros</li>
                                 </ul>
-                                <a asp-action="EditUnit" asp-route-groupId="@Model.CurrentGroup.Id" asp-route-unitId="@unit.Id"
+                                <a asp-action="ShowDetails" asp-route-unitId="@unit.Id"
                                    class="btn btn-outline-dark" style="position: relative; bottom: 0px; width: 100%">
-                                    Edit Unit
+                                    Show Details
                                 </a>
                             </div>
                         </div>

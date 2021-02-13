@@ -1,4 +1,4 @@
-﻿@model DAL.Entities.Unit
+﻿@model BLL.DTOs.UnitDetailsDTO
 
 @{
     ViewData["Title"] = "ShowDetails";
@@ -10,6 +10,8 @@
 <div>
     <h4>Unit</h4>
     <hr />
+    <a asp-controller="Costs" asp-action="ShowCosts" asp-route-unitId="@Model.Id">COSTS TEMP</a>
+    <a asp-controller="Units" asp-action="EditUnit" asp-route-groupId="@Model.UnitGroup.Id" asp-route-unitId="@Model.Id">EDIT UNIT TEMP</a>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.OwnerId)
@@ -60,8 +62,4 @@
             @Html.DisplayFor(model => model.Contract.Id)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>

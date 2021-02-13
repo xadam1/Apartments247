@@ -2,7 +2,7 @@
 
 namespace BLL.DTOs
 {
-    public class UnitFullDTO
+    public class UnitDetailsDTO
     {
         public int Id { get; set; }
 
@@ -12,13 +12,11 @@ namespace BLL.DTOs
 
         public int CurrentCapacity { get; set; }
 
-        public int UnitTypeId { get; set; }
-
         public UnitType UnitType { get; set; }
 
-        public string TypeStr => UnitType?.Type;
+        public UnitGroup UnitGroup { get; set; }
 
-        public int SpecificationId { get; set; }
+        public string? TypeStr => UnitType?.Type;
 
         public virtual Specification Specification { get; set; }
 

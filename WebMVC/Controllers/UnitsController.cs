@@ -2,6 +2,7 @@
 using BLL.Facades;
 using DAL;
 using DAL.Entities;
+using DAL.Extras;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -126,9 +127,14 @@ namespace WebMVC.Controllers
 
 
         [HttpGet]
-        public IActionResult ShowDetails()
+        public async Task<IActionResult> ShowDetails(int unitId = Constants.NO_ID)
         {
-            return View();
+            if (unitId == Constants.NO_ID)
+                return RedirectToAction("Error", "Home");
+
+            UnitDetailsDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDetailsDTO>(unitId);
+
+            return View(unit);
         }
 
         [HttpGet]
