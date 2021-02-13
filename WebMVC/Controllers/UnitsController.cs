@@ -110,6 +110,7 @@ namespace WebMVC.Controllers
 
             var unit = new UnitDTO
             {
+                OwnerId = UserInfoManager.UserId,
                 Specification = spec,
                 UnitGroupId = groupId,
                 UnitTypeId = unitTypeId,

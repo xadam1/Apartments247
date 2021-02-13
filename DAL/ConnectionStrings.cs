@@ -41,6 +41,6 @@ namespace DAL
 
         public static string DB_CONN_STRING { get; } = dbConnectionStrings["localSQLite"];
 
-        public static string API_URL { get; } = apiUrls["localApiConsole"];
+        public static string API_URL { get; } = apiUrls["localApiVS"];
     }
 }

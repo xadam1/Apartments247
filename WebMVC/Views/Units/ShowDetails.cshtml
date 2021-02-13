@@ -5,61 +5,119 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ShowDetails</h1>
+<div class="row">
+    <h3><span class="text-muted">Details of</span> <span class="font-weight-bold">@Model.Specification.Name</span></h3>
 
-<div>
-    <h4>Unit</h4>
-    <hr />
-    <a asp-controller="Costs" asp-action="ShowCosts" asp-route-unitId="@Model.Id">COSTS TEMP</a>
-    <a asp-controller="Units" asp-action="EditUnit" asp-route-groupId="@Model.UnitGroup.Id" asp-route-unitId="@Model.Id">EDIT UNIT TEMP</a>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OwnerId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OwnerId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CurrentCapacity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CurrentCapacity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MaxCapacity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MaxCapacity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Specification)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Specification.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UnitType)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UnitType.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UnitGroup)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UnitGroup.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MonthlyIncome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MonthlyIncome)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Contract)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Contract.Id)
-        </dd>
-    </dl>
+    <a asp-controller="Costs" asp-action="ShowCosts" asp-route-unitId="@Model.Id"
+       class="btn btn-outline-success offset-6" style="border-bottom-right-radius: 0; border-top-right-radius:0;">
+        Costs
+    </a>
+    <a asp-controller="Units" asp-action="EditUnit" asp-route-groupId="@Model.UnitGroup.Id" asp-route-unitId="@Model.Id"
+       class="btn btn-outline-primary" style="border-radius: 0;">
+        Edit Unit
+    </a>
+
+    <a asp-controller="Units" asp-action="DeleteUnit" asp-route-groupId="@Model.UnitGroup.Id" asp-route-unitId="@Model.Id"
+       class="btn btn-danger text-dark" style="border-bottom-left-radius: 0; border-top-left-radius:0;">
+        DELETE
+    </a>
 </div>
+<hr />
+
+<form>
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label font-weight-bold">ID</label>
+        <div class="col-sm-1">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.Id">
+        </div>
+
+        <label class="col-sm-1 col-form-label font-weight-bold offset-3">Group</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.UnitGroup.Specification.Name">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label font-weight-bold">Name</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.Specification.Name">
+        </div>
+
+        <label class="col-sm-1 col-form-label font-weight-bold offset-1">Type</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.TypeStr">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label font-weight-bold">Monthly Income</label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.MonthlyIncome,-">
+        </div>
+
+        <label class="col-sm-1 col-form-label font-weight-bold offset-1">Capacity</label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.CurrentCapacity/@Model.MaxCapacity">
+        </div>
+
+        <label class="col-sm-1 col-form-label font-weight-bold offset-1">Color</label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.Specification.Color.Name">
+        </div>
+    </div>
+
+    <hr />
+
+    <label class="font-weight-bold text-lg-left">Address</label>
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label font-weight-bold">Street</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.Specification.Address.Street">
+        </div>
+
+        <label class="col-sm-1 col-form-label font-weight-bold">Number</label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.Specification.Address.Number">
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label font-weight-bold">City</label>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.Specification.Address.City">
+        </div>
+
+        <label class="col-sm-1 col-form-label font-weight-bold offset-1">ZIP</label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.Specification.Address.Zip">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label font-weight-bold">State</label>
+        <div class="col-sm-7">
+            <input type="text" class="form-control" readonly="readonly"
+                   value="@Model.Specification.Address.State">
+        </div>
+    </div>
+
+    <hr />
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label font-weight-bold">Note</label>
+        <div class="col-sm-7">
+            <textarea class="form-control" readonly="readonly" rows="3" name="noteText">@Model.Note</textarea>
+        </div>
+    </div>
+</form>
