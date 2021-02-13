@@ -1,38 +1,67 @@
 ﻿@model BLL.DTOs.CostsWithUnitIdDTO
 @using X.PagedList.Mvc.Core;
+@using WebMVC.Utils;
 <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewData["Title"] = "Show Costs";
+    CostSort sortBy = ViewBag.SortBy;
+    bool isAscending = ViewBag.IsAscending;
 }
 
-<h1>Show Costs</h1>
+<h1>Showing Costs for @ViewBag.UnitName</h1>
 
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ShowCosts" method="get">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">From Date</label>
+                <input asp-for="@Model.FromDate" name="fromDate" class="form-control" />
+                <span asp-validation-for="@Model.FromDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">To Date</label>
+                <input asp-for="@Model.ToDate" name="toDate" class="form-control" />
+                <span asp-validation-for="@Model.ToDate" class="text-danger"></span>
+            </div>
+            <input type="hidden" name="unitId" asp-for="@Model.UnitId" />
+            <input type="hidden" name="sortBy" asp-for="@sortBy" />
+            <input type="hidden" name="isAscending" asp-for="@isAscending" />
+            <div class="form-group">
+                <input type="submit" value="Apply" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Name" asp-route-isAscending="true">↓</a>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Name" asp-route-isAscending="true" asp-route-fromDate="@Model.FromDate.ToString("yyyy-MM-dd")" asp-route-toDate="@Model.ToDate.ToString("yyyy-MM-dd")">↓</a>
                 Name
-                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Name" asp-route-isAscending="false">↑</a>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Name" asp-route-isAscending="false" asp-route-fromDate="@Model.FromDate.ToString("yyyy-MM-dd")" asp-route-toDate="@Model.ToDate.ToString("yyyy-MM-dd")">↑</a>
             </th>
             <th>
-                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Price" asp-route-isAscending="true">↓</a>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Price" asp-route-isAscending="true" asp-route-fromDate="@Model.FromDate.ToString("yyyy-MM-dd")" asp-route-toDate="@Model.ToDate.ToString("yyyy-MM-dd")">↓</a>
                 Price
-                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Price" asp-route-isAscending="false">↑</a>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Price" asp-route-isAscending="false" asp-route-fromDate="@Model.FromDate.ToString("yyyy-MM-dd")" asp-route-toDate="@Model.ToDate.ToString("yyyy-MM-dd")">↑</a>
             </th>
             <th>
-                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Type" asp-route-isAscending="true">↓</a>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Type" asp-route-isAscending="true" asp-route-fromDate="@Model.FromDate.ToString("yyyy-MM-dd")" asp-route-toDate="@Model.ToDate.ToString("yyyy-MM-dd")">↓</a>
                 Cost Type
-                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Type" asp-route-isAscending="false">↑</a>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Type" asp-route-isAscending="false" asp-route-fromDate="@Model.FromDate.ToString("yyyy-MM-dd")" asp-route-toDate="@Model.ToDate.ToString("yyyy-MM-dd")">↑</a>
             </th>
             <th>
-                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Date" asp-route-isAscending="true">↓</a>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Date" asp-route-isAscending="true" asp-route-fromDate="@Model.FromDate.ToString("yyyy-MM-dd")" asp-route-toDate="@Model.ToDate.ToString("yyyy-MM-dd")">↓</a>
                 Date
-                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Date" asp-route-isAscending="false">↑</a>
+                <a asp-action="ShowCosts" asp-route-unitId="@Model.UnitId" asp-route-sortBy="Date" asp-route-isAscending="false" asp-route-fromDate="@Model.FromDate.ToString("yyyy-MM-dd")" asp-route-toDate="@Model.ToDate.ToString("yyyy-MM-dd")">↑</a>
             </th>
             <th>
-                <a asp-action="CreateCost" asp-route-unitId="@Model.UnitId">Create New</a>
+                <a asp-action="CreateCost" asp-route-unitId="@Model.UnitId">Create New Cost</a>
             </th>
         </tr>
     </thead>
@@ -63,7 +92,8 @@
     </tbody>
 </table>
 <br />
+
 Page @(Model.CostsDTO.PageCount < Model.CostsDTO.PageNumber ? 0 : Model.CostsDTO.PageNumber) of @Model.CostsDTO.PageCount
 
 @Html.PagedListPager(Model.CostsDTO, pageNumber => Url.Action("ShowCosts",
-    new { unitId = Model.UnitId, sortBy = ViewBag.SortBy, isAscending = ViewBag.IsAscending, pageNumber }))
+    new { unitId = Model.UnitId, sortBy = ViewBag.SortBy, isAscending = ViewBag.IsAscending, pageNumber, fromDate = Model.FromDate.ToString("yyyy-MM-dd"), toDate = Model.ToDate.ToString("yyyy-MM-dd") }))

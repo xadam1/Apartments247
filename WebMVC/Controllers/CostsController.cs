@@ -24,31 +24,42 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowCosts(int unitId, CostSort sortBy = CostSort.Date, bool isAscending = true, int pageNumber = 1)
+        public async Task<IActionResult> ShowCosts(int unitId, CostSort sortBy = CostSort.Date, bool isAscending = true, int pageNumber = 1, DateTime fromDate = default, DateTime toDate = default)
         {
-            if (!await CanUserVisitPage(unitId))
+            var unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
+            if (unit != null && !UserInfoManager.CanUserAccessPage(unit.OwnerId))
             {
                 return RedirectToAction("AccessError", "Home");
             }
 
+            var today = DateTime.Today;
+            if (fromDate == default)
+            {
+                fromDate = new DateTime(today.Year, today.Month, 1);
+            }
+
+            if (toDate == default)
+            {
+                toDate = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
+            }
+
+            ViewBag.UnitName = unit.Specification.Name;
             ViewBag.SortBy = sortBy;
             ViewBag.IsAscending = isAscending;
-
-            // TODO filter by date - "Showing costs from x to y
-            var fromDate = DateTime.MinValue;
-            var toDate = DateTime.MaxValue;
 
             var costs = await _costFacade.GetCostsByUnitIdAsync<CostDTO>(unitId, fromDate, toDate);
 
             SortCosts(ref costs, sortBy, isAscending);
 
             // TODO customizable size
-            var pageSize = 10;
+            var pageSize = 2;
 
             var costWithUnitId = new CostsWithUnitIdDTO
             {
                 CostsDTO = costs.ToPagedList(pageNumber, pageSize),
-                UnitId = unitId
+                UnitId = unitId,
+                FromDate = fromDate,
+                ToDate = toDate
             };
             
             return View(costWithUnitId);
