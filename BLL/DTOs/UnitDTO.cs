@@ -7,6 +7,8 @@ namespace BLL.DTOs
     {
         public int Id { get; set; }
 
+        public int OwnerId { get; set; }
+
         public int? CurrentCapacity { get; set; }
         public int? MaxCapacity { get; set; }
 
