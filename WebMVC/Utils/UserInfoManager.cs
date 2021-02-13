@@ -41,5 +41,10 @@ namespace WebMVC.Utils
                 UserId = user.Id;
             }
         }
+
+        public static bool CanUserAccessPage(int ownerId)
+        {
+            return UserId == ownerId;
+        }
     }
 }

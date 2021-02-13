@@ -14,16 +14,23 @@ namespace WebMVC.Controllers
     public class CostsController : Controller
     {
         private readonly ICostFacade _costFacade;
+        private readonly IUnitFacade _unitFacade;
 
-        public CostsController(ICostFacade costFacade)
+        public CostsController(ICostFacade costFacade, IUnitFacade unitFacade)
         {
             this._costFacade = costFacade;
+            this._unitFacade = unitFacade;
         }
 
         [HttpGet]
         public async Task<IActionResult> ShowCosts(int unitId, CostSort sortBy = CostSort.Date, bool isAscending = true)
         {
-            // TODO filter by date
+            if (!await CanUserVisitPage(unitId))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
+
+            // TODO filter by date - "Showing costs from x to y
             var fromDate = DateTime.MinValue;
             var toDate = DateTime.MaxValue;
 
@@ -76,8 +83,13 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateCost(int unitId)
+        public async Task<IActionResult> CreateCost(int unitId)
         {
+            if (!await CanUserVisitPage(unitId))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
+
             var costWithCostTypesDTO = new CostWithCostTypesDTO
             {
                 CostDTO = new CostDTO { UnitId = unitId },
@@ -98,8 +110,13 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditCost(int costId, int unitId, string name, int price, CostType costType, DateTime date)
+        public async Task<IActionResult> EditCost(int costId, int unitId, string name, int price, CostType costType, DateTime date)
         {
+            if (!await CanUserVisitPage(unitId))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
+
             var costWithCostTypesDTO = new CostWithCostTypesDTO
             {
                 CostDTO = GetCostDTO(unitId, name, price, costType, date, costId),
@@ -118,13 +135,24 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteCost(int costId, int unitId, string name, int price, CostType costType, DateTime date)
+        public async Task<IActionResult> DeleteCost(int costId, int unitId, string name, int price, CostType costType, DateTime date)
         {
+            if (!await CanUserVisitPage(unitId))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
+
             var costDTO = GetCostDTO(unitId, name, price, costType, date, costId);
 
             return View(costDTO);
         }
-        
+
+        private async Task<bool> CanUserVisitPage(int unitId)
+        {
+            var unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
+            return unit != null && UserInfoManager.CanUserAccessPage(unit.OwnerId);
+        }
+
         private List<SelectListItem> GetCostTypes()
         {
             var costTypes = new List<SelectListItem>();
