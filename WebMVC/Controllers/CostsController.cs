@@ -90,9 +90,15 @@ namespace WebMVC.Controllers
                 return RedirectToAction("AccessError", "Home");
             }
 
+            var costDTO = new CostDTO 
+            { 
+                UnitId = unitId,
+                Date = DateTime.Today
+            };
+
             var costWithCostTypesDTO = new CostWithCostTypesDTO
             {
-                CostDTO = new CostDTO { UnitId = unitId },
+                CostDTO = costDTO,
                 CostTypes = GetCostTypes(),
             };
 
