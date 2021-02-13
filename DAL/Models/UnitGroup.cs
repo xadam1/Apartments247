@@ -4,6 +4,8 @@ namespace DAL.Models
 {
     public class UnitGroup : BaseEntity
     {
+        public int OwnerId { get; set; }
+
         // FK
         public int UserId { get; set; }
         public virtual User User { get; set; }

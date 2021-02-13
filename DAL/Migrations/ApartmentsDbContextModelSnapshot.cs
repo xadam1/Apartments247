@@ -324,6 +324,9 @@ namespace DAL.Migrations
                     b.Property<int>("MonthlyIncome")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("SpecificationId")
                         .HasColumnType("INTEGER");
 
@@ -371,6 +374,9 @@ namespace DAL.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("OwnerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("SpecificationId")

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApartmentsDbContext))]
-    [Migration("20210211193530_Init")]
+    [Migration("20210213142437_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -326,6 +326,9 @@ namespace DAL.Migrations
                     b.Property<int>("MonthlyIncome")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("SpecificationId")
                         .HasColumnType("INTEGER");
 
@@ -373,6 +376,9 @@ namespace DAL.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("OwnerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("SpecificationId")

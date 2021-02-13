@@ -4,6 +4,8 @@ namespace DAL.Models
 {
     public class Unit : BaseEntity
     {
+        public int OwnerId { get; set; }
+
         public int? CurrentCapacity { get; set; }
         public int? MaxCapacity { get; set; }
 

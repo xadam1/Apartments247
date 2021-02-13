@@ -127,6 +127,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    OwnerId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     SpecificationId = table.Column<int>(nullable: false)
                 },
@@ -153,6 +154,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    OwnerId = table.Column<int>(nullable: false),
                     CurrentCapacity = table.Column<int>(nullable: true),
                     MaxCapacity = table.Column<int>(nullable: true),
                     SpecificationId = table.Column<int>(nullable: false),
