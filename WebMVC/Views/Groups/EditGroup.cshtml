@@ -19,13 +19,15 @@ else
     <h3>Edit Group</h3>
 }
 
-<form action="/Groups/SaveGroup" method="post">
-    <label for="name">Name</label>
+<form asp-controller="Groups" asp-action="SaveGroup" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <label class="control-label">Name</label>
     <br />
-    <input type="text" name="name" value="@group.Name" />
+    <input asp-for="@Model.Group.Name" type="text" name="name" value="@group.Name" class="form-control" />
+    <span asp-validation-for="@Model.Group.Name" class="text-danger"></span>
     <br />
 
-    <label for="color">Color</label>
+    <label class="control-label">Color</label>
     <br />
     <select name="colorSelect">
         @foreach (var color in colors)
@@ -40,22 +42,27 @@ else
             }
     </script>
 
-    <label>State</label><br />
-    <input type="text" name="state" value="@group.State" /><br />
+    <label for="state" class="control-label">State</label><br />
+    <input asp-for="@Model.Group.State" type="text" name="state" value="@group.State" class="form-control" /><br />
+    <span asp-validation-for="@Model.Group.State" class="text-danger"></span>
 
-    <label>City</label><br />
-    <input type="text" name="city" value="@group.City" /><br />
+    <label for="city" class="control-label">City</label><br />
+    <input asp-for="@Model.Group.City" type="text" name="city" value="@group.City" class="form-control" /><br />
+    <span asp-validation-for="@Model.Group.City" class="text-danger"></span>
 
-    <label>Street</label><br />
-    <input type="text" name="street" value="@group.Street" /><br />
+    <label for="street" class="control-label">Street</label><br />
+    <input asp-for="@Model.Group.Street" type="text" name="street" value="@group.Street" class="form-control" /><br />
+    <span asp-validation-for="@Model.Group.Street" class="text-danger"></span>
 
-    <label>Number</label><br />
-    <input type="text" name="number" value="@group.Number" /><br />
+    <label for="number" class="control-label">Number</label><br />
+    <input asp-for="@Model.Group.Number" type="text" name="number" value="@group.Number" class="form-control" /><br />
+    <span asp-validation-for="@Model.Group.Number" class="text-danger"></span>
 
-    <label>Zip</label><br />
-    <input type="text" name="zip" value="@group.Zip" /><br />
+    <label for="zip" class="control-label">Zip</label><br />
+    <input asp-for="@Model.Group.Zip" type="text" name="zip" value="@group.Zip" class="form-control" /><br />
+    <span asp-validation-for="@Model.Group.Zip" class="text-danger"></span>
 
-    <label for="note">Note</label><br />
+    <label for="note" class="control-label">Note</label><br />
     <textarea name="note">@group.Note</textarea><br />
 
     <input type="hidden" name="userId" value="@userId" />
