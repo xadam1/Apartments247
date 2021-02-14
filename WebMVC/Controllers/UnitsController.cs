@@ -154,10 +154,34 @@ namespace WebMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateUnit(int unitId, int groupId, string name, int selectColor, string note,
-            int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
-            string street, string number, string zip, int monthlyCosts, IFormFile file)
+        public async Task<IActionResult> UpdateUnit(int unitId, int groupId, string name, int unitTypeId, string noteText,
+            int currentCapacity, int maxCapacity, int monthlyCosts, int colorId, string street, string streetNumber,
+            string city, string zip, string state, IFormFile contractFile)
         {
+            var unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
+            var contract = GetContract(contractFile, unit);
+
+            unit.UnitTypeId = unitTypeId;
+            unit.UnitGroupId = groupId;
+            unit.CurrentCapacity = currentCapacity;
+            unit.MaxCapacity = maxCapacity;
+            unit.Contract = contract;
+            unit.Contract.Name = contract.Name;
+            unit.Contract.Content = contract.Content;
+            unit.MonthlyIncome = monthlyCosts;
+
+            unit.Specification.Name = name;
+            unit.Specification.ColorId = colorId;
+            unit.Specification.Note = noteText;
+
+            unit.Specification.Address.State = state;
+            unit.Specification.Address.City = city;
+            unit.Specification.Address.Street = street;
+            unit.Specification.Address.Number = streetNumber;
+            unit.Specification.Address.Zip = zip;
+
+            await _unitFacade.UpdateUnitAsync(unitId, unit);
+
             return RedirectToAction("MyUnits", new { groupId });
         }
 
@@ -227,7 +251,7 @@ namespace WebMVC.Controllers
                 await _unitFacade.UpdateUnitAsync(unitId, unit);
             }
 
-            return RedirectToAction("MyUnits", "Units", new { groupId, unitId });
+            return RedirectToAction("MyUnits", "Units", new { groupId });
         }
 
         [HttpGet]
