@@ -35,6 +35,11 @@ namespace WebMVC.Controllers
         {
             Log.Called(nameof(MyUnits), $"groupID={unitGroupID}");
 
+            if (!await CanUserVisitPage(unitGroupID))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
+
             var units = new List<UnitFullDTO>();
             var currentGroup = new UnitGroupNameDTO();
             var groups = await _ugFacade.GetUnitGroupsByUserIdAsync<UnitGroupNameDTO>(UserInfoManager.UserId);
@@ -71,6 +76,11 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> CreateUnit(int groupId)
         {
             Log.Called(nameof(CreateUnit));
+
+            if (!await CanUserVisitPage(groupId))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
 
             var dto = new CreateOrEditUnitDTO
             {
@@ -132,6 +142,11 @@ namespace WebMVC.Controllers
 
             UnitDetailsDTO unit = await _unitFacade.GetUnitByIdAsync<UnitDetailsDTO>(unitId);
 
+            if (!(unit != null && UserInfoManager.CanUserAccessPage(unit.OwnerId)))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
+
             return View(unit);
         }
 
@@ -139,6 +154,11 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> EditUnit(int groupId, int unitId)
         {
             Log.Called(nameof(EditUnit), $"groupID={groupId}, unitID={unitId}");
+
+            if (!await CanUserVisitPage(groupId))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
 
             var dto = new CreateOrEditUnitDTO()
             {
@@ -185,8 +205,13 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteUnit(int groupId, int unitId)
+        public async Task<IActionResult> DeleteUnit(int groupId, int unitId)
         {
+            if (!await CanUserVisitPage(groupId))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
+
             using (var client = new HttpClient())
             using (var response = client.GetAsync(ConnectionStrings.API_URL + $"DeleteUnit?unitId={unitId}").Result)
             {
@@ -228,6 +253,12 @@ namespace WebMVC.Controllers
             }
 
             return contract;
+        }
+
+        private async Task<bool> CanUserVisitPage(int groupId)
+        {
+            var group = await _ugFacade.GetUnitGroupByIdAsync<UnitGroupDTO>(groupId);
+            return group != null && UserInfoManager.CanUserAccessPage(group.OwnerId);
         }
     }
 }
