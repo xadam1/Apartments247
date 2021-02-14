@@ -355,5 +355,3 @@ MigrationBackup/
 .DS_Store/
 
 *.sqlite
-
-*.db

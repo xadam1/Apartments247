@@ -81,6 +81,7 @@ namespace WebMVC.Controllers
 
             var unitGroup = new UnitGroupDTO
             {
+                OwnerId = UserInfoManager.UserId,
                 UserId = UserInfoManager.UserId,
                 Specification = spec
             };

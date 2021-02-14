@@ -32,7 +32,7 @@ Na webovém portálu si uživatel může založit a spravovat účet. Kromě ná
 - Info o nájemnících
 - Smlouva od do
 - Výše nájmu
-- Poplatky (voda, el, plyn, net, ...) --> graf?
+- Poplatky (voda, el, plyn, net, ...)
 - Záloha + doplatek
 - Vybavení bytu (lednice, sporák, ...)
 - Opravy (a jejich cena)
@@ -49,3 +49,8 @@ Na webovém portálu si uživatel může založit a spravovat účet. Kromě ná
 - Vybavení v prostorech
 - Celkové zisky
 - Měsíční (roční, ...) vývoj poplatků/zisků
+
+
+Co je potřeba ke spuštění aplikace:
+Ve VisualStudiu nastavit Multiple Startup Projects - WebAPI a WebMVC
+Nahráli jsme pro tebe na git předpřipravenou databázi s přihlašovacíma údajema Login = Admin, Password = testing, ale samozřejmě si můžeš vytvořit vlastního uživatele ;)
