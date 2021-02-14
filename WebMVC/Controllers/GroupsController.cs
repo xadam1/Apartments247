@@ -30,11 +30,6 @@ namespace WebMVC.Controllers
         {
             Log.Called(nameof(MyGroups), $"GID [{groupId}]");
 
-            if (!await CanUserVisitPage(groupId))
-            {
-                return RedirectToAction("AccessError", "Home");
-            }
-
             var groups = new GroupsOverviewDTO
             {
                 UserId = UserInfoManager.UserId,

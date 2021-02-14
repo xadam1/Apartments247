@@ -4,6 +4,7 @@ using DAL;
 using DAL.Entities;
 using DAL.Extras;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
@@ -34,11 +35,6 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> MyUnits(int unitGroupID)
         {
             Log.Called(nameof(MyUnits), $"groupID={unitGroupID}");
-
-            if (!await CanUserVisitPage(unitGroupID))
-            {
-                return RedirectToAction("AccessError", "Home");
-            }
 
             var units = new List<UnitFullDTO>();
             var currentGroup = new UnitGroupNameDTO();
