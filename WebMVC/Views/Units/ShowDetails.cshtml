@@ -149,12 +149,11 @@
 
 <script>
     function OpenContract() {
-        @*link = document.getElementById("link").value;*@
         window.open('/Units/OpenContract?id=@Model.Id', "_blank");
     };
 
     function DisplayFilename() {
-        uploadedFile = document.getElementById("contractFile").value.split("\\").pop();
+        var uploadedFile = document.getElementById("contractFile").value.split("\\").pop();
         document.getElementById("contractFile").innerHTML = uploadedFile;
     }
 </script>

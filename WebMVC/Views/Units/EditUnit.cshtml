@@ -1,189 +1,152 @@
-﻿@model WebMVC.Models.EditUnitModel
+﻿@model BLL.DTOs.CreateOrEditUnitDTO
 
 @{
     ViewData["Title"] = "Edit Unit";
-    ViewData["UserId"] = Model.UserId;
-    var userId = Model.UserId;
-    var groupId = Model.GroupId;
-    var unitId = Model.UnitId;
-    var unit = Model.Unit;
-    var colors = Model.Colors;
-    var unitTypes = Model.UnitTypes;
-    var unitGroups = Model.UnitGroups;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (unitId != -1)
-{
-    <h3>
-        Edit Unit
-    </h3>
-}
-else
-{
-    <h3>Create New Unit</h3>
-}
+<h3><span class="text-muted">Edit</span> <span class="font-weight-bold">@Model.Unit.Specification.Name</span></h3>
 
-<form action="/Units/SaveUnit" method="post" enctype="multipart/form-data">
-    <select name="groupId">
-        @foreach (var unitGroup in unitGroups)
-        {
-            <option id="unitGroup_@unitGroup.Id" value="@unitGroup.Id">@unitGroup.Name</option>
-        }
-    </select><br />
-
-    <script>
-        document.getElementById("unitGroup_@groupId").selected = true;
-    </script>
-
-    <label for="name" class="control-label">Name</label>
-    <br />
-    <input asp-for="@Model.Unit.Name" type="text" name="name" value="@unit.Name" class="form-control" />
-    <span asp-validation-for="@Model.Unit.Name" class="text-danger"></span>
-    <br />
-
-    <label>Color</label>
-    <br />
-    <select id="selectColor" name="selectColor">
-        @foreach (var color in colors)
-        {
-            <option id="color_@color.Id" value="@color.Id">@color.Name</option>
-        }
-    </select>
-    <br />
-
-    <script>
-        document.getElementById("color_@unit.ColorId").selected = true;
-    </script>
-
-
-
-    <label for="state" class="control-label">State</label>
-    <br />
-    <input asp-for="@Model.Unit.State" type="text" name="state" value="@unit.State" class="" />
-    <span asp-validation-for="@Model.Unit.State" class="text-danger"></span>
-    <br />
-
-    <label for="city" class="control-label">City</label>
-    <br />
-    <input asp-for="@Model.Unit.City" type="text" name="city" value="@unit.City" class="form-control" />
-    <span asp-validation-for="@Model.Unit.City" class="text-danger"></span>
-    <br />
-
-    <label for="street" class="control-label">Street</label>
-    <br />
-    <input asp-for="@Model.Unit.Street" type="text" name="street" value="@unit.Street" class="form-control" />
-    <span asp-validation-for="@Model.Unit.Street" class="text-danger"></span>
-    <br />
-
-    <label for="street" class="control-label">Number</label>
-    <br />
-    <input asp-for="@Model.Unit.Number" type="text" name="number" value="@unit.Number" class="form-control" />
-    <span asp-validation-for="@Model.Unit.Number" class="text-danger"></span>
-    <br />
-
-    <label for="zip" class="control-label">Zip</label>
-    <br />
-    <input asp-for="@Model.Unit.Zip" type="text" name="zip" value="@unit.Zip" class="form-control" />
-    <span asp-validation-for="@Model.Unit.Zip" class="text-danger"></span>
-    <br />
-
-    <label for="note" class="control-label">Note</label>
-    <br />
-    <input asp-for="@Model.Unit.Note" type="text" name="note" value="@unit.Note" class="form-control">
-    <span asp-validation-for="@Model.Unit.Note" class="text-danger"></span>
-    <br />
-
-    <label for="unittype">UnitType</label>
-    <br />
-    <select name="selectUnitType">
-        @foreach (var unitType in unitTypes)
-        {
-            <option id="unitType_@unitType.Id" value="@unitType.Id">@unitType.Type</option>
-        }
-    </select>
-    <br />
-
-    <script>
-        document.getElementById("unitType_@unit.UnitTypeId").selected = true;
-    </script>
-
-    <label for="currentcapacity" class="control-label">CurrentCapacity</label>
-    <br />
-    <input asp-for="@Model.Unit.CurrentCapacity" type="text" name="currentCapacity" value="@unit.CurrentCapacity" class="form-control" />
-    <span asp-validation-for="@Model.Unit.CurrentCapacity" class="text-danger"></span>
-    <br />
-
-    <label for="maxcapacity" class="control-label">MaxCapacity</label>
-    <br />
-    <input asp-for="@Model.Unit.MaxCapacity" type="text" name="maxCapacity" value="@unit.MaxCapacity" class="form-control" />
-    <span asp-validation-for="@Model.Unit.MaxCapacity" class="text-danger"></span>
-    <br />
-
-    <label>Monthly Costs</label>
-    <br />
-    <input type="number" name="monthlyCosts" value="@unit.MonthlyIncome" />
-    <br />
-
-    @*@<p>Contract</p>
-        <div class="custom-file mb-3">
-            <input type="file" class="custom-file-input" id="customFile" name="filename" onchange="DisplayFilename()">
-            <label id="customFileLabel" class="custom-file-label" for="customFile">Choose file</label>
-        </div>*@
-
-    <label for="contract" class="control-label">Contract</label>
-    <br />
-    <input readonly="readonly" type="text" id="contractName" value="@unit.ContractName" />
-    <br />
-
+<form asp-controller="Units" asp-action="UpdateUnit" enctype="multipart/form-data">
     <div class="form-group">
-        <input type="file" class="form-group" name="file" id="customFile" onchange="DisplayFilename()" />
+        <label for="ugSelect">Want to change Unit Group?</label>
+        <select id="ugSelect" name="groupId" class="custom-select custom-select-lg mb-3">
+            @foreach (var unitGroup in Model.UnitGroups)
+            {
+                var selectedOption = unitGroup.Id == Model.SelectedUnitGroup?.Id;
+
+                <option selected="@selectedOption" id="unitGroup_@unitGroup.Id" value="@unitGroup.Id">
+                    @unitGroup.Name
+                </option>
+            }
+        </select>
     </div>
 
-    @if (unit.ContractId > 0)
-    {
-        <div class="form-group">
-            <button type="button" onclick="OpenContract()" class="btn btn-primary col-xs-12">Open contract</button>
+    <hr />
+
+    <div class="form-row">
+        <div class="form-group col-md-7">
+            <label for="name">Name</label>
+            <input id="name" type="text" name="name" class="form-control"
+                   placeholder="Byt č.7" value="@Model.Unit.Specification.Name">
+            <span asp-validation-for="@Model.Unit.Specification.Name" class="text-danger"></span>
         </div>
-    }
 
-    <input type="hidden" name="userId" value="@userId" />
-    <input type="hidden" name="unitId" value="@unit.Id" />
+        <div class="form-group col-md-5">
+            <label for="uTypeSelect">Change Unit Type?</label>
+            <select id="uTypeSelect" name="unitTypeId" class="custom-select custom-select mb-3">
+                @foreach (var unitType in Model.UnitTypes)
+                {
+                    var selectedOption = unitType.Id == Model.Unit.UnitTypeId;
 
-    <input type="submit" value="Save" />
+                    <option selected="@selectedOption" id="unitType_@unitType.Id" value="@unitType.Id">
+                        @unitType.Type
+                    </option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="textArea">Note</label>
+        <textarea class="form-control" id="textArea" rows="2" name="noteText">@Model.Unit.Note</textarea>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="currentCapacity">Current Capacity</label>
+            <input type="number" class="form-control" id="currentCapacity" name="currentCapacity" min="0"
+                   value="@Model.Unit.CurrentCapacity">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="currentCapacity">Maximal Capacity</label>
+            <input type="number" class="form-control" id="maxCapacity" name="maxCapacity" min="0"
+                   value="@Model.Unit.MaxCapacity">
+        </div>
+
+        <div class="form-group col-md-4 offset-2">
+            <label for="monthlyCosts">Monthly Income</label>
+            <input type="number" class="form-control" id="monthlyCosts" name="monthlyCosts" min="0"
+                   value="@Model.Unit.MonthlyIncome">
+        </div>
+    </div>
+
+    <hr />
+
+    <label>Address</label>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="street">Street</label>
+            <input id="street" type="text" name="street" class="form-control"
+                   placeholder="Botanická" value="@Model.Unit.Specification.Address.Street">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="streetNumber">Street Number</label>
+            <input id="streetNumber" type="text" name="streetNumber" class="form-control"
+                   placeholder="68a" value="@Model.Unit.Specification.Address.Number">
+        </div>
+
+        <div class="form-group offset-2 col-md-4">
+            <label for="selectColor">Change color?</label>
+            <select id="selectColor" name="colorId" class="custom-select custom-select mb-3">
+                @foreach (var color in Model.Colors)
+                {
+                    var selectedOption = color.Id == Model.Unit.Specification.ColorId;
+
+                    <option id="color_@color.Id" selected="@selectedOption" value="@color.Id">@color.Name</option>
+                }
+            </select>
+        </div>
+
+
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="city">City</label>
+            <input id="city" type="text" name="city" class="form-control"
+                   placeholder="Brno" value="@Model.Unit.Specification.Address.City">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="zip">ZIP Code</label>
+            <input id="zip" type="text" name="zip" class="form-control"
+                   placeholder="602 00" value="@Model.Unit.Specification.Address.Zip">
+        </div>
+
+        <div class="offset-2">
+            <label>Contract</label>
+            <input readonly="readonly" type="text" id="contractName" hidden value="@Model.Unit?.Contract?.Name" />
+
+            <div class="form-group">
+                <input type="file" class="form-group" name="contractFile" id="contractFile" onchange="DisplayFilename()" />
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="state">State</label>
+            <input id="state" type="text" name="state" class="form-control"
+                   placeholder="Česká Republika" value="@Model.Unit.Specification.Address.State">
+        </div>
+
+        <div class="row offset-2 col-md-4 align-items-end" style="padding-bottom: 16px;">
+            <button class="btn btn-outline-success" style="width: 100%" type="submit">Update</button>
+        </div>
+    </div>
 </form>
 
-    @*@<form class="col-xs-12" method="post" action="/Units/UploadFile" enctype="multipart/form-data">
 
-            <div class="form-group">
-                <input type="file" class="form-control" name="file" />
-            </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary col-xs-12">Add</button>
-            </div>
-        </form>*@
-
-    <script>
+<script>
     function OpenContract() {
-        @*link = document.getElementById("link").value;*@
-        window.open('/Units/OpenContract?id=@unit.Id', "_blank");
+        window.open('/Units/OpenContract?id=@Model.Unit.Id', "_blank");
     };
 
     function DisplayFilename() {
-        uploadedFile = document.getElementById("customFile").value.split("\\").pop();
+        var uploadedFile = document.getElementById("customFile").value.split("\\").pop();
         document.getElementById("contractName").innerHTML = uploadedFile;
     }
-    </script>
+</script>
 
-    @if (unitId != -1)
-    {
-        <button type="button" onclick="confirmDeleteUnit()">Delete unit</button>
-        <script>
-        function confirmDeleteUnit() {
-            result = confirm("Are you sure?");
-            if (result) {
-                location.href = "/Units/DeleteUnit?userId=@userId&groupId=@groupId&unitId=@unitId";
-            }
-        };
-        </script>
-    }

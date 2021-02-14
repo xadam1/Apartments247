@@ -1,4 +1,4 @@
-﻿@model BLL.DTOs.CreateUnitDTO
+﻿@model BLL.DTOs.CreateOrEditUnitDTO
 
 @{
     ViewData["Title"] = "Create Unit";
@@ -46,7 +46,7 @@
 
     <div class="form-group">
         <label for="textArea">Note</label>
-        <textarea class="form-control" id="textArea" rows="3" name="noteText"></textarea>
+        <textarea class="form-control" id="textArea" rows="2" name="noteText"></textarea>
     </div>
 
     <div class="form-row">
@@ -93,12 +93,6 @@
                 <input type="file" class="form-group" name="contractFile" id="contractFile" onchange="DisplayFilename()" />
             </div>
 
-            @if (Model?.Unit?.Contract?.Id > 0)
-            {
-                <div class="form-group">
-                    <button type="button" onclick="OpenContract()" class="btn btn-primary col-xs-12">Open contract</button>
-                </div>
-            }
         </div>
     </div>
 
@@ -130,13 +124,8 @@
 
 
 <script>
-function OpenContract() {
-        @*link = document.getElementById("link").value;*@
-        window.open('/Units/OpenContract?id=@Model.Unit.Id', "_blank");
-    };
-
-function DisplayFilename() {
-uploadedFile = document.getElementById("contractFile").value.split("\\").pop();
-document.getElementById("contractFile").innerHTML = uploadedFile;
-}
+    function DisplayFilename() {
+        var uploadedFile = document.getElementById("contractFile").value.split("\\").pop();
+        document.getElementById("contractFile").innerHTML = uploadedFile;
+    }
 </script>

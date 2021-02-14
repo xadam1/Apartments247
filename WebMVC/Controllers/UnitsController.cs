@@ -10,8 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using WebAPI.Models;
-using WebMVC.Models;
 using WebMVC.Utils;
 
 namespace WebMVC.Controllers
@@ -74,7 +72,7 @@ namespace WebMVC.Controllers
         {
             Log.Called(nameof(CreateUnit));
 
-            var dto = new CreateUnitDTO
+            var dto = new CreateOrEditUnitDTO
             {
                 Colors = await _colorFacade.GetColorsAsync<ColorDTO>(),
                 UnitGroups = await _ugFacade.GetUnitGroupNamesByUserId<UnitGroupNameDTO>(UserInfoManager.UserId),
@@ -139,43 +137,28 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditUnit(int groupId, int unitId = -1)
+        public async Task<IActionResult> EditUnit(int groupId, int unitId)
         {
             Log.Called(nameof(EditUnit), $"groupID={groupId}, unitID={unitId}");
 
-            var m = new EditUnitModel
+            var dto = new CreateOrEditUnitDTO()
             {
-                UserId = UserInfoManager.UserId,
-                GroupId = groupId,
-                UnitId = unitId,
-                Colors = Utils.Utils.GetColors(),
-                UnitTypes = Utils.Utils.GetUnitTypes(),
-                UnitGroups = Utils.Utils.GetUnitGroupNamesByUserId()
+                Colors = await _colorFacade.GetColorsAsync<ColorDTO>(),
+                UnitGroups = await _ugFacade.GetUnitGroupNamesByUserId<UnitGroupNameDTO>(UserInfoManager.UserId),
+                UnitTypes = await _unitTypeFacade.GetUnitTypesAsync<UnitTypeDTO>(),
+                SelectedUnitGroup = await _ugFacade.GetUnitGroupByIdAsync<UnitGroupNameDTO>(groupId),
+                Unit = await _unitFacade.GetUnitByIdAsync<UnitFullDTO>(unitId)
             };
 
-            if (unitId == -1)
-                m.Unit = new UnitWithSpecificationModel
-                {
-                    Id = -1,
-                    Name = "Domeček lásky",
-                    ColorId = 10,
-                    State = "state",
-                    City = "city",
-                    Street = "street",
-                    Number = "number",
-                    Zip = "zip",
-                    Note = "Skvělé místo pro zamilované skupiny libovolné arity",
-                    UnitTypeId = 6,
-                    CurrentCapacity = 0,
-                    MaxCapacity = 2,
-                    ContractName = "nezadáno"
+            return View(dto);
+        }
 
-                };
-            else
-                m.Unit = Utils.Utils.GetUnitById(unitId);
-                
-
-            return View(m);
+        [HttpPost]
+        public IActionResult UpdateUnit(int unitId, int groupId, string name, int selectColor, string note,
+            int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
+            string street, string number, string zip, int monthlyCosts, IFormFile file)
+        {
+            return RedirectToAction("MyUnits", new { groupId });
         }
 
         [HttpPost]
