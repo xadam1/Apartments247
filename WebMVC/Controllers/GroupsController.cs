@@ -2,6 +2,7 @@
 using BLL.Facades;
 using DAL;
 using DAL.Entities;
+using DAL.Extras;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -29,6 +30,11 @@ namespace WebMVC.Controllers
         {
             Log.Called(nameof(MyGroups), $"GID [{groupId}]");
 
+            if (!await CanUserVisitPage(groupId))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
+
             var groups = new GroupsOverviewDTO
             {
                 UserId = UserInfoManager.UserId,
@@ -43,6 +49,11 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> CreateGroup()
         {
             Log.Called(nameof(CreateGroup), UserInfoManager.UserId.ToString());
+
+            if (!(UserInfoManager.UserId != Constants.NO_ID && UserInfoManager.CanUserAccessPage(UserInfoManager.UserId)))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
 
             var dto = new CreateGroupDTO
             {
@@ -85,8 +96,13 @@ namespace WebMVC.Controllers
 
 
         [HttpGet]
-        public IActionResult EditGroup(int groupId, int createNewInt)
+        public async Task<IActionResult> EditGroup(int groupId, int createNewInt)
         {
+            if (!await CanUserVisitPage(groupId))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
+
             var createNew = createNewInt > 0;
 
             var m = new EditGroupModel
@@ -147,8 +163,13 @@ namespace WebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteGroup(int groupId)
+        public async Task<IActionResult> DeleteGroup(int groupId)
         {
+            if (!await CanUserVisitPage(groupId))
+            {
+                return RedirectToAction("AccessError", "Home");
+            }
+
             using (var client = new HttpClient())
             {
                 using (var response = client.GetAsync(ConnectionStrings.API_URL + $"DeleteGroup?groupId={groupId}")
@@ -161,6 +182,12 @@ namespace WebMVC.Controllers
             groupId = Utils.Utils.GetFirstUnitGroupIdByUserId();
 
             return RedirectToAction("MyGroups", "Groups", new { groupId });
+        }
+
+        private async Task<bool> CanUserVisitPage(int groupId)
+        {
+            var group = await _unitGroupFacade.GetUnitGroupByIdAsync<UnitGroupDTO>(groupId);
+            return group != null && UserInfoManager.CanUserAccessPage(group.OwnerId);
         }
     }
 }
