@@ -27,7 +27,7 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> ShowCosts(int unitId, CostSort sortBy = CostSort.Date, bool isAscending = true, int pageNumber = 1, DateTime fromDate = default, DateTime toDate = default)
         {
             var unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
-            if (unit != null && !UserInfoManager.CanUserAccessPage(unit.OwnerId))
+            if (!(unit != null && UserInfoManager.CanUserAccessPage(unit.OwnerId)))
             {
                 return RedirectToAction("AccessError", "Home");
             }

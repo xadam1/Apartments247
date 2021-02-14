@@ -25,7 +25,7 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> ShowEquipments(int unitId)
         {
             var unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
-            if (unit != null && !UserInfoManager.CanUserAccessPage(unit.OwnerId))
+            if (!(unit != null && UserInfoManager.CanUserAccessPage(unit.OwnerId)))
             {
                 return RedirectToAction("AccessError", "Home");
             }
