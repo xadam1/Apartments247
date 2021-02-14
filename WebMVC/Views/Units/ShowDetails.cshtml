@@ -9,9 +9,15 @@
     <h3><span class="text-muted">Details of</span> <span class="font-weight-bold">@Model.Specification.Name</span></h3>
 
     <a asp-controller="Costs" asp-action="ShowCosts" asp-route-unitId="@Model.Id"
-       class="btn btn-outline-success offset-6" style="border-bottom-right-radius: 0; border-top-right-radius:0;">
+       class="btn btn-outline-success offset-5" style="border-bottom-right-radius: 0; border-top-right-radius:0;">
         Costs
     </a>
+
+    <a asp-controller="Equipments" asp-action="ShowEquipments" asp-route-unitId="@Model.Id"
+       class="btn btn-outline-success" style="border-radius: 0;">
+        Equipments
+    </a>
+
     <a asp-controller="Units" asp-action="EditUnit" asp-route-groupId="@Model.UnitGroup.Id" asp-route-unitId="@Model.Id"
        class="btn btn-outline-primary" style="border-radius: 0;">
         Edit Unit
