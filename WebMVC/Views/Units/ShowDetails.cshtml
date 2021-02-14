@@ -116,8 +116,39 @@
     <hr />
     <div class="form-group row">
         <label class="col-sm-1 col-form-label font-weight-bold">Note</label>
-        <div class="col-sm-7">
+        <div class="col-sm-6">
             <textarea class="form-control" readonly="readonly" rows="3" name="noteText">@Model.Note</textarea>
+        </div>
+
+        <label class="col-sm-1 col-form-label font-weight-bold offset-1">Contract</label>
+        <div class="col-sm-3">
+
+            @if (Model.Contract.Name != null)
+            {
+                <input type="text" class="form-control" readonly="readonly" value="@Model.Contract.Name">
+
+                <div class="form-group">
+                    <button type="button" onclick="OpenContract()" class="btn btn-primary col-xs-12 w-100" style="margin-top: 24px;">
+                        Open contract
+                    </button>
+                </div>
+            }
+            else
+            {
+                <input type="text" class="form-control" readonly="readonly" value="Not Uploaded...">
+            }
         </div>
     </div>
 </form>
+
+<script>
+    function OpenContract() {
+        @*link = document.getElementById("link").value;*@
+        window.open('/Units/OpenContract?id=@Model.Id', "_blank");
+    };
+
+    function DisplayFilename() {
+        uploadedFile = document.getElementById("contractFile").value.split("\\").pop();
+        document.getElementById("contractFile").innerHTML = uploadedFile;
+    }
+</script>
