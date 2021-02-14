@@ -1,0 +1,39 @@
+﻿@model BLL.DTOs.EquipmentsWithUnitIdDTO
+
+@{
+    ViewData["Title"] = "Show Equipments";
+}
+
+<h1>Show Equipments for @ViewBag.UnitName</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Type
+            </th>
+            <th>
+                Count
+            </th>
+            <th>
+                <a asp-action="CreateEquipment" asp-route-unitId="@Model.UnitId">Create New Equipment</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var equipment in Model.EquipmentsDTO) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => equipment.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => equipment.UnitEquipments.Count)
+            </td>
+            <td>
+                @*<a asp-action="EditEquipment" asp-route-id="@equipment.Id">Edit</a> |*@
+                <a asp-action="DeleteEquipment" asp-route-unitId="@Model.UnitId" asp-route-equipmentId="@equipment.Id" asp-route-type="@equipment.Type">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

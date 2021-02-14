@@ -12,10 +12,10 @@ namespace Infrastructure.Queries
             _query = _query.Include(equipment => equipment.UnitEquipments);
         }
 
-        /*public EquipmentQuery FilterByUnitId(int unitId)
+        public EquipmentQuery FilterByUnitId(int unitId)
         {
-            _query = _query.Where(equipment => equipment.UnitEquipments. == unitId);
+            _query = _query.Where(equipment => equipment.UnitEquipments.Any(ue => ue.UnitId == unitId));
             return this;
-        }*/
+        }
     }
 }

@@ -54,6 +54,10 @@ namespace Infrastructure
                 .AsSelf()
                 .InstancePerDependency();
 
+            builder.RegisterType<EquipmentQuery>()
+                .AsSelf()
+                .InstancePerDependency();
+
             builder.RegisterType<ApartmentsDbContext>()
                 .AsSelf()
                 .InstancePerLifetimeScope();

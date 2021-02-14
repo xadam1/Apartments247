@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApartmentsDbContext))]
-    [Migration("20210213142437_Init")]
+    [Migration("20210214005402_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace DAL.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.10");
 
-            modelBuilder.Entity("DAL.Models.Address", b =>
+            modelBuilder.Entity("DAL.Entities.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,7 +51,7 @@ namespace DAL.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("DAL.Models.Color", b =>
+            modelBuilder.Entity("DAL.Entities.Color", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,7 +132,7 @@ namespace DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DAL.Models.Contract", b =>
+            modelBuilder.Entity("DAL.Entities.Contract", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -150,7 +150,7 @@ namespace DAL.Migrations
                     b.ToTable("Contracts");
                 });
 
-            modelBuilder.Entity("DAL.Models.Cost", b =>
+            modelBuilder.Entity("DAL.Entities.Cost", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -179,7 +179,7 @@ namespace DAL.Migrations
                     b.ToTable("Costs");
                 });
 
-            modelBuilder.Entity("DAL.Models.Equipment", b =>
+            modelBuilder.Entity("DAL.Entities.Equipment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -246,7 +246,7 @@ namespace DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DAL.Models.Photo", b =>
+            modelBuilder.Entity("DAL.Entities.Photo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -277,7 +277,7 @@ namespace DAL.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("DAL.Models.Specification", b =>
+            modelBuilder.Entity("DAL.Entities.Specification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -308,7 +308,7 @@ namespace DAL.Migrations
                     b.ToTable("Specifications");
                 });
 
-            modelBuilder.Entity("DAL.Models.Unit", b =>
+            modelBuilder.Entity("DAL.Entities.Unit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -351,7 +351,7 @@ namespace DAL.Migrations
                     b.ToTable("Units");
                 });
 
-            modelBuilder.Entity("DAL.Models.UnitEquipment", b =>
+            modelBuilder.Entity("DAL.Entities.UnitEquipment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -372,7 +372,7 @@ namespace DAL.Migrations
                     b.ToTable("UnitEquipment");
                 });
 
-            modelBuilder.Entity("DAL.Models.UnitGroup", b =>
+            modelBuilder.Entity("DAL.Entities.UnitGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -397,7 +397,7 @@ namespace DAL.Migrations
                     b.ToTable("UnitGroups");
                 });
 
-            modelBuilder.Entity("DAL.Models.UnitType", b =>
+            modelBuilder.Entity("DAL.Entities.UnitType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -454,7 +454,7 @@ namespace DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DAL.Models.User", b =>
+            modelBuilder.Entity("DAL.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -483,93 +483,93 @@ namespace DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DAL.Models.Cost", b =>
+            modelBuilder.Entity("DAL.Entities.Cost", b =>
                 {
-                    b.HasOne("DAL.Models.Unit", "Unit")
+                    b.HasOne("DAL.Entities.Unit", "Unit")
                         .WithMany("Costs")
                         .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DAL.Models.Photo", b =>
+            modelBuilder.Entity("DAL.Entities.Photo", b =>
                 {
-                    b.HasOne("DAL.Models.Unit", "Unit")
+                    b.HasOne("DAL.Entities.Unit", "Unit")
                         .WithMany("Photos")
                         .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DAL.Models.Specification", b =>
+            modelBuilder.Entity("DAL.Entities.Specification", b =>
                 {
-                    b.HasOne("DAL.Models.Address", "Address")
+                    b.HasOne("DAL.Entities.Address", "Address")
                         .WithOne()
-                        .HasForeignKey("DAL.Models.Specification", "AddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("DAL.Entities.Specification", "AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Color", "Color")
+                    b.HasOne("DAL.Entities.Color", "Color")
                         .WithMany()
                         .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DAL.Models.Unit", b =>
+            modelBuilder.Entity("DAL.Entities.Unit", b =>
                 {
-                    b.HasOne("DAL.Models.Contract", "Contract")
+                    b.HasOne("DAL.Entities.Contract", "Contract")
                         .WithMany()
                         .HasForeignKey("ContractId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Specification", "Specification")
+                    b.HasOne("DAL.Entities.Specification", "Specification")
                         .WithMany()
                         .HasForeignKey("SpecificationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.UnitGroup", "UnitGroup")
+                    b.HasOne("DAL.Entities.UnitGroup", "UnitGroup")
                         .WithMany("Units")
                         .HasForeignKey("UnitGroupId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.UnitType", "UnitType")
+                    b.HasOne("DAL.Entities.UnitType", "UnitType")
                         .WithMany("Units")
                         .HasForeignKey("UnitTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DAL.Models.UnitEquipment", b =>
+            modelBuilder.Entity("DAL.Entities.UnitEquipment", b =>
                 {
-                    b.HasOne("DAL.Models.Equipment", "Equipment")
+                    b.HasOne("DAL.Entities.Equipment", "Equipment")
                         .WithMany("UnitEquipments")
                         .HasForeignKey("EquipmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Unit", "Unit")
+                    b.HasOne("DAL.Entities.Unit", "Unit")
                         .WithMany("UnitEquipments")
                         .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DAL.Models.UnitGroup", b =>
+            modelBuilder.Entity("DAL.Entities.UnitGroup", b =>
                 {
-                    b.HasOne("DAL.Models.Specification", "Specification")
+                    b.HasOne("DAL.Entities.Specification", "Specification")
                         .WithOne()
-                        .HasForeignKey("DAL.Models.UnitGroup", "SpecificationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("DAL.Entities.UnitGroup", "SpecificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.User", "User")
+                    b.HasOne("DAL.Entities.User", "User")
                         .WithMany("UnitGroups")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

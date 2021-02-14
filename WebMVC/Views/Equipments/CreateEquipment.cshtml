@@ -1,0 +1,31 @@
+﻿@model BLL.DTOs.EquipmentWithUnitIdDTO
+
+@{
+    ViewData["Title"] = "Create Equipment";
+}
+
+<h1>CreateEquipment</h1>
+
+<h4>Equipment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateEquipment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Type</label>
+                <input asp-for="@Model.EquipmentDTO.Type" name="type" class="form-control" />
+                <span asp-validation-for="@Model.EquipmentDTO.Type" class="text-danger"></span>
+            </div>
+            <input type="hidden" name="unitId" asp-for="@Model.UnitId" />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a href="javascript: history.go(-1)" class="btn btn-primary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

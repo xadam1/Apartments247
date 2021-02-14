@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
+using DAL.Entities;
 using Infrastructure;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,22 +20,33 @@ namespace BLL.Services
 
         public void CreateEquipment<T>(T equipmentDTO)
         {
-            throw new System.NotImplementedException();
+            _unitOfWork.EquipmentRepository.Add(_mapper.Map<Equipment>(equipmentDTO));
         }
 
         public void DeleteEquipment(int id)
         {
-            throw new System.NotImplementedException();
+            var equipmentTask = _unitOfWork.EquipmentRepository.GetByIdAsync(id);
+            equipmentTask.Wait();
+
+            var equipment = equipmentTask.Result;
+            _unitOfWork.EquipmentRepository.Delete(equipment);
         }
 
-        public Task<List<T>> GetEquipmentsByUnitIdAsync<T>(int id)
+        public async Task<List<T>> GetEquipmentsByUnitIdAsync<T>(int id)
         {
-            throw new System.NotImplementedException();
+            var query = _unitOfWork.EquipmentQuery.FilterByUnitId(id);
+
+            var equipments = await query.ExecuteAsync();
+            return _mapper.Map<List<T>>(equipments);
         }
 
-        public Task UpdateEquipmentAsync(int id, EquipmentDTO equipmentDTO)
+        public async Task UpdateEquipmentAsync(EquipmentDTO equipmentDTO)
         {
-            throw new System.NotImplementedException();
+            var equipment = await _unitOfWork.EquipmentRepository.GetByIdAsync(equipmentDTO.Id);
+            equipment.Type = equipmentDTO.Type;
+            equipment.UnitEquipments = equipmentDTO.UnitEquipments;
+
+            _unitOfWork.EquipmentRepository.Update(equipment);
         }
     }
 }

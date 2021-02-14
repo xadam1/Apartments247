@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BLL.Services
+namespace BLL.Facades
 {
-    public interface IEquipmentService
+    public interface IEquipmentFacade
     {
         Task<List<T>> GetEquipmentsByUnitIdAsync<T>(int id);
 
-        void CreateEquipment<T>(T equipmentDTO);
+        Task CreateEquipmentAsync<T>(T equipmentDTO);
 
         Task UpdateEquipmentAsync(EquipmentDTO equipmentDTO);
 
-        void DeleteEquipment(int id);
+        Task DeleteEquipmentAsync(int id);
     }
 }

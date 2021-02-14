@@ -28,5 +28,6 @@ namespace Infrastructure
         UsersUnitGroupsWithUnitsQuery UsersUnitGroupsWithUnitsQuery { get; }
         UnitsWithUnitGroupsQuery UnitsWithUnitGroupsQuery { get; }
         CostQuery CostQuery { get; }
+        EquipmentQuery EquipmentQuery { get; }
     }
 }

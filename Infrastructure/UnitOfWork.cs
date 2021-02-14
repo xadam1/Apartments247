@@ -28,6 +28,7 @@ namespace Infrastructure
         public UsersUnitGroupsWithUnitsQuery UsersUnitGroupsWithUnitsQuery { get; }
         public UnitsWithUnitGroupsQuery UnitsWithUnitGroupsQuery { get; }
         public CostQuery CostQuery { get; }
+        public EquipmentQuery EquipmentQuery { get; }
 
 
         // Constructor
@@ -52,6 +53,7 @@ namespace Infrastructure
             UsersUnitGroupsWithUnitsQuery = new UsersUnitGroupsWithUnitsQuery(_dbContext);
             UnitsWithUnitGroupsQuery = new UnitsWithUnitGroupsQuery(_dbContext);
             CostQuery = new CostQuery(_dbContext);
+            EquipmentQuery = new EquipmentQuery(_dbContext);
         }
 
 
