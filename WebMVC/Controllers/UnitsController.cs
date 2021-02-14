@@ -124,7 +124,6 @@ namespace WebMVC.Controllers
             return RedirectToAction("MyUnits", "Units", new { groupId });
         }
 
-
         [HttpGet]
         public async Task<IActionResult> ShowDetails(int unitId = Constants.NO_ID)
         {
@@ -183,75 +182,6 @@ namespace WebMVC.Controllers
             await _unitFacade.UpdateUnitAsync(unitId, unit);
 
             return RedirectToAction("MyUnits", new { groupId });
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SaveUnit(int unitId, int groupId, string name, int selectColor, string note,
-            int selectUnitType, int currentCapacity, int maxCapacity, string contractLink, string state, string city,
-            string street, string number, string zip, int monthlyCosts, IFormFile file)
-        {
-            var unit = await _unitFacade.GetUnitByIdAsync<UnitDTO>(unitId);
-            var contract = GetContract(file, unit);
-
-            if (unit == null)
-            {
-                var address = new Address
-                {
-                    State = state ?? string.Empty,
-                    City = city != null ? state : string.Empty,
-                    Street = street != null ? state : string.Empty,
-                    Number = number != null ? state : string.Empty,
-                    Zip = zip != null ? state : string.Empty
-                };
-
-                var spec = new Specification
-                {
-                    Name = name ?? string.Empty,
-                    ColorId = selectColor,
-                    Address = address,
-                    Note = note ?? string.Empty
-                };
-
-                unit = new UnitDTO
-                {
-                    Specification = spec,
-                    UnitGroupId = groupId,
-                    UnitTypeId = selectUnitType,
-                    CurrentCapacity = currentCapacity,
-                    MaxCapacity = maxCapacity,
-                    //ContractLink = contractLink ?? string.Empty,
-                    Contract = contract,
-                    MonthlyIncome = monthlyCosts
-                };
-
-                await _unitFacade.CreateUnitAsync(unit);
-            }
-            else
-            {
-                unit.Specification.Name = name ?? string.Empty;
-                unit.Specification.ColorId = selectColor;
-                unit.Specification.Note = note ?? string.Empty;
-
-                unit.Specification.Address.State = state ?? string.Empty;
-                unit.Specification.Address.City = city ?? string.Empty;
-                unit.Specification.Address.Street = street ?? string.Empty;
-                unit.Specification.Address.Number = number ?? string.Empty;
-                unit.Specification.Address.Zip = zip ?? string.Empty;
-
-                unit.UnitTypeId = selectUnitType;
-                unit.UnitGroupId = groupId;
-                unit.CurrentCapacity = currentCapacity;
-                unit.MaxCapacity = maxCapacity;
-                //unit.ContractLink = contractLink ?? string.Empty;
-                unit.Contract = contract;
-                unit.Contract.Name = contract.Name;
-                unit.Contract.Content = contract.Content;
-                unit.MonthlyIncome = monthlyCosts;
-
-                await _unitFacade.UpdateUnitAsync(unitId, unit);
-            }
-
-            return RedirectToAction("MyUnits", "Units", new { groupId });
         }
 
         [HttpGet]
