@@ -1,13 +1,6 @@
 # PROJEKT 'Apartments 247'
 ## Správce bytů a nebytových jednotek
 
-### Info
-Číslo skupiny: 8,
-Jména (uča): 
-    Jan Adam (485566),
-    Tomáš Fojt (485072),
-    Vojtěch Škaroupka (485232)
-
 
 ### O Projektu
 Na webovém portálu si uživatel může založit a spravovat účet. Kromě nástrojů pro správu základních údajů jako jméno, heslo a profilový obrázek, editor nabízí i možnost vytvářet záznamy o vlastněných bytech a sdružovat je do logických celků. Cílem je poskytnout vlastníkovi bytů přehledný panel se zadanými údaji a grafy zobrazujícími vývoj změn v průběhu času.
@@ -49,8 +42,3 @@ Na webovém portálu si uživatel může založit a spravovat účet. Kromě ná
 - Vybavení v prostorech
 - Celkové zisky
 - Měsíční (roční, ...) vývoj poplatků/zisků
-
-
-Co je potřeba ke spuštění aplikace:
-Ve VisualStudiu nastavit Multiple Startup Projects - WebAPI a WebMVC
-Nahráli jsme pro tebe na git předpřipravenou databázi s přihlašovacíma údajema Login = Admin, Password = testing, ale samozřejmě si můžeš vytvořit vlastního uživatele ;)
